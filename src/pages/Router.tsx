@@ -6,6 +6,7 @@ import SignIn from "./SignIn";
 export enum RoutesList {
   Home = "/",
   SignIn = "/sign-in",
+  EditProfile = "/edit-profile",
 }
 
 const Router = () => {

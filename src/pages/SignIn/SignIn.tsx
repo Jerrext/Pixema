@@ -3,6 +3,7 @@ import styles from "src/pages/SignIn/SignIn.module.scss";
 import Input from "src/components/Input";
 import Switcher from "src/components/Switch";
 import Tabs from "src/components/Tabs/";
+import UserName from "src/components/UserName/";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -26,6 +27,7 @@ const SignIn = () => {
       <Switcher />
       <Switcher disabled />
       <Tabs onClick={() => {}} />
+      <UserName userName="Daniil Kolpakov" />
     </div>
   );
 };

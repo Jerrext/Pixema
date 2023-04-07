@@ -1,0 +1,71 @@
+@import "src/assets/colors";
+
+.userNameWrapper {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  padding-right: 20px;
+  position: relative;
+  max-width: 264px;
+  cursor: pointer;
+  &::after,
+  &::before {
+    content: "";
+    position: absolute;
+    height: 2px;
+    width: 7px;
+    background-color: $light;
+    right: 0;
+    top: 50%;
+  }
+  &::after {
+    transform: rotate(-40deg);
+  }
+  &::before {
+    transform: rotate(40deg);
+    right: 4px;
+  }
+  &:hover::after,
+  &:hover::before {
+    background-color: $white;
+  }
+}
+
+.initials {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $primary;
+  border-radius: 10px;
+  margin-right: 20px;
+}
+
+.dropdownWrapper {
+  background-color: $dark;
+  width: 100%;
+  position: absolute;
+  top: 70px;
+  padding: 2px 0;
+  border-radius: 10px;
+  display: none;
+  transition: top 0.5s;
+}
+
+.dropdownItem {
+  padding: 15px 20px;
+  border-bottom: 1px solid $graphite;
+  cursor: pointer;
+  &:last-child {
+    border-bottom: 0;
+  }
+  &:hover {
+    color: $primary;
+  }
+}
+
+.dropdownOpenedWrapper {
+  display: block;
+  cursor: default;
+}
