@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "src/pages/SignIn/SignIn.module.scss";
 import Input from "src/components/Input/";
+import Switch from "src/components/Switch/";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -21,6 +22,8 @@ const SignIn = () => {
         inputType="password"
         onChange={setPassword}
       />
+      <Switch />
+      <Switch disabled />
     </div>
   );
 };
