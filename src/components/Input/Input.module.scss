@@ -1,0 +1,62 @@
+@import "src/assets/colors";
+
+.inputWrapper {
+  position: relative;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.input {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  padding: 16px 20px;
+  background-color: $graphite;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  width: 544px;
+  margin-top: 8px;
+  outline: none;
+
+  &:focus {
+    border: 2px solid $primary;
+  }
+
+  &:active {
+    border: 2px solid transparent;
+  }
+
+  &::placeholder {
+    color: $secondary;
+  }
+}
+
+.disabledInp {
+  background-color: $secondary;
+  cursor: not-allowed;
+}
+
+.errorInput {
+  border: 2px solid $error;
+
+  &:focus {
+    border: 2px solid $error;
+  }
+}
+
+.errorText {
+  position: absolute;
+  bottom: -27px;
+  color: $error;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.datkTitle {
+  color: $white;
+}
