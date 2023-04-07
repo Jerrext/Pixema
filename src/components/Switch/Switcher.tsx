@@ -1,12 +1,12 @@
 import React, { FC, useState } from "react";
 import classNames from "classnames";
-import styles from "./Switch.module.scss";
+import styles from "./Switcher.module.scss";
 
 type SwitchProps = {
   disabled?: boolean;
 };
 
-const Switch: FC<SwitchProps> = ({ disabled }) => {
+const Switcher: FC<SwitchProps> = ({ disabled }) => {
   const [switchState, setSwitchState] = useState(false);
   const onSwitcherClick = () => {
     setSwitchState(!switchState);
@@ -26,4 +26,4 @@ const Switch: FC<SwitchProps> = ({ disabled }) => {
   );
 };
 
-export default Switch;
+export default Switcher;
