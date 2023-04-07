@@ -1,0 +1,60 @@
+@import "src/assets/colors";
+
+.customSelect {
+  width: 500px;
+  margin-top: 8px;
+
+  &__control {
+    padding: 8px 20px;
+    height: 56px;
+    border-radius: 10px;
+    width: 100%;
+    cursor: text !important;
+  }
+
+  &__indicator {
+    cursor: pointer !important;
+
+    &:hover > svg > path {
+      fill: $white !important;
+    }
+    > svg > path {
+      fill: $light !important;
+    }
+    &-separator {
+      align-self: stretch;
+      width: 1px;
+      background-color: $light;
+      margin: 8px 12px;
+      box-sizing: border-box;
+    }
+  }
+
+  &__placeholder {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  &__menu {
+    background-color: $graphite;
+    left: 0;
+    top: 65px !important;
+    border-radius: 10px;
+    padding: 2px 0;
+  }
+
+  &__option {
+    padding: 15px 20px;
+    border-bottom: 1px solid $dark;
+    cursor: pointer !important;
+
+    &:hover {
+      color: $primary;
+    }
+
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+}

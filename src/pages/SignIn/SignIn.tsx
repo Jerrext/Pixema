@@ -4,10 +4,18 @@ import Input from "src/components/Input";
 import Switcher from "src/components/Switch";
 import Tabs from "src/components/Tabs/";
 import UserName from "src/components/UserName/";
+import SelectComponent from "src/components/SelectComponent/";
+// import SelectComponent from "src/components/SelectComponent/";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const options = [
+    { value: "chocolate", label: "Chocolate" },
+    { value: "strawberry", label: "Strawberry" },
+    { value: "vanilla", label: "Vanilla" },
+  ];
   return (
     <div className={styles.signInWrapper}>
       <Input
@@ -28,6 +36,7 @@ const SignIn = () => {
       <Switcher disabled />
       <Tabs onClick={() => {}} />
       <UserName userName="Daniil Kolpakov" />
+      <SelectComponent title="Country" placeholder="Select country" />
     </div>
   );
 };
