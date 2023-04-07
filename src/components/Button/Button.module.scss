@@ -1,0 +1,30 @@
+@import "src/assets/mixins";
+
+.primaryBtn {
+  @include button();
+  background-color: $primary;
+
+  &:hover {
+    background-color: $primary-secondary;
+  }
+}
+
+.secondaryBtn {
+  @include button();
+  background-color: $graphite;
+
+  &:hover {
+    color: $light;
+  }
+}
+
+.disabledBtn {
+  background-color: $secondary;
+  color: $light;
+  cursor: not-allowed;
+
+  &:hover {
+    background-color: $secondary;
+    cursor: not-allowed;
+  }
+}

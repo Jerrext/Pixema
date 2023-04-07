@@ -1,0 +1,10 @@
+@import "src/assets/colors";
+
+@mixin button() {
+  border-radius: 10px;
+  padding: 16px 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
