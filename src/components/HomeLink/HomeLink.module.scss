@@ -1,62 +1,61 @@
 @import "src/assets/colors";
 
-.inputWrapper {
-  position: relative;
-}
+.homeLinkWrapper {
+  display: flex;
+  gap: 23px;
+  align-items: center;
+  cursor: pointer;
+  > svg > path {
+    fill: $secondary;
+  }
+  p {
+    color: $secondary;
+    font-size: 18px;
+  }
 
-.title {
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
-}
-
-.input {
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 20px;
-  padding: 16px 20px;
-  background-color: $graphite;
-  border-radius: 10px;
-  border: 2px solid transparent;
-  width: 544px;
-  margin-top: 8px;
-  outline: none;
-
-  &:focus {
-    border: 2px solid $primary;
+  &:hover {
+    > svg > path {
+      fill: $primary-secondary;
+    }
+    p {
+      color: $primary-secondary;
+    }
   }
 
   &:active {
-    border: 2px solid transparent;
-  }
-
-  &::placeholder {
-    color: $secondary;
+    > svg > path {
+      fill: $primary;
+    }
+    p {
+      color: $primary;
+    }
   }
 }
 
-.disabledInp {
-  background-color: $secondary;
+.disabledLink {
   cursor: not-allowed;
-}
-
-.errorInput {
-  border: 2px solid $error;
-
-  &:focus {
-    border: 2px solid $error;
+  > svg > path {
+    fill: $graphite;
   }
-}
+  p {
+    color: $graphite;
+  }
 
-.errorText {
-  position: absolute;
-  bottom: -27px;
-  color: $error;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 20px;
-}
+  &:hover {
+    > svg > path {
+      fill: $graphite;
+    }
+    p {
+      color: $graphite;
+    }
+  }
 
-.datkTitle {
-  color: $white;
+  &:active {
+    > svg > path {
+      fill: $graphite;
+    }
+    p {
+      color: $graphite;
+    }
+  }
 }

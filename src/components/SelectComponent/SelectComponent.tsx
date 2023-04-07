@@ -32,7 +32,7 @@ const SelectComponent: FC<SelectedProps> = ({
   };
 
   const onChange = (newValue: any) => {
-    setCurrentValue(newValue.value);
+    setCurrentValue(newValue ? newValue.value : "");
   };
 
   return (

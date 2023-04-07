@@ -5,6 +5,7 @@ import Switcher from "src/components/Switch";
 import Tabs from "src/components/Tabs/";
 import UserName from "src/components/UserName/";
 import SelectComponent from "src/components/SelectComponent/";
+import HomeLink from "src/components/HomeLink/HomeLink";
 // import SelectComponent from "src/components/SelectComponent/";
 
 const SignIn = () => {
@@ -37,6 +38,8 @@ const SignIn = () => {
       <Tabs onClick={() => {}} />
       <UserName userName="Daniil Kolpakov" />
       <SelectComponent title="Country" placeholder="Select country" />
+      <HomeLink />
+      <HomeLink disabled />
     </div>
   );
 };
