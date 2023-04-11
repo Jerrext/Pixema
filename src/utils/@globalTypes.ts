@@ -28,3 +28,5 @@ export type CardType = {
   rating: string;
   vote_count: number;
 };
+
+export type CardListType = CardType[];
