@@ -1,0 +1,62 @@
+@import "src/assets/colors";
+
+.cardWrapper {
+  min-height: 433;
+  width: 266px;
+  position: relative;
+}
+
+.posterWrapper {
+  border-radius: 20px;
+  width: 100%;
+  height: 357px;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
+}
+
+.title {
+  margin-top: 24px;
+  font-weight: 700;
+  cursor: pointer;
+
+  &:hover {
+    color: $primary;
+  }
+}
+
+.rating,
+.bookmark {
+  position: absolute;
+  padding: 2px 8px;
+  height: 28px;
+  text-align: center;
+  top: 20px;
+  border-radius: 6px;
+}
+
+.rating {
+  left: 20px;
+  background-color: $green;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.bookmark {
+  cursor: pointer;
+  right: 20px;
+  background-color: $graphite;
+  > svg > path {
+    fill: $primary;
+  }
+}
+
+.trendRating {
+  background-color: $primary;
+}
