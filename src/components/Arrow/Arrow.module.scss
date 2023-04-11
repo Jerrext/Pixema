@@ -1,0 +1,26 @@
+@import "src/assets/colors";
+
+.arrowWrapper {
+  cursor: pointer;
+  display: inline-block;
+
+  &:hover {
+    > svg > path {
+      stroke: $light;
+    }
+  }
+}
+
+.disabledArrow {
+  cursor: not-allowed;
+
+  > svg > path {
+    stroke: $secondary;
+  }
+
+  &:hover {
+    > svg > path {
+      stroke: $secondary;
+    }
+  }
+}

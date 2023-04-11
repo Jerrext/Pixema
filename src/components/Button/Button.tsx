@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FC, ReactNode, KeyboardEvent } from "react";
 import classNames from "classnames";
 import styles from "./Button.module.scss";
-import { HomeIcon } from "src/assets/icons";
+import { ButtonType } from "src/utils/@globalTypes";
 
 type ButtonProps = {
   title: string | ReactNode;
@@ -10,11 +10,6 @@ type ButtonProps = {
   className?: string;
   onClick: () => void;
 };
-
-export enum ButtonType {
-  Primary = "Primary",
-  Secondary = "Secondary",
-}
 
 const btnStyles = {
   [ButtonType.Primary]: styles.primaryBtn,

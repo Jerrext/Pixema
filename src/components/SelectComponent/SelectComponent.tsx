@@ -43,6 +43,9 @@ const SelectComponent: FC<SelectedProps> = ({
           control: (baseStyles, state) => ({
             ...baseStyles,
             backgroundColor: state.isDisabled ? "#80858B" : "#323537",
+            border: state.isFocused
+              ? "2px solid #7B61FF"
+              : "2px solid transparent",
           }),
           placeholder: (baseStyles, state) => ({
             ...baseStyles,

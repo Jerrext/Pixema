@@ -1,0 +1,55 @@
+@import "src/assets/colors";
+
+.searchWrapper {
+  position: relative;
+}
+
+.search {
+  width: 100%;
+  margin: 0;
+}
+
+.filter {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  height: 24px;
+  width: 24px;
+  cursor: pointer;
+  transform: translateY(-50%);
+
+  &::before {
+    position: absolute;
+    content: "";
+    height: 6px;
+    width: 6px;
+    opacity: 0;
+    left: 0;
+    bottom: 0;
+    border-radius: 50%;
+    background-color: $primary;
+  }
+
+  &:hover {
+    > svg > path {
+      stroke: $white;
+    }
+
+    &::before {
+      opacity: 1;
+    }
+  }
+}
+
+.disabledFilter {
+  cursor: not-allowed;
+  &:hover {
+    > svg > path {
+      stroke: $light;
+    }
+
+    &::before {
+      opacity: 0;
+    }
+  }
+}

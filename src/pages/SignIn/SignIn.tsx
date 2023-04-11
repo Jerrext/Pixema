@@ -7,7 +7,10 @@ import UserName from "src/components/UserName/";
 import SelectComponent from "src/components/SelectComponent/";
 import HomeLink from "src/components/HomeLink/";
 import Button from "src/components/Button/";
-import { ButtonType } from "src/components/Button/Button";
+import Arrow from "src/components/Arrow";
+import GroupButtons from "src/components/GroupButtons";
+import Search from "src/components/Search";
+import { ButtonType } from "src/utils/@globalTypes";
 // import SelectComponent from "src/components/SelectComponent/";
 
 const SignIn = () => {
@@ -54,6 +57,12 @@ const SignIn = () => {
         disabled
         onClick={() => {}}
       />
+      <Arrow onClick={() => {}} />
+      <Arrow disabled onClick={() => {}} />
+      <GroupButtons />
+      <GroupButtons disabled />
+      <Search />
+      <Search disabled />
     </div>
   );
 };

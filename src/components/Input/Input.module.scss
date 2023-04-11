@@ -38,6 +38,10 @@
 .disabledInp {
   background-color: $secondary;
   cursor: not-allowed;
+
+  &::placeholder {
+    color: $light;
+  }
 }
 
 .errorInput {
