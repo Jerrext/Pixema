@@ -9,13 +9,16 @@ const PagesContainer = () => {
   const isLoggedIn = false;
   return (
     <div className={styles.wrapper}>
-      <Header />
-      <div className={styles.mainWrapper}>
-        {isLoggedIn && <div>Sidebar</div>}
-        <Outlet />
-      </div>
-      <div className={styles.footer}>
-        <div>© All Rights Reserved</div>
+      {!isLoggedIn && <div className={styles.formPagesBackground}></div>}
+      <div className={styles.pagesWrapper}>
+        <Header />
+        <div className={styles.mainWrapper}>
+          {isLoggedIn && <div>Sidebar</div>}
+          <Outlet />
+        </div>
+        <div className={styles.footer}>
+          <div>© All Rights Reserved</div>
+        </div>
       </div>
     </div>
   );

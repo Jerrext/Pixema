@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import styles from "src/pages/FormPages/SignIn/SignIn.module.scss";
+import styles from "./SignIn.module.scss";
 import { CardListType } from "src/utils/@globalTypes";
 import FormPage from "../FormPage";
 import { Link } from "react-router-dom";
@@ -344,7 +344,7 @@ const SignIn = () => {
   return (
     <FormPage
       titleFormPage="Sign In"
-      buttonTitle="Sign In"
+      buttonTitle="Sign in"
       disabledButton={!isValid}
       onClick={() => {}}
       footerContent={
@@ -360,7 +360,7 @@ const SignIn = () => {
         errText={emailError}
         onBlur={onBlurEmail}
         onChange={setEmail}
-        inputType="text"
+        inputType="email"
       />
       <div className={styles.passwordWrapper}>
         <Input
