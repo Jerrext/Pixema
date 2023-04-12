@@ -3,6 +3,7 @@
 .customSelect {
   width: 500px;
   margin-top: 8px;
+  font-weight: 500;
 
   &__control {
     padding: 8px 20px;
@@ -40,7 +41,8 @@
   &__menu {
     background-color: $graphite;
     left: 0;
-    top: 65px !important;
+    top: auto !important;
+    margin-top: 10px;
     border-radius: 10px;
     padding: 2px 0;
   }
@@ -56,6 +58,42 @@
 
     &:last-child {
       border-bottom: 0;
+    }
+  }
+}
+
+.multiSelectWrapper {
+  .customSelect {
+    &__value-container {
+      gap: 12px;
+    }
+
+    &__control {
+      height: unset;
+      min-height: 56px;
+      padding: 8px;
+    }
+
+    &__multi-value {
+      background-color: $dark;
+      border-radius: 6px;
+      padding: 4px 8px;
+      gap: 9px;
+      cursor: default;
+
+      &__remove {
+        cursor: pointer;
+        transform: scale(1.2);
+        > svg > path {
+          fill: $light;
+        }
+
+        &:hover {
+          > svg > path {
+            fill: $white;
+          }
+        }
+      }
     }
   }
 }

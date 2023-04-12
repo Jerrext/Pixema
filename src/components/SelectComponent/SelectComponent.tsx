@@ -1,42 +1,55 @@
 import React, { FC, useState } from "react";
-import Select from "react-select";
+import Select, { OnChangeValue } from "react-select";
 import "./SelectComponent.scss";
-// import styles from "./SelectComponent.module.scss";
 import classNames from "classnames";
+import { OptionType, OptionsListType } from "./types";
 
-type SelectedProps = {
+type SelectComponentProps = {
   title: string;
   placeholder: string;
   isDisabled?: boolean;
-  SelectList?: [];
+  optionsList: OptionsListType;
+  isMulti?: boolean;
 };
 
-const SelectComponent: FC<SelectedProps> = ({
+const SelectComponent: FC<SelectComponentProps> = ({
   title,
   placeholder,
   isDisabled,
-  SelectList,
+  isMulti,
+  optionsList,
 }) => {
-  const [currentValue, setCurrentValue] = useState();
-
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-  ];
+  const [currentValues, setCurrentValues] = useState<string[] | string>();
 
   const getValue = () => {
-    return currentValue
-      ? options.find((item) => item.value === currentValue)
-      : "";
+    console.log(currentValues);
+    if (currentValues) {
+      return isMulti
+        ? optionsList.filter(
+            (option) => currentValues.indexOf(option.value) >= 0
+          )
+        : optionsList.find((option) => option.value === currentValues);
+    } else {
+      return null;
+    }
   };
 
-  const onChange = (newValue: any) => {
-    setCurrentValue(newValue ? newValue.value : "");
+  const onChange = (newValue: OnChangeValue<OptionType, boolean>) => {
+    setCurrentValues(
+      isMulti
+        ? (newValue as OptionsListType).map((value) => value.value)
+        : newValue
+        ? (newValue as OptionType).value
+        : ""
+    );
   };
 
   return (
-    <div>
+    <div
+      className={classNames({
+        ["multiSelectWrapper"]: isMulti,
+      })}
+    >
       <p>{title}</p>
       <Select
         styles={{
@@ -57,9 +70,11 @@ const SelectComponent: FC<SelectedProps> = ({
         className="customSelect"
         classNamePrefix="customSelect"
         isClearable={true}
-        options={options}
+        options={optionsList}
         placeholder={placeholder}
         isDisabled={isDisabled}
+        closeMenuOnSelect={isMulti && false}
+        isMulti={isMulti}
         unstyled
       />
     </div>
