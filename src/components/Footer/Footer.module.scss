@@ -1,0 +1,56 @@
+@import "src/assets/colors";
+
+.groupButtonsWrapper {
+  display: flex;
+  border-radius: 10px;
+  gap: 1px;
+  overflow: hidden;
+  height: 56px;
+  width: 266px;
+}
+
+.button {
+  cursor: pointer;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  background-color: $graphite;
+
+  &:hover {
+    > svg > path {
+      fill: $white;
+    }
+  }
+
+  &:last-child:hover {
+    > svg > path {
+      stroke: $white;
+    }
+    > svg > circle {
+      stroke: $white;
+    }
+  }
+}
+
+.disabledGroupButtonsWrapper {
+  .button {
+    background-color: $secondary;
+    cursor: not-allowed;
+
+    &:hover {
+      > svg > path {
+        fill: $light;
+      }
+    }
+
+    &:last-child:hover {
+      > svg > path {
+        stroke: $light;
+      }
+      > svg > circle {
+        stroke: $light;
+      }
+    }
+  }
+}

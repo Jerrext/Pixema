@@ -5,3 +5,4 @@ export { SocialIcon } from "./SocialIcon";
 export { FilterIcon } from "./FilterIcon";
 export { TrendIcon } from "./TrendIcon";
 export { NoContentIcon } from "./NoContentIcon";
+export { PixemaLogoIcon } from "./PixemaLogoIcon";

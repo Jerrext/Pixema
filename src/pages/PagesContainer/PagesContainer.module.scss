@@ -1,0 +1,19 @@
+@import "src/assets/colors";
+
+.wrapper {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-image: url("../../img/signInBG.png");
+  background-color: $black;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.footer {
+  align-self: center;
+  font-weight: 500;
+  padding-bottom: 64px;
+}

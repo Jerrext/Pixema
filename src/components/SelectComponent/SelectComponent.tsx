@@ -22,7 +22,6 @@ const SelectComponent: FC<SelectComponentProps> = ({
   const [currentValues, setCurrentValues] = useState<string[] | string>();
 
   const getValue = () => {
-    console.log(currentValues);
     if (currentValues) {
       return isMulti
         ? optionsList.filter(

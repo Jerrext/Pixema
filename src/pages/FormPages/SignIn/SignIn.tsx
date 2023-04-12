@@ -1,17 +1,11 @@
-import React, { useState } from "react";
-import styles from "src/pages/SignIn/SignIn.module.scss";
+import React, { useEffect, useMemo, useState } from "react";
+import styles from "src/pages/FormPages/SignIn/SignIn.module.scss";
+import { CardListType } from "src/utils/@globalTypes";
+import FormPage from "../FormPage";
+import { Link } from "react-router-dom";
+import { RoutesList } from "src/pages/Router";
 import Input from "src/components/Input";
-import Switcher from "src/components/Switch";
-import Tabs from "src/components/Tabs/";
-import UserName from "src/components/UserName/";
-import HomeLink from "src/components/HomeLink/";
-import Button from "src/components/Button/";
-import Arrow from "src/components/Arrow";
-import GroupButtons from "src/components/GroupButtons";
-import Search from "src/components/Search";
-import { ButtonType, CardListType } from "src/utils/@globalTypes";
-import CardList from "src/components/CardList";
-import SelectComponent from "src/components/SelectComponent/SelectComponent";
+import { reg } from "src/utils/constants";
 // import SelectComponent from "src/components/SelectComponent/";
 
 const cardList = [
@@ -293,6 +287,51 @@ const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+  const [passwordTouched, setPasswordTouched] = useState(false);
+  const [emailTouched, setEmailTouched] = useState(false);
+
+  const onBlurEmail = () => {
+    setEmailTouched(true);
+  };
+
+  const onBlurPassword = () => {
+    setPasswordTouched(true);
+  };
+
+  useEffect(() => {
+    if (emailTouched) {
+      if (email.length === 0) {
+        setEmailError("Email is required field");
+      } else if (!reg.test(email)) {
+        setEmailError("Enter a valid email");
+      } else {
+        setEmailError("");
+      }
+    }
+  }, [email, emailTouched]);
+
+  useEffect(() => {
+    if (passwordTouched) {
+      if (password.length === 0) {
+        setPasswordError("Password is required field");
+      } else {
+        setPasswordError("");
+      }
+    }
+  }, [password, passwordTouched]);
+
+  const isValid = useMemo(() => {
+    return (
+      emailError.length === 0 &&
+      passwordError.length === 0 &&
+      emailTouched &&
+      passwordTouched
+    );
+  }, [emailError, passwordError, emailTouched, passwordTouched]);
+
   const options = [
     { value: "chocolate", label: "Chocolate" },
     { value: "strawberry", label: "Strawberry" },
@@ -303,58 +342,41 @@ const SignIn = () => {
   ];
 
   return (
-    <div className={styles.signInWrapper}>
+    <FormPage
+      titleFormPage="Sign In"
+      buttonTitle="Sign In"
+      disabledButton={!isValid}
+      onClick={() => {}}
+      footerContent={
+        <span>
+          Don’t have an account? <Link to={RoutesList.SignUp}>Sign Up</Link>
+        </span>
+      }
+    >
       <Input
         value={email}
-        placeholder="Your email"
         title="Email"
-        inputType="email"
+        placeholder="Your email"
+        errText={emailError}
+        onBlur={onBlurEmail}
         onChange={setEmail}
+        inputType="text"
       />
-      <Input
-        value={password}
-        placeholder="Your password"
-        title="Password"
-        inputType="password"
-        onChange={setPassword}
-      />
-      <Switcher />
-      <Switcher disabled />
-      <Tabs onClick={() => {}} />
-      <UserName userName="Daniil Kolpakov" />
-      <SelectComponent
-        title="Country"
-        placeholder="Select country"
-        optionsList={options}
-      />
-      <SelectComponent
-        title="Country"
-        placeholder="Select country"
-        optionsList={options}
-        isMulti
-      />
-      <HomeLink />
-      <HomeLink disabled />
-      <Button title="Primary" type={ButtonType.Primary} onClick={() => {}} />
-      <Button
-        title="Secondary"
-        type={ButtonType.Secondary}
-        onClick={() => {}}
-      />
-      <Button
-        title="Disabled"
-        type={ButtonType.Primary}
-        disabled
-        onClick={() => {}}
-      />
-      <Arrow onClick={() => {}} />
-      <Arrow disabled onClick={() => {}} />
-      <GroupButtons />
-      <GroupButtons disabled />
-      <Search />
-      <Search disabled />
-      <CardList cardList={cardList} />
-    </div>
+      <div className={styles.passwordWrapper}>
+        <Input
+          value={password}
+          title="Password"
+          placeholder="Your password"
+          errText={passwordError}
+          onBlur={onBlurPassword}
+          onChange={setPassword}
+          inputType="password"
+        />
+        <Link to={RoutesList.ResetPassword} className={styles.forgotPassword}>
+          Forgot password?
+        </Link>
+      </div>
+    </FormPage>
   );
 };
 
