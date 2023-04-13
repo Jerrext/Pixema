@@ -1,4 +1,12 @@
 export type UserResponseData = {
+  themes: {};
+  user: UserDataType;
+  menus: [];
+  locales: [];
+  status: string;
+};
+
+export type UserDataType = {
   first_name: null;
   last_name: null;
   language: string;

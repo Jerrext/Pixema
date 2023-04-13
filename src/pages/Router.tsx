@@ -4,6 +4,8 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import SignIn from "./FormPages/SignIn";
 import PagesContainer from "./PagesContainer";
 import SignUp from "./FormPages/SignUp";
+import { useSelector } from "react-redux";
+import { AuthSelectors } from "src/redux/reducers/authSlice";
 
 export enum RoutesList {
   Home = "/",
@@ -15,7 +17,7 @@ export enum RoutesList {
 }
 
 const Router = () => {
-  const isLoggedIn = false;
+  const isLoggedIn = useSelector(AuthSelectors.getLoggedIn);
   return (
     <BrowserRouter>
       <Routes>
@@ -24,8 +26,18 @@ const Router = () => {
             path={RoutesList.Home}
             element={isLoggedIn ? "" : <Navigate to={RoutesList.SignIn} />}
           />
-          <Route path={RoutesList.SignIn} element={<SignIn />} />
-          <Route path={RoutesList.SignUp} element={<SignUp />} />
+          <Route
+            path={RoutesList.SignIn}
+            element={
+              isLoggedIn ? <Navigate to={RoutesList.Home} /> : <SignIn />
+            }
+          />
+          <Route
+            path={RoutesList.SignUp}
+            element={
+              isLoggedIn ? <Navigate to={RoutesList.Home} /> : <SignUp />
+            }
+          />
           <Route path={RoutesList.Default} element={"404"} />
         </Route>
       </Routes>

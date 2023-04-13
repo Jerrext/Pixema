@@ -4,9 +4,11 @@ import classNames from "classnames";
 
 import styles from "./PagesContainer.module.scss";
 import Header from "./Header";
+import { useSelector } from "react-redux";
+import { AuthSelectors } from "src/redux/reducers/authSlice";
 
 const PagesContainer = () => {
-  const isLoggedIn = false;
+  const isLoggedIn = useSelector(AuthSelectors.getLoggedIn);
   return (
     <div className={styles.wrapper}>
       {!isLoggedIn && <div className={styles.formPagesBackground}></div>}

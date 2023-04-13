@@ -2,10 +2,16 @@ import React, { useEffect, useMemo, useState } from "react";
 import styles from "./SignIn.module.scss";
 import { CardListType } from "src/utils/@globalTypes";
 import FormPage from "../FormPage";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { RoutesList } from "src/pages/Router";
 import Input from "src/components/Input";
 import { reg } from "src/utils/constants";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  AuthSelectors,
+  setInputErrors,
+  signInUser,
+} from "src/redux/reducers/authSlice";
 // import SelectComponent from "src/components/SelectComponent/";
 
 const cardList = [
@@ -284,6 +290,11 @@ const cardList = [
 const cardList2: CardListType = [];
 
 const SignIn = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const newError = useSelector(AuthSelectors.getEmailErrors);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -299,6 +310,21 @@ const SignIn = () => {
 
   const onBlurPassword = () => {
     setPasswordTouched(true);
+  };
+
+  const onSignInBtnClick = () => {
+    dispatch(
+      signInUser({
+        data: {
+          email,
+          password,
+          token_name: "qwe",
+        },
+        callback: () => {
+          navigate(RoutesList.Home);
+        },
+      })
+    );
   };
 
   useEffect(() => {
@@ -323,6 +349,14 @@ const SignIn = () => {
     }
   }, [password, passwordTouched]);
 
+  useEffect(() => {
+    if (newError) {
+      setEmailError(newError);
+      setPasswordError(newError);
+    }
+    dispatch(setInputErrors(null));
+  }, [newError]);
+
   const isValid = useMemo(() => {
     return (
       emailError.length === 0 &&
@@ -346,7 +380,7 @@ const SignIn = () => {
       titleFormPage="Sign In"
       buttonTitle="Sign in"
       disabledButton={!isValid}
-      onClick={() => {}}
+      onClick={onSignInBtnClick}
       footerContent={
         <span>
           Don’t have an account? <Link to={RoutesList.SignUp}>Sign Up</Link>

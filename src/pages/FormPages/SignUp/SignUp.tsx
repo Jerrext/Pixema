@@ -8,7 +8,7 @@ import { reg } from "src/utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import {
   AuthSelectors,
-  setRegisterErrors,
+  setInputErrors,
   signUpUser,
 } from "src/redux/reducers/authSlice";
 // import SelectComponent from "src/components/SelectComponent/";
@@ -69,7 +69,7 @@ const SignUp = () => {
   useEffect(() => {
     newEmailError && setEmailError(newEmailError);
     newPasswordError && setPasswordError(newPasswordError);
-    dispatch(setRegisterErrors(null));
+    dispatch(setInputErrors(null));
   }, [newEmailError, newPasswordError]);
 
   useEffect(() => {

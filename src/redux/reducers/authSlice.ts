@@ -1,21 +1,26 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import React from "react";
 import { RootState } from "../store";
-import { SignUpUserPayload } from "./@types";
+import {
+  SigInPayloadData,
+  SignInUserPayload,
+  SignUpUserPayload,
+  Callback,
+  inputErrorsState,
+} from "./@types";
+import { UserDataType } from "../sagas/@types";
+import { ACCESS_TOKEN_KEY } from "src/utils/constants";
 
 type AuthState = {
   isLoggedIn: boolean;
-  registerErrors: registerErrorsState | null;
-};
-
-type registerErrorsState = {
-  email?: string[];
-  password?: string[];
+  inputErrors: inputErrorsState | null;
+  userData: UserDataType | null;
 };
 
 const initialState: AuthState = {
-  isLoggedIn: false,
-  registerErrors: null,
+  isLoggedIn: !!localStorage.getItem(ACCESS_TOKEN_KEY),
+  inputErrors: null,
+  userData: null,
 };
 
 const AuthSlice = createSlice({
@@ -23,17 +28,28 @@ const AuthSlice = createSlice({
   initialState,
   reducers: {
     signUpUser(_, __: PayloadAction<SignUpUserPayload>) {},
-    setRegisterErrors(
-      state,
-      action: PayloadAction<registerErrorsState | null>
-    ) {
-      state.registerErrors = action.payload;
+    setInputErrors(state, action: PayloadAction<inputErrorsState | null>) {
+      state.inputErrors = action.payload;
     },
-    signInUser(_, __: PayloadAction<undefined>) {},
+    signInUser(_, __: PayloadAction<SignInUserPayload>) {},
+    setUserData(state, action: PayloadAction<UserDataType | null>) {
+      state.userData = action.payload;
+    },
+    setLoggedIn(state, action: PayloadAction<boolean>) {
+      state.isLoggedIn = action.payload;
+    },
+    logoutUser(_, __: PayloadAction<Callback>) {},
   },
 });
 
-export const { signUpUser, signInUser, setRegisterErrors } = AuthSlice.actions;
+export const {
+  signUpUser,
+  signInUser,
+  setInputErrors,
+  setUserData,
+  setLoggedIn,
+  logoutUser,
+} = AuthSlice.actions;
 
 export default AuthSlice.reducer;
 export const authName = AuthSlice.name;
@@ -41,8 +57,7 @@ export const authName = AuthSlice.name;
 export const AuthSelectors = {
   getLoggedIn: (state: RootState) => state.auth.isLoggedIn,
   getEmailErrors: (state: RootState) =>
-    state.auth.registerErrors?.email && state.auth.registerErrors?.email[0],
+    state.auth.inputErrors?.email && state.auth.inputErrors?.email[0],
   getPasswordErrors: (state: RootState) =>
-    state.auth.registerErrors?.password &&
-    state.auth.registerErrors?.password[0],
+    state.auth.inputErrors?.password && state.auth.inputErrors?.password[0],
 };
