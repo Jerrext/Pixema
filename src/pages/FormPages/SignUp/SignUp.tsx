@@ -1,29 +1,34 @@
 import React, { useEffect, useMemo, useState } from "react";
 import styles from "./SignUp.module.scss";
 import FormPage from "../FormPage";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { RoutesList } from "src/pages/Router";
 import Input from "src/components/Input";
 import { reg } from "src/utils/constants";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  AuthSelectors,
+  setRegisterErrors,
+  signUpUser,
+} from "src/redux/reducers/authSlice";
 // import SelectComponent from "src/components/SelectComponent/";
 
 const SignUp = () => {
-  const [userName, setUserName] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const newEmailError = useSelector(AuthSelectors.getEmailErrors);
+  const newPasswordError = useSelector(AuthSelectors.getPasswordErrors);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const [userNameError, setUserNameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
   const [passwordTouched, setPasswordTouched] = useState(false);
   const [emailTouched, setEmailTouched] = useState(false);
-  const [userNameTouched, setUserNameTouched] = useState(false);
-
-  const onBlurUserName = () => {
-    setUserNameTouched(true);
-  };
 
   const onBlurEmail = () => {
     setEmailTouched(true);
@@ -33,22 +38,28 @@ const SignUp = () => {
     setPasswordTouched(true);
   };
 
-  useEffect(() => {
-    if (userNameTouched) {
-      if (userName.length === 0) {
-        setUserNameError("Name is required field");
-      } else {
-        setUserNameError("");
-      }
-    }
-  }, [userName, userNameTouched]);
+  const onSignUpBtnClick = () => {
+    dispatch(
+      signUpUser({
+        data: {
+          email,
+          password,
+          password_confirmation: confirmPassword,
+          token_name: "qwe",
+        },
+        callback: () => {
+          navigate(RoutesList.SignIn);
+        },
+      })
+    );
+  };
 
   useEffect(() => {
     if (emailTouched) {
       if (email.length === 0) {
-        setEmailError("Email is required field");
+        setEmailError("Email is required field.");
       } else if (!reg.test(email)) {
-        setEmailError("Enter a valid email");
+        setEmailError("Enter a valid email.");
       } else {
         setEmailError("");
       }
@@ -56,11 +67,19 @@ const SignUp = () => {
   }, [email, emailTouched]);
 
   useEffect(() => {
+    newEmailError && setEmailError(newEmailError);
+    newPasswordError && setPasswordError(newPasswordError);
+    dispatch(setRegisterErrors(null));
+  }, [newEmailError, newPasswordError]);
+
+  useEffect(() => {
     if (passwordTouched) {
       if (password !== confirmPassword) {
-        setPasswordError("Passwords must match");
+        setPasswordError("Passwords must match.");
       } else if (password.length === 0 || confirmPassword.length === 0) {
-        setPasswordError("Password is required field");
+        setPasswordError("Password is required field.");
+      } else if (password.length < 5) {
+        setPasswordError("The password must be at least 5 characters.");
       } else {
         setPasswordError("");
       }
@@ -71,41 +90,23 @@ const SignUp = () => {
     return (
       emailError.length === 0 &&
       passwordError.length === 0 &&
-      userNameError.length === 0 &&
-      userNameTouched &&
       emailTouched &&
       passwordTouched
     );
-  }, [
-    emailError,
-    passwordError,
-    userNameError,
-    userNameTouched,
-    emailTouched,
-    passwordTouched,
-  ]);
+  }, [emailError, passwordError, emailTouched, passwordTouched]);
 
   return (
     <FormPage
       titleFormPage="Sign Up"
       buttonTitle="Sign up"
       disabledButton={!isValid}
-      onClick={() => {}}
+      onClick={onSignUpBtnClick}
       footerContent={
         <span>
           Already have an account? <Link to={RoutesList.SignIn}>Sign In</Link>
         </span>
       }
     >
-      <Input
-        value={userName}
-        title="Name"
-        placeholder="Your name"
-        errText={userNameError}
-        onBlur={onBlurUserName}
-        onChange={setUserName}
-        inputType="text"
-      />
       <Input
         value={email}
         title="Email"
