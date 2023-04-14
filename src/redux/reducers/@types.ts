@@ -27,5 +27,9 @@ export type GetUserDataPayload = {
   id: number | string;
 };
 
+export interface GetAllMoviesPayload {
+  page: number;
+}
+
 export type SignUpUserPayload = PayloadWithCallback<SigUpPayloadData>;
 export type SignInUserPayload = PayloadWithCallback<SigInPayloadData>;

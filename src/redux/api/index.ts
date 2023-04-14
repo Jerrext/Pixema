@@ -26,10 +26,10 @@ const getUserData = (token: string, id: number | string) => {
   );
 };
 
-const getMovies = (token: string) => {
+const getMovies = (token: string, page: number) => {
   return API.get(
     `/titles`,
-    { perPage: PER_PAGE },
+    { perPage: PER_PAGE, page },
     {
       headers: {
         Authorization: `Bearer ${token}`,

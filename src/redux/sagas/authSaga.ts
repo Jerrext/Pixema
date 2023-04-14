@@ -72,7 +72,6 @@ function* logoutUserWorker() {
 }
 
 function* getUserDataWorker(action: PayloadAction<GetUserDataPayload>) {
-  yield put(setAllMoviesLoading(true));
   const { id } = action.payload;
   const { ok, data, problem }: ApiResponse<UserResponseData> =
     yield callCheckingAuth(API.getUserData, id);
@@ -81,7 +80,6 @@ function* getUserDataWorker(action: PayloadAction<GetUserDataPayload>) {
   } else {
     console.warn("Error getting user data", problem);
   }
-  yield put(setAllMoviesLoading(false));
 }
 
 export default function* authSaga() {

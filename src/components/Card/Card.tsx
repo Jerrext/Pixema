@@ -30,7 +30,7 @@ const Card: FC<CardProps> = ({ card, bookmark }) => {
         })}
       >
         {isTrend && <TrendIcon />}
-        <div>{rating}</div>
+        <div>{rating ? rating : 0}</div>
       </div>
       <div
         className={classNames(styles.bookmark, {
