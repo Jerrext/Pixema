@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useNavigate,
+} from "react-router-dom";
 import SignIn from "./FormPages/SignIn";
 import PagesContainer from "./PagesContainer";
 import SignUp from "./FormPages/SignUp";
-import { useSelector } from "react-redux";
-import { AuthSelectors } from "src/redux/reducers/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { AuthSelectors, getUserInfo } from "src/redux/reducers/authSlice";
 
 export enum RoutesList {
   Home = "/",
@@ -13,11 +19,23 @@ export enum RoutesList {
   SignUp = "/sign-up",
   ResetPassword = "/reset-password",
   EditProfile = "/edit-profile",
+  Settings = "/settings",
+  Trends = "/trends",
+  Favorites = "/favorites",
   Default = "*",
 }
 
 const Router = () => {
+  const dispatch = useDispatch();
+  // const navigate = useNavigate();
+
   const isLoggedIn = useSelector(AuthSelectors.getLoggedIn);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      dispatch(getUserInfo({ id: "me" }));
+    }
+  }, [isLoggedIn]);
   return (
     <BrowserRouter>
       <Routes>

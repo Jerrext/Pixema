@@ -6,3 +6,5 @@ export { FilterIcon } from "./FilterIcon";
 export { TrendIcon } from "./TrendIcon";
 export { NoContentIcon } from "./NoContentIcon";
 export { PixemaLogoIcon } from "./PixemaLogoIcon";
+export { FavoriteIcon } from "./FavoriteIcon";
+export { SettingsIcon } from "./SettingsIcon";

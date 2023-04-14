@@ -13,4 +13,16 @@ const signInUser = (data: SigInPayloadData) => {
   return API.post("/auth/login", data);
 };
 
-export default { signUpUser, signInUser };
+const getUserData = (token: string, id: number | string) => {
+  return API.get(
+    `/user-profile/${id}`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
+export default { signUpUser, signInUser, getUserData };

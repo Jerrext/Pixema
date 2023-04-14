@@ -1,5 +1,9 @@
 @import "src/assets/colors";
 
+.wrapper {
+  background-color: $black;
+}
+
 .pagesWrapper {
   display: flex;
   height: 100vh;
@@ -14,13 +18,21 @@
   background-size: cover;
   background-repeat: no-repeat;
   width: 100%;
-  background-color: $black;
   height: 100%;
   position: fixed;
 }
 
 .footer {
   align-self: center;
-  font-weight: 500;
   padding: 32px 0 50px;
+}
+
+.mainWrapper {
+  display: flex;
+  flex: 1;
+  gap: 57px;
+}
+
+.footerText {
+  font-weight: 500;
 }

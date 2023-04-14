@@ -4,6 +4,7 @@ import { PayloadAction } from "@reduxjs/toolkit";
 
 import API from "../api";
 import {
+  getUserInfo,
   logoutUser,
   setInputErrors,
   setLoggedIn,
@@ -13,12 +14,14 @@ import {
 } from "../reducers/authSlice";
 import {
   Callback,
+  GetUserDataPayload,
   SigInPayloadData,
   SignInUserPayload,
   SignUpUserPayload,
 } from "../reducers/@types";
 import { UserErrorsData, UserResponseData } from "./@types";
 import { ACCESS_TOKEN_KEY } from "src/utils/constants";
+import callCheckingAuth from "./callCheckingAuth";
 
 function* signUpUserWorker(action: PayloadAction<SignUpUserPayload>) {
   const { data, callback } = action.payload;
@@ -48,8 +51,10 @@ function* signInUserWorker(action: PayloadAction<SignInUserPayload>) {
     status,
   }: ApiResponse<any> = yield call(API.signInUser, data); //
   if (responseData && ok) {
-    localStorage.setItem(ACCESS_TOKEN_KEY, responseData.user.access_token);
-    yield put(setUserData(responseData.user));
+    console.log(responseData.user.access_token.split("|")[1]);
+    console.log(responseData.user.access_token);
+    const token = responseData.user.access_token.split("|")[1];
+    localStorage.setItem(ACCESS_TOKEN_KEY, token);
     yield put(setLoggedIn(true));
     callback();
   } else if (responseData && status === 422) {
@@ -61,12 +66,23 @@ function* signInUserWorker(action: PayloadAction<SignInUserPayload>) {
   }
 }
 
-function* logoutUserWorker(action: PayloadAction<Callback>) {
-  const callback = action.payload;
+function* logoutUserWorker() {
   localStorage.removeItem(ACCESS_TOKEN_KEY);
-  yield put(setUserData(null));
   yield put(setLoggedIn(false));
-  callback();
+  yield put(setUserData(null));
+}
+
+function* getUserDataWorker(action: PayloadAction<GetUserDataPayload>) {
+  const { id } = action.payload;
+  const { ok, data, problem }: ApiResponse<any> = yield callCheckingAuth(
+    API.getUserData,
+    id
+  );
+  if (data && ok) {
+    yield put(setUserData(data.user));
+  } else {
+    console.warn("Error getting user data", problem);
+  }
 }
 
 export default function* authSaga() {
@@ -74,5 +90,6 @@ export default function* authSaga() {
     takeLatest(signUpUser, signUpUserWorker),
     takeLatest(signInUser, signInUserWorker),
     takeLatest(logoutUser, logoutUserWorker),
+    takeLatest(getUserInfo, getUserDataWorker),
   ]);
 }

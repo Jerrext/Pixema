@@ -1,7 +1,15 @@
-@import "src/assets/mixins";
+@import "src/assets/colors";
 
 .wrapper {
   padding: 40px 62px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 57px;
+}
+
+.logoWrapper {
+  padding-right: 89px;
 }
 
 .logo {

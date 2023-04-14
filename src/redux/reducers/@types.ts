@@ -18,9 +18,13 @@ export type SigInPayloadData = {
   token_name: string;
 };
 
-export type inputErrorsState = {
+export type InputErrorsData = {
   email?: string[];
   password?: string[];
+};
+
+export type GetUserDataPayload = {
+  id: number | string;
 };
 
 export type SignUpUserPayload = PayloadWithCallback<SigUpPayloadData>;

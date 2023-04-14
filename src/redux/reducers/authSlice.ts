@@ -6,14 +6,15 @@ import {
   SignInUserPayload,
   SignUpUserPayload,
   Callback,
-  inputErrorsState,
+  InputErrorsData,
+  GetUserDataPayload,
 } from "./@types";
 import { UserDataType } from "../sagas/@types";
 import { ACCESS_TOKEN_KEY } from "src/utils/constants";
 
 type AuthState = {
   isLoggedIn: boolean;
-  inputErrors: inputErrorsState | null;
+  inputErrors: InputErrorsData | null;
   userData: UserDataType | null;
 };
 
@@ -28,7 +29,7 @@ const AuthSlice = createSlice({
   initialState,
   reducers: {
     signUpUser(_, __: PayloadAction<SignUpUserPayload>) {},
-    setInputErrors(state, action: PayloadAction<inputErrorsState | null>) {
+    setInputErrors(state, action: PayloadAction<InputErrorsData | null>) {
       state.inputErrors = action.payload;
     },
     signInUser(_, __: PayloadAction<SignInUserPayload>) {},
@@ -38,7 +39,8 @@ const AuthSlice = createSlice({
     setLoggedIn(state, action: PayloadAction<boolean>) {
       state.isLoggedIn = action.payload;
     },
-    logoutUser(_, __: PayloadAction<Callback>) {},
+    logoutUser(_, __: PayloadAction<undefined>) {},
+    getUserInfo(_, __: PayloadAction<GetUserDataPayload>) {},
   },
 });
 
@@ -49,6 +51,7 @@ export const {
   setUserData,
   setLoggedIn,
   logoutUser,
+  getUserInfo,
 } = AuthSlice.actions;
 
 export default AuthSlice.reducer;
@@ -60,4 +63,5 @@ export const AuthSelectors = {
     state.auth.inputErrors?.email && state.auth.inputErrors?.email[0],
   getPasswordErrors: (state: RootState) =>
     state.auth.inputErrors?.password && state.auth.inputErrors?.password[0],
+  getUserName: (state: RootState) => state.auth.userData?.display_name,
 };

@@ -1,0 +1,15 @@
+@import "src/assets/colors";
+
+.wrapper {
+  padding: 24px 20px 64px 62px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.ButtonsWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 311px;
+}
