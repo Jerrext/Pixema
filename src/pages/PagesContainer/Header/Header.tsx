@@ -18,7 +18,7 @@ const Header = () => {
             <PixemaLogoIcon />
           </div>
           <Search />
-          <UserName userName={userName ? userName : "No Name"} />
+          <UserName userName={userName ? userName : "Loading..."} />
         </>
       ) : (
         <PixemaLogoIcon />

@@ -1,7 +1,6 @@
 @import "src/assets/colors";
 
 .wrapper {
-  background-color: $black;
 }
 
 .pagesWrapper {
@@ -10,6 +9,7 @@
   flex-direction: column;
   justify-content: space-between;
   position: relative;
+  background-color: $black;
   z-index: 1;
 }
 
@@ -31,6 +31,20 @@
   display: flex;
   flex: 1;
   gap: 57px;
+  overflow-y: auto;
+
+  ::-webkit-scrollbar {
+    width: 0.6rem;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: $black;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: $primary;
+    border-radius: 50px;
+  }
 }
 
 .footerText {

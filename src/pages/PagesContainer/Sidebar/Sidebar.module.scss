@@ -5,11 +5,12 @@
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+  height: calc(100vh - 136px);
+  width: 311px;
 }
 
 .ButtonsWrapper {
   display: flex;
   flex-direction: column;
   gap: 40px;
-  width: 311px;
 }

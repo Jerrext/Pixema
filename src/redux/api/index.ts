@@ -1,5 +1,6 @@
 import { create } from "apisauce";
 import { SigInPayloadData, SigUpPayloadData } from "../reducers/@types";
+import { PER_PAGE } from "src/utils/constants";
 
 const API = create({
   baseURL: "https://unelmamovie.com/api/v1",
@@ -25,4 +26,16 @@ const getUserData = (token: string, id: number | string) => {
   );
 };
 
-export default { signUpUser, signInUser, getUserData };
+const getMovies = (token: string) => {
+  return API.get(
+    `/titles`,
+    { perPage: PER_PAGE },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
+export default { signUpUser, signInUser, getUserData, getMovies };

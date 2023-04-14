@@ -1,1 +1,25 @@
 @import "src/assets/colors";
+
+.wrapper {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 55px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.showMoreBtn {
+  display: inline-flex;
+  cursor: pointer;
+  align-self: center;
+  padding: 8px 24px;
+  border-radius: 40px;
+  background-color: $graphite;
+  font-weight: 500;
+  margin-top: 30px;
+
+  &:hover {
+    color: $primary;
+  }
+}

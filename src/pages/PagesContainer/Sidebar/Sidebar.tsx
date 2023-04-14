@@ -54,21 +54,23 @@ const Sidebar: FC<SidebarProps> = ({ footerContent }) => {
   ];
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.ButtonsWrapper}>
-        {navButtonsList.map((item) => {
-          return (
-            <MenuButton
-              disabled={item.disabled}
-              key={item.key}
-              icon={item.icon}
-              title={item.title}
-              routeLink={item.key}
-            />
-          );
-        })}
+    <div>
+      <div className={styles.wrapper}>
+        <div className={styles.ButtonsWrapper}>
+          {navButtonsList.map((item) => {
+            return (
+              <MenuButton
+                disabled={item.disabled}
+                key={item.key}
+                icon={item.icon}
+                title={item.title}
+                routeLink={item.key}
+              />
+            );
+          })}
+        </div>
+        {footerContent}
       </div>
-      {footerContent}
     </div>
   );
 };

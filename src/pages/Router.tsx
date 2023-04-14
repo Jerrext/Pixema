@@ -12,6 +12,7 @@ import PagesContainer from "./PagesContainer";
 import SignUp from "./FormPages/SignUp";
 import { useDispatch, useSelector } from "react-redux";
 import { AuthSelectors, getUserInfo } from "src/redux/reducers/authSlice";
+import Home from "./Home/Home";
 
 export enum RoutesList {
   Home = "/",
@@ -42,7 +43,9 @@ const Router = () => {
         <Route path={RoutesList.Home} element={<PagesContainer />}>
           <Route
             path={RoutesList.Home}
-            element={isLoggedIn ? "" : <Navigate to={RoutesList.SignIn} />}
+            element={
+              isLoggedIn ? <Home /> : <Navigate to={RoutesList.SignIn} />
+            }
           />
           <Route
             path={RoutesList.SignIn}

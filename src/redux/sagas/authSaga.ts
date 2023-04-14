@@ -51,8 +51,6 @@ function* signInUserWorker(action: PayloadAction<SignInUserPayload>) {
     status,
   }: ApiResponse<any> = yield call(API.signInUser, data); //
   if (responseData && ok) {
-    console.log(responseData.user.access_token.split("|")[1]);
-    console.log(responseData.user.access_token);
     const token = responseData.user.access_token.split("|")[1];
     localStorage.setItem(ACCESS_TOKEN_KEY, token);
     yield put(setLoggedIn(true));
@@ -74,10 +72,8 @@ function* logoutUserWorker() {
 
 function* getUserDataWorker(action: PayloadAction<GetUserDataPayload>) {
   const { id } = action.payload;
-  const { ok, data, problem }: ApiResponse<any> = yield callCheckingAuth(
-    API.getUserData,
-    id
-  );
+  const { ok, data, problem }: ApiResponse<UserResponseData> =
+    yield callCheckingAuth(API.getUserData, id);
   if (data && ok) {
     yield put(setUserData(data.user));
   } else {

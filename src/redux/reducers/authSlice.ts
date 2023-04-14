@@ -9,13 +9,13 @@ import {
   InputErrorsData,
   GetUserDataPayload,
 } from "./@types";
-import { UserDataType } from "../sagas/@types";
+import { UserData, UserSignInData } from "../sagas/@types";
 import { ACCESS_TOKEN_KEY } from "src/utils/constants";
 
 type AuthState = {
   isLoggedIn: boolean;
   inputErrors: InputErrorsData | null;
-  userData: UserDataType | null;
+  userData: UserData | null;
 };
 
 const initialState: AuthState = {
@@ -33,7 +33,7 @@ const AuthSlice = createSlice({
       state.inputErrors = action.payload;
     },
     signInUser(_, __: PayloadAction<SignInUserPayload>) {},
-    setUserData(state, action: PayloadAction<UserDataType | null>) {
+    setUserData(state, action: PayloadAction<UserData | null>) {
       state.userData = action.payload;
     },
     setLoggedIn(state, action: PayloadAction<boolean>) {

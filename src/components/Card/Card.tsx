@@ -12,7 +12,10 @@ type CardProps = {
 const Card: FC<CardProps> = ({ card, bookmark }) => {
   const { poster, rating, name, year } = card;
 
-  const isTrend = +rating > 8;
+  const isTrend = +rating >= 8;
+  const isGreen = +rating < 8 && +rating >= 6;
+  const isOrange = +rating < 6;
+
   return (
     <div className={styles.cardWrapper}>
       <div className={styles.posterWrapper}>
@@ -22,16 +25,20 @@ const Card: FC<CardProps> = ({ card, bookmark }) => {
       <div
         className={classNames(styles.rating, {
           [styles.trendRating]: isTrend,
+          [styles.greenRating]: isGreen,
+          [styles.orangeRating]: isOrange,
         })}
       >
         {isTrend && <TrendIcon />}
         <div>{rating}</div>
       </div>
-      {bookmark && (
-        <div className={styles.bookmark}>
-          <BookmarkIcon />
-        </div>
-      )}
+      <div
+        className={classNames(styles.bookmark, {
+          [styles.addedMovie]: bookmark,
+        })}
+      >
+        <BookmarkIcon />
+      </div>
     </div>
   );
 };
