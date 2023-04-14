@@ -8,3 +8,5 @@ export { NoContentIcon } from "./NoContentIcon";
 export { PixemaLogoIcon } from "./PixemaLogoIcon";
 export { FavoriteIcon } from "./FavoriteIcon";
 export { SettingsIcon } from "./SettingsIcon";
+export { ImdbIcon } from "./ImdbIcon";
+export { EyeIcon } from "./EyeIcon";

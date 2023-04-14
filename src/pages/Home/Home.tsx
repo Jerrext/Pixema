@@ -56,8 +56,12 @@ const Home = () => {
             activeLinkClassName={classNames(styles.linkPage)}
             pageLinkClassName={classNames(styles.linkPage)}
             activeClassName={styles.activePageNumber}
-            nextClassName={classNames(styles.arrowButton)}
-            previousClassName={classNames(styles.arrowButton)}
+            nextClassName={classNames(styles.arrowButton, {
+              [styles.blockedButtonPosts]: currentPage === pagesCount,
+            })}
+            previousClassName={classNames(styles.arrowButton, {
+              [styles.blockedButtonPosts]: currentPage === 1,
+            })}
             previousLinkClassName={classNames(styles.linkPage)}
             nextLinkClassName={classNames(styles.linkPage)}
           />

@@ -38,4 +38,35 @@ const getMovies = (token: string, page: number) => {
   );
 };
 
-export default { signUpUser, signInUser, getUserData, getMovies };
+const getSingleMovieData = (token: string, id: string) => {
+  return API.get(
+    `/titles/${id}`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
+const getRecommendationMovieListData = (token: string, id: string) => {
+  return API.get(
+    `/titles/${id}/related`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
+export default {
+  signUpUser,
+  signInUser,
+  getUserData,
+  getMovies,
+  getSingleMovieData,
+  getRecommendationMovieListData,
+};

@@ -2,7 +2,8 @@
 
 .arrowWrapper {
   cursor: pointer;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
 
   &:hover {
     > svg > path {

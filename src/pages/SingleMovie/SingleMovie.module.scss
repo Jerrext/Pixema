@@ -1,0 +1,144 @@
+@import "src/assets/colors";
+
+.scrollWrapper {
+  flex: 1 1;
+  overflow-y: auto;
+  width: 100%;
+}
+
+.wrapper {
+  display: flex;
+  gap: 42px;
+}
+
+.movieCardWrapper {
+  width: 266px;
+}
+
+.movieDescription {
+  flex: 1;
+}
+
+.moviePoster {
+  object-fit: cover;
+  object-position: center center;
+  width: 100%;
+  height: 356px;
+  border-radius: 20px;
+  margin-bottom: 32px;
+}
+
+.genres {
+  display: flex;
+  gap: 20px;
+
+  > div {
+    position: relative;
+    color: $light;
+    font-weight: 500;
+
+    &::before {
+      content: "";
+      position: absolute;
+      height: 4px;
+      width: 4px;
+      background-color: $light;
+      border-radius: 50%;
+      right: -12px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    &:last-child::before {
+      display: none;
+    }
+  }
+}
+
+.title {
+  line-height: 60px;
+  font-size: 40px;
+}
+
+.raringWrapper {
+  display: flex;
+  gap: 20px;
+
+  > div {
+    background-color: $graphite;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    padding: 2px 8px;
+    height: 28px;
+    border-radius: 6px;
+    gap: 7px;
+  }
+
+  .trendRating {
+    background-color: $primary;
+    > svg {
+      width: 16px !important;
+      height: 16px !important;
+      > path {
+        fill: $white;
+      }
+    }
+  }
+
+  .greenRating {
+    background-color: $green;
+  }
+
+  .orangeRating {
+    background-color: $orange;
+  }
+}
+
+.description {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  max-width: 878px;
+
+  > p {
+    font-weight: 500;
+  }
+}
+
+.table {
+  width: 100%;
+  border-spacing: 10px 20px;
+
+  tr {
+    > td {
+      &:first-child {
+        width: 100px;
+        color: $light;
+        vertical-align: top;
+      }
+      &:last-child {
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+.buttonsWrapper {
+  display: flex;
+  gap: 20px;
+
+  > div:first-child {
+    transform: rotate(180deg);
+  }
+}
+
+.recommendation {
+  margin-top: 56px;
+}
+
+.recommendationTop {
+  display: flex;
+  justify-content: space-between;
+}

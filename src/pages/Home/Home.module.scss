@@ -24,7 +24,7 @@
 }
 
 .pagesContainer {
-  margin-bottom: 40px;
+  padding: 20px 0 40px;
   display: flex;
 }
 .pageNumber {
@@ -104,11 +104,11 @@
     cursor: not-allowed;
 
     a > svg > path {
-      fill: $secondary;
+      stroke: $graphite;
     }
   }
   a > svg > path {
-    fill: $secondary;
+    stroke: $graphite;
   }
 }
 

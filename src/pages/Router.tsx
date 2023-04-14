@@ -13,6 +13,7 @@ import SignUp from "./FormPages/SignUp";
 import { useDispatch, useSelector } from "react-redux";
 import { AuthSelectors, getUserInfo } from "src/redux/reducers/authSlice";
 import Home from "./Home/Home";
+import SingleMovie from "./SingleMovie";
 
 export enum RoutesList {
   Home = "/",
@@ -23,6 +24,7 @@ export enum RoutesList {
   Settings = "/settings",
   Trends = "/trends",
   Favorites = "/favorites",
+  SingleMovie = "/titles/:id",
   Default = "*",
 }
 
@@ -57,6 +59,12 @@ const Router = () => {
             path={RoutesList.SignUp}
             element={
               isLoggedIn ? <Navigate to={RoutesList.Home} /> : <SignUp />
+            }
+          />
+          <Route
+            path={RoutesList.SingleMovie}
+            element={
+              isLoggedIn ? <SingleMovie /> : <Navigate to={RoutesList.SignIn} />
             }
           />
           <Route path={RoutesList.Default} element={"404"} />
