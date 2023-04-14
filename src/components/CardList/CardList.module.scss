@@ -2,8 +2,9 @@
 
 .wrapper {
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
-  gap: 30px;
+  justify-content: start;
+  row-gap: 30px;
+  column-gap: 45px;
   overflow: auto;
 }

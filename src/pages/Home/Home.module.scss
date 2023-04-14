@@ -1,10 +1,14 @@
 @import "src/assets/colors";
 
-.wrapper {
+.scrollWrapper {
   flex: 1;
   overflow-y: auto;
-  padding-right: 55px;
+  // padding-right: 55px;
   width: 100%;
+}
+
+.wrapper {
+  padding-right: 55px;
   display: flex;
   flex-direction: column;
 }

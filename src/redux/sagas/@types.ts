@@ -1,3 +1,5 @@
+import { CardListType } from "src/utils/@globalTypes";
+
 export type UserSignInResponseData = {
   themes: {};
   user: UserSignInData;
@@ -32,50 +34,10 @@ export type UserSignInData = {
   watchlist: null;
 };
 
-export type MovieData = {
-  adult: boolean;
-  affiliate_link: null;
-  allow_update: boolean;
-  backdrop: string;
-  budget: number;
-  certification: string;
-  country: null;
-  created_at: null;
-  description: string;
-  episode_count: number;
-  fully_synced: boolean;
-  genre: null;
-  id: number;
-  imdb_id: string;
-  is_series: boolean;
-  language: string;
-  model_type: string;
-  name: string;
-  original_title: string;
-  popularity: number;
-  poster: string;
-  rating: string;
-  release_date: string;
-  revenue: number;
-  runtime: number;
-  season_count: number;
-  series_ended: boolean;
-  show_videos: boolean;
-  stream_videos_count: number;
-  tagline: string;
-  tmdb_id: number;
-  trailer: null;
-  type: string;
-  updated_at: string;
-  views: number;
-  vote_count: number;
-  year: number;
-};
-
 export type MoviesResponseData = {
   pagination: {
     current_page: number;
-    data: MovieData;
+    data: CardListType;
     first_page_url: string;
     from: number;
     last_page: number;

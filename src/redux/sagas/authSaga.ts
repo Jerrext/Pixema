@@ -22,6 +22,7 @@ import {
 import { UserErrorsData, UserResponseData } from "./@types";
 import { ACCESS_TOKEN_KEY } from "src/utils/constants";
 import callCheckingAuth from "./callCheckingAuth";
+import { setAllMoviesLoading } from "../reducers/movieSlice";
 
 function* signUpUserWorker(action: PayloadAction<SignUpUserPayload>) {
   const { data, callback } = action.payload;
@@ -71,6 +72,7 @@ function* logoutUserWorker() {
 }
 
 function* getUserDataWorker(action: PayloadAction<GetUserDataPayload>) {
+  yield put(setAllMoviesLoading(true));
   const { id } = action.payload;
   const { ok, data, problem }: ApiResponse<UserResponseData> =
     yield callCheckingAuth(API.getUserData, id);
@@ -79,6 +81,7 @@ function* getUserDataWorker(action: PayloadAction<GetUserDataPayload>) {
   } else {
     console.warn("Error getting user data", problem);
   }
+  yield put(setAllMoviesLoading(false));
 }
 
 export default function* authSaga() {

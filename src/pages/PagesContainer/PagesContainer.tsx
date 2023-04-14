@@ -15,16 +15,17 @@ const PagesContainer = () => {
     <div className={styles.footerText}>© All Rights Reserved</div>
   );
   return (
-    <div className={styles.wrapper}>
-      {!isLoggedIn && <div className={styles.formPagesBackground}></div>}
-      <div className={styles.pagesWrapper}>
-        <Header />
-        <div className={styles.mainWrapper}>
-          {isLoggedIn && <Sidebar footerContent={footerContent} />}
-          <Outlet />
-        </div>
-        {!isLoggedIn && <div className={styles.footer}>{footerContent}</div>}
+    <div
+      className={classNames(styles.pagesWrapper, {
+        [styles.formPagesBackground]: !isLoggedIn,
+      })}
+    >
+      <Header />
+      <div className={classNames({ [styles.mainWrapper]: isLoggedIn })}>
+        {isLoggedIn && <Sidebar footerContent={footerContent} />}
+        <Outlet />
       </div>
+      {!isLoggedIn && <div className={styles.footer}>{footerContent}</div>}
     </div>
   );
 };
