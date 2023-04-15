@@ -11,7 +11,11 @@ import { useParams } from "react-router-dom";
 import GroupButtons from "src/components/GroupButtons/GroupButtons";
 import classNames from "classnames";
 import { EyeIcon, ImdbIcon, TrendIcon } from "src/assets/icons";
-import { getMoneyFormat, getWordWithCapitalLetter } from "src/utils/functions";
+import {
+  getMoneyFormat,
+  getUkFormatDate,
+  getWordWithCapitalLetter,
+} from "src/utils/functions";
 import Arrow from "src/components/Arrow/Arrow";
 
 const SingleMovie = () => {
@@ -24,47 +28,57 @@ const SingleMovie = () => {
     MovieSelectors.getRecommendationMovieList
   );
 
+  const emptyValue = "Empty";
+
+  const getCreditsDepartment = (department: string) => {
+    const data = movieData?.credits.filter(
+      (item) => item.pivot.department === department
+    );
+    return data?.length !== 0
+      ? data?.map((item) => item.name).join(", ")
+      : emptyValue;
+  };
+
   const movieDataList = [
     {
       title: "Year",
-      description: movieData?.year,
+      description: movieData?.year ? movieData.year : emptyValue,
     },
     {
       title: "Released",
-      description: movieData?.release_date,
+      description: movieData?.release_date
+        ? getUkFormatDate(movieData.release_date)
+        : emptyValue,
     },
     {
       title: "Revenue",
-      description: movieData?.revenue && getMoneyFormat(movieData?.revenue),
+      description: movieData?.revenue
+        ? getMoneyFormat(movieData?.revenue)
+        : emptyValue,
     },
     {
       title: "Budget",
-      description: movieData?.budget && getMoneyFormat(movieData?.budget),
+      description: movieData?.budget
+        ? getMoneyFormat(movieData?.budget)
+        : emptyValue,
     },
     {
       title: "Type",
-      description: movieData?.type && getWordWithCapitalLetter(movieData.type),
+      description: movieData?.type
+        ? getWordWithCapitalLetter(movieData.type)
+        : emptyValue,
     },
     {
       title: "Actors",
-      description: movieData?.credits
-        .filter((item) => item.pivot.department === "cast")
-        .map((item) => item.name)
-        .join(", "),
+      description: getCreditsDepartment("cast"),
     },
     {
       title: "Director",
-      description: movieData?.credits
-        .filter((item) => item.pivot.department === "directing")
-        .map((item) => item.name)
-        .join(", "),
+      description: getCreditsDepartment("directing"),
     },
     {
       title: "Writers",
-      description: movieData?.credits
-        .filter((item) => item.pivot.department === "writing")
-        .map((item) => item.name)
-        .join(", "),
+      description: getCreditsDepartment("writing"),
     },
   ];
 
