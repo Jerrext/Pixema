@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import styles from "./SingleMovie.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -10,24 +10,36 @@ import Loader from "src/components/Loader/Loader";
 import { useParams } from "react-router-dom";
 import GroupButtons from "src/components/GroupButtons/GroupButtons";
 import classNames from "classnames";
-import { EyeIcon, ImdbIcon, TrendIcon } from "src/assets/icons";
+import { ArrowIcon, EyeIcon, ImdbIcon, TrendIcon } from "src/assets/icons";
 import {
   getMoneyFormat,
   getUkFormatDate,
   getWordWithCapitalLetter,
 } from "src/utils/functions";
 import Arrow from "src/components/Arrow/Arrow";
+import ReactPaginate from "react-paginate";
+import Card from "src/components/Card/Card";
 
 const SingleMovie = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+
+  const [currentPage, setCurrentPage] = useState(1);
 
   const isSingleMovieLoadng = useSelector(MovieSelectors.getSingleMovieLoadng);
   const movieData = useSelector(MovieSelectors.getSingleMovie);
   const recommendationCardList = useSelector(
     MovieSelectors.getRecommendationMovieList
   );
+  const isRecommendationMovieLoading = useSelector(
+    MovieSelectors.getRecommendationMovieLoading
+  );
 
+  const recommendationPageCount = Math.ceil(recommendationCardList.length / 4);
+  const isTrend = movieData?.rating && +movieData.rating >= 8;
+  const isGreen =
+    movieData?.rating && +movieData.rating < 8 && +movieData.rating >= 6;
+  const isOrange = movieData?.rating && +movieData.rating < 6;
   const emptyValue = "Empty";
 
   const getCreditsDepartment = (department: string) => {
@@ -82,10 +94,19 @@ const SingleMovie = () => {
     },
   ];
 
-  const isTrend = movieData?.rating && +movieData.rating >= 8;
-  const isGreen =
-    movieData?.rating && +movieData.rating < 8 && +movieData.rating >= 6;
-  const isOrange = movieData?.rating && +movieData.rating < 6;
+  const nextPageOnClick = () => {
+    currentPage < recommendationPageCount && setCurrentPage(currentPage + 1);
+  };
+
+  const previosPageOnClick = () => {
+    currentPage !== 1 && setCurrentPage(currentPage - 1);
+  };
+
+  const recommendationPageList = useMemo(() => {
+    return recommendationCardList.filter(
+      (item, index) => index >= 4 * (currentPage - 1) && index < 4 * currentPage
+    );
+  }, [recommendationCardList, currentPage]);
 
   useEffect(() => {
     if (id) {
@@ -130,13 +151,13 @@ const SingleMovie = () => {
                 <ImdbIcon />
                 <p>{movieData?.rating ? movieData.rating : 0}</p>
               </div>
-              <div>{movieData?.runtime} min</div>
+              {movieData?.runtime && <div>{movieData?.runtime} min</div>}
               <div>
                 <EyeIcon />
                 <p>{movieData?.views ? movieData.views : 0}</p>
               </div>
             </div>
-            <p>{movieData?.description}</p>
+            {movieData?.description && <p>{movieData?.description}</p>}
             <div className={styles.movieData}>
               <table className={styles.table}>
                 <tbody>
@@ -156,16 +177,28 @@ const SingleMovie = () => {
             <div className={styles.recommendationTop}>
               <h2>Recommendation</h2>
               <div className={styles.buttonsWrapper}>
-                <Arrow onClick={() => {}} />
-                <Arrow onClick={() => {}} />
+                <Arrow
+                  onClick={previosPageOnClick}
+                  disabled={currentPage === 1}
+                />
+                <Arrow
+                  onClick={nextPageOnClick}
+                  disabled={currentPage === recommendationPageCount}
+                />
               </div>
             </div>
+            {isRecommendationMovieLoading ? (
+              <Loader />
+            ) : (
+              <div className={styles.recommendationCardList}>
+                {recommendationPageList.map((item) => {
+                  return (
+                    <Card key={item.id} card={item} classname={styles.card} />
+                  );
+                })}
+              </div>
+            )}
           </div>
-          {recommendationCardList ? (
-            <Loader />
-          ) : (
-            <div className={styles.recommendationCardList}></div>
-          )}
         </div>
       </div>
     </div>

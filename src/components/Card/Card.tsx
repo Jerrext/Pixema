@@ -8,9 +8,10 @@ import { useNavigate } from "react-router-dom";
 type CardProps = {
   card: CardType;
   bookmark?: boolean;
+  classname?: string;
 };
 
-const Card: FC<CardProps> = ({ card, bookmark }) => {
+const Card: FC<CardProps> = ({ card, bookmark, classname }) => {
   const navigate = useNavigate();
 
   const { poster, rating, name, year, id } = card;
@@ -24,7 +25,7 @@ const Card: FC<CardProps> = ({ card, bookmark }) => {
   };
 
   return (
-    <div className={styles.cardWrapper}>
+    <div className={classNames(styles.cardWrapper, classname)}>
       <div className={styles.posterWrapper}>
         <img src={poster} alt={name} />
       </div>
