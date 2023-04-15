@@ -6,19 +6,19 @@ import {
   getRecommendationMovieList,
   getSingleMovie,
 } from "src/redux/reducers/movieSlice";
-import Loader from "src/components/Loader/Loader";
+import Loader from "src/components/Loader";
 import { useParams } from "react-router-dom";
-import GroupButtons from "src/components/GroupButtons/GroupButtons";
+import GroupButtons from "src/components/GroupButtons";
 import classNames from "classnames";
-import { ArrowIcon, EyeIcon, ImdbIcon, TrendIcon } from "src/assets/icons";
+import { EyeIcon, ImdbIcon, TrendIcon } from "src/assets/icons";
 import {
   getMoneyFormat,
   getUkFormatDate,
   getWordWithCapitalLetter,
 } from "src/utils/functions";
-import Arrow from "src/components/Arrow/Arrow";
-import ReactPaginate from "react-paginate";
-import Card from "src/components/Card/Card";
+import Arrow from "src/components/Arrow";
+import Card from "src/components/Card";
+import Player from "src/components/Player";
 
 const SingleMovie = () => {
   const { id } = useParams();
@@ -173,6 +173,23 @@ const SingleMovie = () => {
               </table>
             </div>
           </div>
+          {movieData && (
+            <div className={styles.playerWrapper}>
+              <Player
+                title={movieData?.original_title}
+                year={movieData?.year}
+              />
+            </div>
+          )}
+          {/* <iframe
+            width="100%"
+            height="600px"
+            src="https://www.youtube.com/embed/GLzthfaWJkM"
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          ></iframe> */}
           <div className={styles.recommendation}>
             <div className={styles.recommendationTop}>
               <h2>Recommendation</h2>
