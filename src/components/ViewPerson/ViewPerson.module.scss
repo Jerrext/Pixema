@@ -1,0 +1,74 @@
+@import "src/assets/colors";
+
+.name {
+  text-decoration: underline;
+  cursor: pointer;
+  position: relative;
+
+  &:hover {
+    color: $primary;
+
+    .viewPerson {
+      display: inline-flex;
+    }
+  }
+}
+
+.viewPerson {
+  display: none;
+  position: absolute;
+  left: 50%;
+  align-items: center;
+  gap: 20px;
+  transform: translateX(-50%);
+  top: 30px;
+  z-index: 5;
+  width: 400px;
+  border-radius: 10px;
+  // height: 150px;
+  background-color: $graphite;
+  padding: 15px;
+
+  &::before {
+    content: "";
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
+    border-bottom: 10px solid $graphite;
+    border-right: 10px solid transparent;
+    border-left: 10px solid transparent;
+  }
+}
+
+.personDescription {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  flex: 1;
+
+  > p {
+    > span:first-child {
+      font-weight: 400;
+      color: $light;
+    }
+  }
+}
+
+.personPoster {
+  width: 100px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $light;
+  border-radius: 10px;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
+}

@@ -7,10 +7,17 @@ import {
   getSingleMovie,
 } from "src/redux/reducers/movieSlice";
 import Loader from "src/components/Loader";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import GroupButtons from "src/components/GroupButtons";
 import classNames from "classnames";
-import { EyeIcon, ImdbIcon, TrendIcon } from "src/assets/icons";
+import {
+  BookmarkIcon,
+  EyeIcon,
+  ImdbIcon,
+  SocialIcon,
+  TrendIcon,
+  UnknownPersonIcon,
+} from "src/assets/icons";
 import {
   getMoneyFormat,
   getUkFormatDate,
@@ -22,10 +29,13 @@ import Player from "src/components/Player";
 import ThumbsGallery from "src/components/ThumbsGallery/ThumbsGallery";
 import Tabs from "src/components/Tabs/Tabs";
 import { MovieTabsNames } from "src/utils/@globalTypes";
+import ViewPerson from "src/components/ViewPerson/ViewPerson";
+import { GroupButtonType } from "src/components/GroupButtons/@types";
 
 const SingleMovie = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [currentPage, setCurrentPage] = useState(1);
   const [tabState, setTabState] = useState(MovieTabsNames.Images);
@@ -51,7 +61,9 @@ const SingleMovie = () => {
       (item) => item.pivot.department === department
     );
     return data?.length !== 0
-      ? data?.map((item) => item.name).join(", ")
+      ? data?.map((item) => {
+          return <ViewPerson key={item.id} personData={item} />;
+        })
       : emptyValue;
   };
 
@@ -109,6 +121,19 @@ const SingleMovie = () => {
     },
   ];
 
+  const GROUP_BUTTON_LIST = [
+    {
+      title: <BookmarkIcon />,
+      onClick: () => {},
+      buttonType: GroupButtonType.Button,
+    },
+    {
+      title: <SocialIcon />,
+      link: movieData?.backdrop,
+      buttonType: GroupButtonType.Link,
+    },
+  ];
+
   const onTabClick = (key: MovieTabsNames) => setTabState(key);
 
   const nextPageOnClick = () => {
@@ -140,7 +165,7 @@ const SingleMovie = () => {
         <div className={styles.movieCardWrapper}>
           <div className={styles.movieCard}>
             <img src={movieData?.poster} className={styles.moviePoster}></img>
-            <GroupButtons />
+            <GroupButtons groupButtonsList={GROUP_BUTTON_LIST} />
           </div>
         </div>
         <div className={styles.movieText}>

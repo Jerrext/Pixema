@@ -10,3 +10,4 @@ export { FavoriteIcon } from "./FavoriteIcon";
 export { SettingsIcon } from "./SettingsIcon";
 export { ImdbIcon } from "./ImdbIcon";
 export { EyeIcon } from "./EyeIcon";
+export { UnknownPersonIcon } from "./UnknownPersonIcon";

@@ -98,7 +98,7 @@ type SingleMovieGenres = {
   display_name: string;
 };
 
-type SingleMovieCredits = {
+export type SingleMovieCredits = {
   id: number;
   name: string;
   poster: string;

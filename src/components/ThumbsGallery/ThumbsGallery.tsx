@@ -57,8 +57,7 @@ const ThumbsGallery: FC<ThumbsGalleryProps> = ({
             }
           })}
         {activeTab === MovieTabsNames.Images &&
-          images?.map((item, index) => {
-            console.log(item.url);
+          images?.map((item) => {
             return (
               <SwiperSlide key={item.id}>
                 <img src={item.url} />
@@ -75,8 +74,7 @@ const ThumbsGallery: FC<ThumbsGalleryProps> = ({
           modules={[FreeMode, Thumbs]}
           className="mySwiper"
         >
-          {images?.map((item, index) => {
-            console.log(item.url);
+          {images?.map((item) => {
             return (
               <SwiperSlide key={item.id}>
                 <img src={item.url} />
