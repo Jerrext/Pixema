@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import classNames from "classnames";
 import styles from "./GroupButtons.module.scss";
 import { BookmarkIcon, SocialIcon } from "src/assets/icons";
-import { GroupButtonList, GroupButtonType } from "./@types";
+import { GroupButtonList } from "./@types";
 
 type GroupButtonsProps = {
   groupButtonsList: GroupButtonList;
@@ -20,7 +20,7 @@ const GroupButtons: FC<GroupButtonsProps> = ({
       })}
     >
       {groupButtonsList.map((item, index) => {
-        return item.buttonType === GroupButtonType.Button ? (
+        return (
           <div
             key={index + Math.random()}
             className={styles.button}
@@ -28,14 +28,6 @@ const GroupButtons: FC<GroupButtonsProps> = ({
           >
             {item.title}
           </div>
-        ) : (
-          <a
-            key={index + Math.random()}
-            className={styles.button}
-            href={item.link}
-          >
-            {item.title}
-          </a>
         );
       })}
     </div>

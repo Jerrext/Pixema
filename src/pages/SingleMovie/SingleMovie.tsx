@@ -7,11 +7,12 @@ import {
   getSingleMovie,
 } from "src/redux/reducers/movieSlice";
 import Loader from "src/components/Loader";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import GroupButtons from "src/components/GroupButtons";
 import classNames from "classnames";
 import {
   BookmarkIcon,
+  CheckMarkIcon,
   EyeIcon,
   ImdbIcon,
   SocialIcon,
@@ -30,15 +31,14 @@ import ThumbsGallery from "src/components/ThumbsGallery/ThumbsGallery";
 import Tabs from "src/components/Tabs/Tabs";
 import { MovieTabsNames } from "src/utils/@globalTypes";
 import ViewPerson from "src/components/ViewPerson/ViewPerson";
-import { GroupButtonType } from "src/components/GroupButtons/@types";
 
 const SingleMovie = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const [currentPage, setCurrentPage] = useState(1);
   const [tabState, setTabState] = useState(MovieTabsNames.Images);
+  const [linkCopiedState, setLinkCopiedState] = useState(false);
 
   const isSingleMovieLoadng = useSelector(MovieSelectors.getSingleMovieLoadng);
   const movieData = useSelector(MovieSelectors.getSingleMovie);
@@ -125,15 +125,18 @@ const SingleMovie = () => {
     {
       title: <BookmarkIcon />,
       onClick: () => {},
-      buttonType: GroupButtonType.Button,
     },
     {
       title: <SocialIcon />,
-      link: movieData?.backdrop,
-      buttonType: GroupButtonType.Link,
+      onClick: () => {
+        navigator.clipboard.writeText(window.location.href);
+        setLinkCopiedState(true);
+        setTimeout(() => {
+          setLinkCopiedState(false);
+        }, 1500);
+      },
     },
   ];
-
   const onTabClick = (key: MovieTabsNames) => setTabState(key);
 
   const nextPageOnClick = () => {
@@ -160,116 +163,130 @@ const SingleMovie = () => {
   return isSingleMovieLoadng ? (
     <Loader />
   ) : (
-    <div className={styles.scrollWrapper}>
-      <div className={styles.wrapper}>
-        <div className={styles.movieCardWrapper}>
-          <div className={styles.movieCard}>
-            <img src={movieData?.poster} className={styles.moviePoster}></img>
-            <GroupButtons groupButtonsList={GROUP_BUTTON_LIST} />
-          </div>
+    <>
+      {linkCopiedState && (
+        <div className={styles.copiedLink}>
+          <CheckMarkIcon />
+          <p>Link copied to clipboard</p>
         </div>
-        <div className={styles.movieText}>
-          <div className={styles.titleWrapper}>
-            <div className={styles.genres}>
-              {movieData?.genres.map((item) => {
-                return <div key={item.id}>{item.display_name}</div>;
-              })}
+      )}
+      <div className={styles.scrollWrapper}>
+        <div className={styles.wrapper}>
+          <div className={styles.movieCardWrapper}>
+            <div className={styles.movieCard}>
+              <img src={movieData?.poster} className={styles.moviePoster}></img>
+              <GroupButtons groupButtonsList={GROUP_BUTTON_LIST} />
             </div>
-            <h1 className={styles.title}>{movieData?.name}</h1>
           </div>
-          <div className={styles.description}>
-            <div className={styles.raringWrapper}>
-              <div
-                className={classNames(styles.rating, {
-                  [styles.trendRating]: isTrend,
-                  [styles.greenRating]: isGreen,
-                  [styles.orangeRating]: isOrange,
+          <div className={styles.movieText}>
+            <div className={styles.titleWrapper}>
+              <div className={styles.genres}>
+                {movieData?.genres.map((item) => {
+                  return <div key={item.id}>{item.display_name}</div>;
                 })}
-              >
-                {isTrend && <TrendIcon />}
-                {movieData?.rating ? movieData.rating : 0}
               </div>
-              <div>
-                <ImdbIcon />
-                <p>{movieData?.rating ? movieData.rating : 0}</p>
-              </div>
-              {movieData?.runtime && <div>{movieData?.runtime} min</div>}
-              <div>
-                <EyeIcon />
-                <p>{movieData?.views ? movieData.views : 0}</p>
-              </div>
+              <h1 className={styles.title}>{movieData?.name}</h1>
             </div>
-            {movieData?.description && <p>{movieData?.description}</p>}
-            <div className={styles.movieData}>
-              <table className={styles.table}>
-                <tbody>
-                  {MOVIE_LIST.map((item, index) => {
-                    return (
-                      <tr key={item.title + index}>
-                        <td>{item.title}</td>
-                        <td>{item.description}</td>
-                      </tr>
-                    );
+            <div className={styles.description}>
+              <div className={styles.raringWrapper}>
+                <div
+                  className={classNames(styles.rating, {
+                    [styles.trendRating]: isTrend,
+                    [styles.greenRating]: isGreen,
+                    [styles.orangeRating]: isOrange,
                   })}
-                </tbody>
-              </table>
+                >
+                  {isTrend && <TrendIcon />}
+                  {movieData?.rating ? movieData.rating : 0}
+                </div>
+                <div>
+                  <ImdbIcon />
+                  <p>{movieData?.rating ? movieData.rating : 0}</p>
+                </div>
+                {movieData?.runtime && <div>{movieData?.runtime} min</div>}
+                <div>
+                  <EyeIcon />
+                  <p>{movieData?.views ? movieData.views : 0}</p>
+                </div>
+              </div>
+              {movieData?.description && <p>{movieData?.description}</p>}
+              <div className={styles.movieData}>
+                <table className={styles.table}>
+                  <tbody>
+                    {MOVIE_LIST.map((item, index) => {
+                      return (
+                        <tr key={item.title + index}>
+                          <td>{item.title}</td>
+                          <td>{item.description}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </div>
-          <div className={styles.preview}>
-            <h2>Preview</h2>
-            <Tabs
-              onClick={onTabClick}
-              activeTab={tabState}
-              tabsList={TABS_LIST}
-            />
-            {movieData &&
-              (tabState === MovieTabsNames.Videos ? (
-                <ThumbsGallery videos={movieData.videos} activeTab={tabState} />
-              ) : (
-                <ThumbsGallery images={movieData.images} activeTab={tabState} />
-              ))}
-          </div>
+            <div className={styles.preview}>
+              <h2>Preview</h2>
+              <Tabs
+                onClick={onTabClick}
+                activeTab={tabState}
+                tabsList={TABS_LIST}
+              />
+              {movieData &&
+                (tabState === MovieTabsNames.Videos ? (
+                  <ThumbsGallery
+                    videos={movieData.videos}
+                    activeTab={tabState}
+                  />
+                ) : (
+                  <ThumbsGallery
+                    images={movieData.images}
+                    activeTab={tabState}
+                  />
+                ))}
+            </div>
 
-          {movieData && (
-            <div className={styles.playerWrapper}>
-              <h2>Watch online</h2>
-              <div className={styles.player}>
-                <Player
-                  title={movieData?.original_title}
-                  year={movieData?.year}
-                />
-              </div>
-            </div>
-          )}
-          <div className={styles.recommendation}>
-            <div className={styles.recommendationTop}>
-              <h2>Recommendation</h2>
-              <div className={styles.buttonsWrapper}>
-                <Arrow
-                  onClick={previosPageOnClick}
-                  disabled={currentPage === 1}
-                />
-                <Arrow
-                  onClick={nextPageOnClick}
-                  disabled={currentPage === recommendationPageCount}
-                />
-              </div>
-            </div>
-            {isRecommendationMovieLoading ? (
-              <Loader />
-            ) : (
-              <div className={styles.recommendationCardList}>
-                {recommendationPageList.map((item) => {
-                  return (
-                    <Card key={item.id} card={item} classname={styles.card} />
-                  );
-                })}
+            {movieData && (
+              <div className={styles.playerWrapper}>
+                <h2>Watch online</h2>
+                <div className={styles.player}>
+                  <Player
+                    title={movieData?.original_title}
+                    year={movieData?.year}
+                  />
+                </div>
               </div>
             )}
+            <div className={styles.recommendation}>
+              <div className={styles.recommendationTop}>
+                <h2>Recommendation</h2>
+                <div className={styles.buttonsWrapper}>
+                  <Arrow
+                    onClick={previosPageOnClick}
+                    disabled={currentPage === 1}
+                  />
+                  <Arrow
+                    onClick={nextPageOnClick}
+                    disabled={currentPage === recommendationPageCount}
+                  />
+                </div>
+              </div>
+              {isRecommendationMovieLoading ? (
+                <Loader />
+              ) : (
+                <div className={styles.recommendationCardList}>
+                  {recommendationPageList.map((item) => {
+                    return (
+                      <Card key={item.id} card={item} classname={styles.card} />
+                    );
+                  })}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
