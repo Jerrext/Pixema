@@ -30,3 +30,8 @@ export type CardType = {
 };
 
 export type CardListType = CardType[];
+
+export enum MovieTabsNames {
+  Videos = "Videos",
+  Images = "Images",
+}

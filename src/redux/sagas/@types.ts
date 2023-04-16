@@ -84,7 +84,7 @@ export type UserData = {
   model_type: string;
 };
 
-type SingleMovieImage = {
+export type SingleMovieImage = {
   id: number;
   url: string;
   type: string;
@@ -115,7 +115,7 @@ type SingleMovieCredits = {
   };
 };
 
-type SingleMovieVideos = {
+export type SingleMovieVideos = {
   id: number;
   name: string;
   thumbnail: null;

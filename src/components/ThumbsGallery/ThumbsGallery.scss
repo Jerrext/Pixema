@@ -1,0 +1,87 @@
+@import "src/assets/colors";
+
+.movie-gallery {
+  display: flex;
+  flex-direction: column;
+
+  .swiper {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .swiper-slide {
+    font-size: 18px;
+    background: $black;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .swiper-slide {
+    background-size: cover;
+    background-position: center;
+    cursor: grab;
+  }
+
+  .mySwiper2 {
+    width: 100%;
+    height: 600px;
+  }
+
+  .mySwiper {
+    box-sizing: border-box;
+    padding: 10px 0;
+    height: 170px;
+  }
+
+  .mySwiper .swiper-slide {
+    width: 25%;
+    height: 100%;
+    opacity: 0.4;
+  }
+
+  .mySwiper .swiper-slide-thumb-active {
+    opacity: 1;
+  }
+  .swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  h3 {
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  .swiper-button-prev,
+  .swiper-button-next {
+    z-index: 10;
+    color: $primary;
+  }
+
+  .videoWrapper {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    margin-top: 20px;
+    &::before {
+      position: absolute;
+      content: "Loading...";
+      top: 50%;
+      left: 50%;
+      font-size: 20px;
+      transform: translate(-50%, -50%);
+      z-index: -1;
+    }
+  }
+}

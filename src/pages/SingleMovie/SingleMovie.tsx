@@ -19,12 +19,16 @@ import {
 import Arrow from "src/components/Arrow";
 import Card from "src/components/Card";
 import Player from "src/components/Player";
+import ThumbsGallery from "src/components/ThumbsGallery/ThumbsGallery";
+import Tabs from "src/components/Tabs/Tabs";
+import { MovieTabsNames } from "src/utils/@globalTypes";
 
 const SingleMovie = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
   const [currentPage, setCurrentPage] = useState(1);
+  const [tabState, setTabState] = useState(MovieTabsNames.Images);
 
   const isSingleMovieLoadng = useSelector(MovieSelectors.getSingleMovieLoadng);
   const movieData = useSelector(MovieSelectors.getSingleMovie);
@@ -51,7 +55,7 @@ const SingleMovie = () => {
       : emptyValue;
   };
 
-  const movieDataList = [
+  const MOVIE_LIST = [
     {
       title: "Year",
       description: movieData?.year ? movieData.year : emptyValue,
@@ -93,6 +97,19 @@ const SingleMovie = () => {
       description: getCreditsDepartment("writing"),
     },
   ];
+
+  const TABS_LIST = [
+    {
+      title: "Images",
+      key: MovieTabsNames.Images,
+    },
+    {
+      title: "Videos",
+      key: MovieTabsNames.Videos,
+    },
+  ];
+
+  const onTabClick = (key: MovieTabsNames) => setTabState(key);
 
   const nextPageOnClick = () => {
     currentPage < recommendationPageCount && setCurrentPage(currentPage + 1);
@@ -161,7 +178,7 @@ const SingleMovie = () => {
             <div className={styles.movieData}>
               <table className={styles.table}>
                 <tbody>
-                  {movieDataList.map((item, index) => {
+                  {MOVIE_LIST.map((item, index) => {
                     return (
                       <tr key={item.title + index}>
                         <td>{item.title}</td>
@@ -173,23 +190,32 @@ const SingleMovie = () => {
               </table>
             </div>
           </div>
+          <div className={styles.preview}>
+            <h2>Preview</h2>
+            <Tabs
+              onClick={onTabClick}
+              activeTab={tabState}
+              tabsList={TABS_LIST}
+            />
+            {movieData &&
+              (tabState === MovieTabsNames.Videos ? (
+                <ThumbsGallery videos={movieData.videos} activeTab={tabState} />
+              ) : (
+                <ThumbsGallery images={movieData.images} activeTab={tabState} />
+              ))}
+          </div>
+
           {movieData && (
             <div className={styles.playerWrapper}>
-              <Player
-                title={movieData?.original_title}
-                year={movieData?.year}
-              />
+              <h2>Watch online</h2>
+              <div className={styles.player}>
+                <Player
+                  title={movieData?.original_title}
+                  year={movieData?.year}
+                />
+              </div>
             </div>
           )}
-          {/* <iframe
-            width="100%"
-            height="600px"
-            src="https://www.youtube.com/embed/GLzthfaWJkM"
-            title="YouTube video player"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
-          ></iframe> */}
           <div className={styles.recommendation}>
             <div className={styles.recommendationTop}>
               <h2>Recommendation</h2>
