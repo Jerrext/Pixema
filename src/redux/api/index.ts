@@ -1,5 +1,10 @@
 import { create } from "apisauce";
-import { SigInPayloadData, SigUpPayloadData } from "../reducers/@types";
+import {
+  AddToListPayload,
+  AddToListValue,
+  SigInPayloadData,
+  SigUpPayloadData,
+} from "../reducers/@types";
 import { PER_PAGE } from "src/utils/constants";
 
 const API = create({
@@ -62,6 +67,26 @@ const getRecommendationMovieListData = (token: string, id: string) => {
   );
 };
 
+const getMyList = (token: string, id: string) => {
+  return API.get(
+    `/lists/${id}`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
+const addToList = (token: string, id: number, value: AddToListValue) => {
+  return API.post(`/lists/${id}/add`, value, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
 export default {
   signUpUser,
   signInUser,
@@ -69,4 +94,6 @@ export default {
   getMovies,
   getSingleMovieData,
   getRecommendationMovieListData,
+  getMyList,
+  addToList,
 };

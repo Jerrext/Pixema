@@ -12,3 +12,4 @@ export { ImdbIcon } from "./ImdbIcon";
 export { EyeIcon } from "./EyeIcon";
 export { UnknownPersonIcon } from "./UnknownPersonIcon";
 export { CheckMarkIcon } from "./CheckMarkIcon";
+export { ErrorIcon } from "./ErrorIcon";

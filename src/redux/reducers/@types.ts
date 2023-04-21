@@ -33,3 +33,18 @@ export interface GetAllMoviesPayload {
 
 export type SignUpUserPayload = PayloadWithCallback<SigUpPayloadData>;
 export type SignInUserPayload = PayloadWithCallback<SigInPayloadData>;
+
+export type AddToListValue = {
+  itemId: number;
+  itemType: string;
+};
+
+export type AddToListPayload = {
+  id: number;
+  value: AddToListValue;
+};
+
+export type MessagePayload = {
+  status: boolean;
+  message: string;
+};

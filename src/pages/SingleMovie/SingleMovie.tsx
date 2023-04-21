@@ -31,6 +31,8 @@ import ThumbsGallery from "src/components/ThumbsGallery/ThumbsGallery";
 import Tabs from "src/components/Tabs/Tabs";
 import { MovieTabsNames } from "src/utils/@globalTypes";
 import ViewPerson from "src/components/ViewPerson/ViewPerson";
+import Message from "src/components/Message/Message";
+import { setMessage } from "src/redux/reducers/messageSlice";
 
 const SingleMovie = () => {
   const { id } = useParams();
@@ -38,7 +40,6 @@ const SingleMovie = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [tabState, setTabState] = useState(MovieTabsNames.Images);
-  const [linkCopiedState, setLinkCopiedState] = useState(false);
 
   const isSingleMovieLoadng = useSelector(MovieSelectors.getSingleMovieLoadng);
   const movieData = useSelector(MovieSelectors.getSingleMovie);
@@ -130,10 +131,9 @@ const SingleMovie = () => {
       title: <SocialIcon />,
       onClick: () => {
         navigator.clipboard.writeText(window.location.href);
-        setLinkCopiedState(true);
-        setTimeout(() => {
-          setLinkCopiedState(false);
-        }, 1500);
+        dispatch(
+          setMessage({ status: true, message: "Link copied to clipboard" })
+        );
       },
     },
   ];
@@ -164,12 +164,6 @@ const SingleMovie = () => {
     <Loader />
   ) : (
     <>
-      {linkCopiedState && (
-        <div className={styles.copiedLink}>
-          <CheckMarkIcon />
-          <p>Link copied to clipboard</p>
-        </div>
-      )}
       <div className={styles.scrollWrapper}>
         <div className={styles.wrapper}>
           <div className={styles.movieCardWrapper}>

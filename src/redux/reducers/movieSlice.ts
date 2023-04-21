@@ -2,7 +2,11 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import React from "react";
 import { RootState } from "../store";
 import { CardListType, CardType } from "src/utils/@globalTypes";
-import { GetAllMoviesPayload } from "./@types";
+import {
+  AddToListPayload,
+  GetAllMoviesPayload,
+  MessagePayload,
+} from "./@types";
 import { SingleMovieData, SingleMovieResponseData } from "../sagas/@types";
 
 type MoviesState = {
@@ -13,6 +17,9 @@ type MoviesState = {
   singleMovie: SingleMovieData | null;
   recommendationMovieList: CardListType;
   isRecommendationMovieLoading: boolean;
+  favoriteMoviesList: CardListType;
+  myMoviesList: CardListType;
+  isMyMoviesListLoadng: boolean;
 };
 
 const initialState: MoviesState = {
@@ -23,6 +30,9 @@ const initialState: MoviesState = {
   singleMovie: null,
   recommendationMovieList: [],
   isRecommendationMovieLoading: false,
+  favoriteMoviesList: [],
+  myMoviesList: [],
+  isMyMoviesListLoadng: false,
 };
 
 const MovieSlice = createSlice({
@@ -53,6 +63,18 @@ const MovieSlice = createSlice({
     setRecommendationMovieLoading(state, action: PayloadAction<boolean>) {
       state.isRecommendationMovieLoading = action.payload;
     },
+    getMyMoviesList(_, __: PayloadAction<number>) {},
+    setMyMoviesList(state, action: PayloadAction<CardListType>) {
+      state.myMoviesList = action.payload;
+    },
+    addMovieToList(_, __: PayloadAction<AddToListPayload>) {},
+    setMyMoviesListLoading(state, action: PayloadAction<boolean>) {
+      state.isMyMoviesListLoadng = action.payload;
+    },
+    setFavoriteMoviesList(state, action: PayloadAction<CardListType>) {
+      state.favoriteMoviesList = action.payload;
+    },
+    getFavoriteMovies(_, __: PayloadAction<undefined>) {},
   },
 });
 
@@ -67,6 +89,12 @@ export const {
   getRecommendationMovieList,
   setRecommendationMovieList,
   setRecommendationMovieLoading,
+  setMyMoviesList,
+  getMyMoviesList,
+  addMovieToList,
+  setMyMoviesListLoading,
+  getFavoriteMovies,
+  setFavoriteMoviesList,
 } = MovieSlice.actions;
 export default MovieSlice.reducer;
 
@@ -82,4 +110,8 @@ export const MovieSelectors = {
     state.movie.recommendationMovieList,
   getRecommendationMovieLoading: (state: RootState) =>
     state.movie.isRecommendationMovieLoading,
+  getMyMoviesList: (state: RootState) => state.movie.myMoviesList,
+  getMyMoviesListLoading: (state: RootState) =>
+    state.movie.isMyMoviesListLoadng,
+  getFavoriteMoviesList: (state: RootState) => state.movie.favoriteMoviesList,
 };

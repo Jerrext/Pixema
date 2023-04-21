@@ -7,6 +7,7 @@ import Loader from "src/components/Loader/Loader";
 import ReactPaginate from "react-paginate";
 import { ArrowIcon } from "src/assets/icons";
 import classNames from "classnames";
+import Paginate from "src/components/Paginate/Paginate";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -17,16 +18,6 @@ const Home = () => {
   const isAllMoviesLoadng = useSelector(MovieSelectors.getAllMoviesLoading);
   const pagesCount = useSelector(MovieSelectors.getPagesCount);
 
-  // const getPagesCount = () => {
-  //   switch (activeTab) {
-  //     case TabsNames.MyPosts:
-  //       return pagesMyPostsCount;
-  //     case TabsNames.All:
-  //     default:
-  //       return pagesCount;
-  //   }
-  // };
-
   const onPageChange = ({ selected }: { selected: number }) => {
     setCurrentPage(selected + 1);
   };
@@ -36,38 +27,20 @@ const Home = () => {
     dispatch(getAllMovies({ page }));
   }, [currentPage]);
 
-  return (
-    <div className={styles.scrollWrapper}>
-      {isAllMoviesLoadng ? (
-        <Loader />
-      ) : (
-        <div className={styles.wrapper}>
-          <CardList cardList={moviesList} />
-          <ReactPaginate
-            nextLabel={<ArrowIcon />}
-            previousLabel={<ArrowIcon />}
-            pageCount={pagesCount}
-            forcePage={currentPage - 1}
-            onPageChange={onPageChange}
-            containerClassName={styles.pagesContainer}
-            pageClassName={styles.pageNumber}
-            breakClassName={styles.pageNumber}
-            breakLinkClassName={styles.linkPage}
-            activeLinkClassName={classNames(styles.linkPage)}
-            pageLinkClassName={classNames(styles.linkPage)}
-            activeClassName={styles.activePageNumber}
-            nextClassName={classNames(styles.arrowButton, {
-              [styles.blockedButtonPosts]: currentPage === pagesCount,
-            })}
-            previousClassName={classNames(styles.arrowButton, {
-              [styles.blockedButtonPosts]: currentPage === 1,
-            })}
-            previousLinkClassName={classNames(styles.linkPage)}
-            nextLinkClassName={classNames(styles.linkPage)}
-          />
-        </div>
+  return isAllMoviesLoadng ? (
+    <Loader />
+  ) : (
+    <>
+      <CardList cardList={moviesList} />
+      {moviesList.length > 0 && (
+        <Paginate
+          pageCount={pagesCount}
+          forcePage={currentPage - 1}
+          onPageChange={onPageChange}
+          currentPage={currentPage}
+        />
       )}
-    </div>
+    </>
   );
 };
 

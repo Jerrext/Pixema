@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { ReactNode, useEffect } from "react";
 
 import {
   BrowserRouter,
@@ -14,6 +14,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { AuthSelectors, getUserInfo } from "src/redux/reducers/authSlice";
 import Home from "./Home/Home";
 import SingleMovie from "./SingleMovie";
+import Favorites from "./Favorites/Favorites";
+import {
+  MovieSelectors,
+  getFavoriteMovies,
+} from "src/redux/reducers/movieSlice";
 
 export enum RoutesList {
   Home = "/",
@@ -30,25 +35,27 @@ export enum RoutesList {
 
 const Router = () => {
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
 
   const isLoggedIn = useSelector(AuthSelectors.getLoggedIn);
+
+  const redirectSignIn = (page: ReactNode) => {
+    return isLoggedIn ? page : <Navigate to={RoutesList.SignIn} />;
+  };
 
   useEffect(() => {
     if (isLoggedIn) {
       dispatch(getUserInfo({ id: "me" }));
+      dispatch(getFavoriteMovies());
     }
   }, [isLoggedIn]);
+
+  // useEffect(() => {
+  // }, [isLoggedIn]);
   return (
     <BrowserRouter>
       <Routes>
         <Route path={RoutesList.Home} element={<PagesContainer />}>
-          <Route
-            path={RoutesList.Home}
-            element={
-              isLoggedIn ? <Home /> : <Navigate to={RoutesList.SignIn} />
-            }
-          />
+          <Route path={RoutesList.Home} element={redirectSignIn(<Home />)} />
           <Route
             path={RoutesList.SignIn}
             element={
@@ -63,9 +70,11 @@ const Router = () => {
           />
           <Route
             path={RoutesList.SingleMovie}
-            element={
-              isLoggedIn ? <SingleMovie /> : <Navigate to={RoutesList.SignIn} />
-            }
+            element={redirectSignIn(<SingleMovie />)}
+          />
+          <Route
+            path={RoutesList.Favorites}
+            element={redirectSignIn(<Favorites />)}
           />
           <Route path={RoutesList.Default} element={"404"} />
         </Route>

@@ -1,9 +1,15 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import classNames from "classnames";
 import styles from "./Card.module.scss";
 import { CardType } from "src/utils/@globalTypes";
 import { BookmarkIcon, TrendIcon } from "src/assets/icons";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  MovieSelectors,
+  addMovieToList,
+  getFavoriteMovies,
+} from "src/redux/reducers/movieSlice";
 
 type CardProps = {
   card: CardType;
@@ -12,13 +18,34 @@ type CardProps = {
 };
 
 const Card: FC<CardProps> = ({ card, bookmark, classname }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [savedState, setSavedState] = useState(false);
+
+  const bookmarkMovies = useSelector(MovieSelectors.getFavoriteMoviesList);
+
   const { poster, rating, name, year, id } = card;
+  const bookmarkIndex = bookmarkMovies.findIndex((movie) => movie.id === id);
 
   const isTrend = +rating >= 8;
   const isGreen = +rating < 8 && +rating >= 6;
   const isOrange = +rating < 6;
+
+  useEffect(() => {
+    setSavedState(bookmarkIndex > -1);
+  }, [bookmarkMovies]);
+
+  // bookmarkIndex > -1
+  const onBookmarkBtnClick = () => {
+    if (savedState) {
+    } else {
+      dispatch(
+        addMovieToList({ id: 376, value: { itemId: id, itemType: "title" } })
+      );
+    }
+    setSavedState(!savedState);
+  };
 
   const onTitleClick = () => {
     navigate(`/titles/${id}`);
@@ -45,8 +72,9 @@ const Card: FC<CardProps> = ({ card, bookmark, classname }) => {
       </div>
       <div
         className={classNames(styles.bookmark, {
-          [styles.addedMovie]: bookmark,
+          [styles.addedMovie]: savedState,
         })}
+        onClick={onBookmarkBtnClick}
       >
         <BookmarkIcon />
       </div>

@@ -187,6 +187,22 @@ export type SingleMovieData = {
   credits: SingleMovieCredits[];
 };
 
+type ListData = {
+  id: number;
+  name: string;
+  description: string;
+  user_id: number;
+  system: boolean;
+  public: boolean;
+  auto_update: null;
+  created_at: string;
+  updated_at: string;
+  style: null;
+  image: string;
+  model_type: string;
+  user: UserData;
+};
+
 export type UserResponseData = {
   user: UserData;
   status: string;
@@ -204,5 +220,11 @@ export type MoviesResponseData = {
 
 export type RecommendationMoviesResponseData = {
   titles: CardListType;
+  status: string;
+};
+
+export type MyListResponseData = {
+  items: PaginationData;
+  list: ListData;
   status: string;
 };

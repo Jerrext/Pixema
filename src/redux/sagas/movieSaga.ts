@@ -1,11 +1,17 @@
 import React from "react";
 import { all, put, takeLatest } from "redux-saga/effects";
 import {
+  addMovieToList,
   getAllMovies,
+  getFavoriteMovies,
+  getMyMoviesList,
   getRecommendationMovieList,
   getSingleMovie,
   setAllMoviesLoading,
+  setFavoriteMoviesList,
   setMoviesList,
+  setMyMoviesList,
+  setMyMoviesListLoading,
   setPagesCount,
   setRecommendationMovieList,
   setRecommendationMovieLoading,
@@ -17,12 +23,14 @@ import API from "../api";
 import { ApiResponse } from "apisauce";
 import {
   MoviesResponseData,
+  MyListResponseData,
   RecommendationMoviesResponseData,
   SingleMovieResponseData,
 } from "./@types";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { GetAllMoviesPayload } from "../reducers/@types";
+import { AddToListPayload, GetAllMoviesPayload } from "../reducers/@types";
 import { CardType } from "src/utils/@globalTypes";
+import { setMessage } from "../reducers/messageSlice";
 
 function* getMoviesWorker(action: PayloadAction<GetAllMoviesPayload>) {
   yield put(setAllMoviesLoading(true));
@@ -32,10 +40,15 @@ function* getMoviesWorker(action: PayloadAction<GetAllMoviesPayload>) {
   if (ok && data) {
     yield put(setMoviesList(data.pagination.data));
     yield put(setPagesCount(data.pagination.last_page));
+    yield put(setAllMoviesLoading(false));
   } else {
-    console.warn("Error getting movies", problem);
+    yield put(
+      setMessage({
+        status: false,
+        message: `Error getting movies list ${problem}`,
+      })
+    );
   }
-  yield put(setAllMoviesLoading(false));
 }
 
 function* getSingleMovieWorker(action: PayloadAction<string>) {
@@ -45,10 +58,15 @@ function* getSingleMovieWorker(action: PayloadAction<string>) {
     yield callCheckingAuth(API.getSingleMovieData, id);
   if (ok && data) {
     yield put(setSingleMovie(data.title));
+    yield put(setSingleMovieLoading(false));
   } else {
-    console.warn("Error getting movie", problem);
+    yield put(
+      setMessage({
+        status: false,
+        message: `Error getting movie data ${problem}`,
+      })
+    );
   }
-  yield put(setSingleMovieLoading(false));
 }
 
 function* getRecommendationMovieListWorker(action: PayloadAction<string>) {
@@ -58,10 +76,69 @@ function* getRecommendationMovieListWorker(action: PayloadAction<string>) {
     yield callCheckingAuth(API.getRecommendationMovieListData, id);
   if (ok && data) {
     yield put(setRecommendationMovieList(data.titles));
+    yield put(setRecommendationMovieLoading(false));
   } else {
-    console.warn("Error getting movies", problem);
+    console.warn("Error getting recommendation movies", problem);
   }
-  yield put(setRecommendationMovieLoading(false));
+}
+
+function* getMyMoviesListWorker(action: PayloadAction<number>) {
+  yield put(setMyMoviesListLoading(true));
+  const id = action.payload;
+  const { ok, data, problem }: ApiResponse<MyListResponseData> =
+    yield callCheckingAuth(API.getMyList, id);
+  if (ok && data) {
+    yield put(setMyMoviesList(data.items.data));
+    yield put(setMyMoviesListLoading(false));
+  } else {
+    yield put(
+      setMessage({
+        status: false,
+        message: `Error getting movies list ${problem}`,
+      })
+    );
+  }
+}
+
+function* addMovieToListWorker(action: PayloadAction<AddToListPayload>) {
+  const { id, value } = action.payload;
+  const { ok, data, problem }: ApiResponse<any> = yield callCheckingAuth(
+    API.addToList,
+    id,
+    value
+  );
+  if (ok && data) {
+    yield put(
+      setMessage({
+        status: true,
+        message: "The movie has been successfully added to the list",
+      })
+    );
+  } else {
+    yield put(
+      setMessage({
+        status: false,
+        message: `Error add movie to list ${problem}`,
+      })
+    );
+  }
+}
+
+function* getFavoriteMoviesListWorker() {
+  yield put(setMyMoviesListLoading(true));
+  const { ok, data, problem }: ApiResponse<MyListResponseData> =
+    yield callCheckingAuth(API.getMyList, 376);
+  if (ok && data) {
+    yield put(setFavoriteMoviesList(data.items.data));
+    yield put(setMyMoviesListLoading(false));
+  } else {
+    yield put(
+      setMessage({
+        status: false,
+        message: `Error getting favorite list ${problem}`,
+      })
+    );
+  }
 }
 
 export default function* movieSaga() {
@@ -69,5 +146,8 @@ export default function* movieSaga() {
     takeLatest(getAllMovies, getMoviesWorker),
     takeLatest(getSingleMovie, getSingleMovieWorker),
     takeLatest(getRecommendationMovieList, getRecommendationMovieListWorker),
+    takeLatest(getMyMoviesList, getMyMoviesListWorker),
+    takeLatest(addMovieToList, addMovieToListWorker),
+    takeLatest(getFavoriteMovies, getFavoriteMoviesListWorker),
   ]);
 }

@@ -187,17 +187,3 @@
     height: 100%;
   }
 }
-
-.copiedLink {
-  position: absolute;
-  top: 50%;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 20px;
-  z-index: 10;
-  background-color: $graphite;
-  border-radius: 20px;
-}
