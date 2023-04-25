@@ -3,4 +3,6 @@ export const reg =
 
 export const ACCESS_TOKEN_KEY = "access_token";
 
+export const THEME = "theme";
+
 export const PER_PAGE = 12;

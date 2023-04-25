@@ -4,8 +4,7 @@ import movieReducer, { movieName } from "./reducers/movieSlice";
 import createSagaMiddleware from "@redux-saga/core";
 import rootSaga from "./sagas/rootSaga";
 import messageReducer, { messageName } from "./reducers/messageSlice";
-
-// import themeReducer, { themeName } from "./reducers/themeSlice";
+import thmeReducer, { themeName } from "./reducers/themeSlice";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -13,6 +12,7 @@ const rootReducer = combineReducers({
   [messageName]: messageReducer,
   [authName]: authReducer,
   [movieName]: movieReducer,
+  [themeName]: thmeReducer,
 });
 
 const store = configureStore({

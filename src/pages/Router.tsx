@@ -19,6 +19,10 @@ import {
   MovieSelectors,
   getFavoriteMovies,
 } from "src/redux/reducers/movieSlice";
+import Settings from "./Settings/Settings";
+import { changeTheme } from "src/redux/reducers/themeSlice";
+import { THEME } from "src/utils/constants";
+import { Theme } from "src/Context/Theme/Context";
 
 export enum RoutesList {
   Home = "/",
@@ -43,14 +47,21 @@ const Router = () => {
   };
 
   useEffect(() => {
+    if (localStorage.getItem(THEME)) {
+      dispatch(
+        changeTheme(
+          localStorage.getItem(THEME) === "dark" ? Theme.Dark : Theme.Light
+        )
+      );
+    } else {
+      localStorage.setItem(THEME, Theme.Dark);
+    }
     if (isLoggedIn) {
       dispatch(getUserInfo({ id: "me" }));
       dispatch(getFavoriteMovies());
     }
   }, [isLoggedIn]);
 
-  // useEffect(() => {
-  // }, [isLoggedIn]);
   return (
     <BrowserRouter>
       <Routes>
@@ -75,6 +86,10 @@ const Router = () => {
           <Route
             path={RoutesList.Favorites}
             element={redirectSignIn(<Favorites />)}
+          />
+          <Route
+            path={RoutesList.Settings}
+            element={redirectSignIn(<Settings />)}
           />
           <Route path={RoutesList.Default} element={"404"} />
         </Route>

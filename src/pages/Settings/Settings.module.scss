@@ -1,1 +1,30 @@
 @import "src/assets/colors";
+
+.title {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 36px;
+}
+
+.settingsItem {
+  border-radius: 10px;
+  background-color: $graphite;
+  display: flex;
+  align-items: center;
+  padding: 24px 40px;
+  margin-top: 16px;
+  justify-content: space-between;
+}
+
+.blockTitle {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.blockDesc {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: $light;
+}
