@@ -1,7 +1,6 @@
 import { create } from "apisauce";
 import {
-  AddToListPayload,
-  AddToListValue,
+  ListValue,
   SigInPayloadData,
   SigUpPayloadData,
 } from "../reducers/@types";
@@ -79,8 +78,16 @@ const getMyList = (token: string, id: string) => {
   );
 };
 
-const addToList = (token: string, id: number, value: AddToListValue) => {
+const addToList = (token: string, id: number, value: ListValue) => {
   return API.post(`/lists/${id}/add`, value, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+const removeListItem = (token: string, id: number, value: ListValue) => {
+  return API.post(`/lists/${id}/remove`, value, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -96,4 +103,5 @@ export default {
   getRecommendationMovieListData,
   getMyList,
   addToList,
+  removeListItem,
 };

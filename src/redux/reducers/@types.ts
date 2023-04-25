@@ -34,14 +34,14 @@ export interface GetAllMoviesPayload {
 export type SignUpUserPayload = PayloadWithCallback<SigUpPayloadData>;
 export type SignInUserPayload = PayloadWithCallback<SigInPayloadData>;
 
-export type AddToListValue = {
+export type ListValue = {
   itemId: number;
   itemType: string;
 };
 
-export type AddToListPayload = {
+export type ListPayload = {
   id: number;
-  value: AddToListValue;
+  value: ListValue;
 };
 
 export type MessagePayload = {

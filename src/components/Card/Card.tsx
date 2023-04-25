@@ -9,6 +9,7 @@ import {
   MovieSelectors,
   addMovieToList,
   getFavoriteMovies,
+  removeListItem,
 } from "src/redux/reducers/movieSlice";
 
 type CardProps = {
@@ -39,6 +40,9 @@ const Card: FC<CardProps> = ({ card, bookmark, classname }) => {
   // bookmarkIndex > -1
   const onBookmarkBtnClick = () => {
     if (savedState) {
+      dispatch(
+        removeListItem({ id: 376, value: { itemId: id, itemType: "title" } })
+      );
     } else {
       dispatch(
         addMovieToList({ id: 376, value: { itemId: id, itemType: "title" } })

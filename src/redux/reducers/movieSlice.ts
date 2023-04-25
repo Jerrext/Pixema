@@ -2,11 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import React from "react";
 import { RootState } from "../store";
 import { CardListType, CardType } from "src/utils/@globalTypes";
-import {
-  AddToListPayload,
-  GetAllMoviesPayload,
-  MessagePayload,
-} from "./@types";
+import { ListPayload, GetAllMoviesPayload, MessagePayload } from "./@types";
 import { SingleMovieData, SingleMovieResponseData } from "../sagas/@types";
 
 type MoviesState = {
@@ -67,7 +63,7 @@ const MovieSlice = createSlice({
     setMyMoviesList(state, action: PayloadAction<CardListType>) {
       state.myMoviesList = action.payload;
     },
-    addMovieToList(_, __: PayloadAction<AddToListPayload>) {},
+    addMovieToList(_, __: PayloadAction<ListPayload>) {},
     setMyMoviesListLoading(state, action: PayloadAction<boolean>) {
       state.isMyMoviesListLoadng = action.payload;
     },
@@ -75,6 +71,7 @@ const MovieSlice = createSlice({
       state.favoriteMoviesList = action.payload;
     },
     getFavoriteMovies(_, __: PayloadAction<undefined>) {},
+    removeListItem(_, __: PayloadAction<ListPayload>) {},
   },
 });
 
@@ -95,6 +92,7 @@ export const {
   setMyMoviesListLoading,
   getFavoriteMovies,
   setFavoriteMoviesList,
+  removeListItem,
 } = MovieSlice.actions;
 export default MovieSlice.reducer;
 

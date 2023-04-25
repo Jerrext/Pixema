@@ -7,19 +7,12 @@ import {
   getFavoriteMovies,
 } from "src/redux/reducers/movieSlice";
 import Loader from "src/components/Loader/Loader";
-import Paginate from "src/components/Paginate/Paginate";
 
 const Favorites = () => {
-  const dispatch = useDispatch();
-
   const isMyMoviesListLoading = useSelector(
     MovieSelectors.getMyMoviesListLoading
   );
   const favoriteMoviesList = useSelector(MovieSelectors.getFavoriteMoviesList);
-
-  useEffect(() => {
-    dispatch(getFavoriteMovies());
-  }, []);
 
   return isMyMoviesListLoading ? (
     <Loader />

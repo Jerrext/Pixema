@@ -7,6 +7,7 @@ import {
   getMyMoviesList,
   getRecommendationMovieList,
   getSingleMovie,
+  removeListItem,
   setAllMoviesLoading,
   setFavoriteMoviesList,
   setMoviesList,
@@ -22,13 +23,14 @@ import callCheckingAuth from "./callCheckingAuth";
 import API from "../api";
 import { ApiResponse } from "apisauce";
 import {
+  ChangeListResponseData,
   MoviesResponseData,
   MyListResponseData,
   RecommendationMoviesResponseData,
   SingleMovieResponseData,
 } from "./@types";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { AddToListPayload, GetAllMoviesPayload } from "../reducers/@types";
+import { ListPayload, GetAllMoviesPayload } from "../reducers/@types";
 import { CardType } from "src/utils/@globalTypes";
 import { setMessage } from "../reducers/messageSlice";
 
@@ -100,20 +102,12 @@ function* getMyMoviesListWorker(action: PayloadAction<number>) {
   }
 }
 
-function* addMovieToListWorker(action: PayloadAction<AddToListPayload>) {
+function* addMovieToListWorker(action: PayloadAction<ListPayload>) {
   const { id, value } = action.payload;
-  const { ok, data, problem }: ApiResponse<any> = yield callCheckingAuth(
-    API.addToList,
-    id,
-    value
-  );
+  const { ok, data, problem }: ApiResponse<ChangeListResponseData> =
+    yield callCheckingAuth(API.addToList, id, value);
   if (ok && data) {
-    yield put(
-      setMessage({
-        status: true,
-        message: "The movie has been successfully added to the list",
-      })
-    );
+    yield put(setFavoriteMoviesList(data.list.items));
   } else {
     yield put(
       setMessage({
@@ -141,6 +135,22 @@ function* getFavoriteMoviesListWorker() {
   }
 }
 
+function* removeListItemWorker(action: PayloadAction<ListPayload>) {
+  const { id, value } = action.payload;
+  const { ok, data, problem }: ApiResponse<ChangeListResponseData> =
+    yield callCheckingAuth(API.removeListItem, id, value);
+  if (ok && data) {
+    yield put(setFavoriteMoviesList(data.list.items));
+  } else {
+    yield put(
+      setMessage({
+        status: false,
+        message: `Error remove movie from list ${problem}`,
+      })
+    );
+  }
+}
+
 export default function* movieSaga() {
   yield all([
     takeLatest(getAllMovies, getMoviesWorker),
@@ -149,5 +159,6 @@ export default function* movieSaga() {
     takeLatest(getMyMoviesList, getMyMoviesListWorker),
     takeLatest(addMovieToList, addMovieToListWorker),
     takeLatest(getFavoriteMovies, getFavoriteMoviesListWorker),
+    takeLatest(removeListItem, removeListItemWorker),
   ]);
 }
