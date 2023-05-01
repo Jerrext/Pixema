@@ -1,23 +1,23 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import styles from "./SingleMovie.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import {
   MovieSelectors,
+  addMovieToList,
   getRecommendationMovieList,
   getSingleMovie,
+  removeListItem,
 } from "src/redux/reducers/movieSlice";
 import Loader from "src/components/Loader";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import GroupButtons from "src/components/GroupButtons";
 import classNames from "classnames";
 import {
   BookmarkIcon,
-  CheckMarkIcon,
   EyeIcon,
   ImdbIcon,
   SocialIcon,
   TrendIcon,
-  UnknownPersonIcon,
 } from "src/assets/icons";
 import {
   getMoneyFormat,
@@ -27,11 +27,10 @@ import {
 import Arrow from "src/components/Arrow";
 import Card from "src/components/Card";
 import Player from "src/components/Player";
-import ThumbsGallery from "src/components/ThumbsGallery/ThumbsGallery";
-import Tabs from "src/components/Tabs/Tabs";
+import ThumbsGallery from "src/components/ThumbsGallery";
+import Tabs from "src/components/Tabs";
 import { MovieTabsNames } from "src/utils/@globalTypes";
-import ViewPerson from "src/components/ViewPerson/ViewPerson";
-import Message from "src/components/Message/Message";
+import ViewPerson from "src/components/ViewPerson";
 import { setMessage } from "src/redux/reducers/messageSlice";
 
 const SingleMovie = () => {
@@ -40,6 +39,7 @@ const SingleMovie = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [tabState, setTabState] = useState(MovieTabsNames.Images);
+  const [savedState, setSavedState] = useState(false);
 
   const isSingleMovieLoadng = useSelector(MovieSelectors.getSingleMovieLoadng);
   const movieData = useSelector(MovieSelectors.getSingleMovie);
@@ -49,7 +49,11 @@ const SingleMovie = () => {
   const isRecommendationMovieLoading = useSelector(
     MovieSelectors.getRecommendationMovieLoading
   );
+  const bookmarkMovies = useSelector(MovieSelectors.getFavoriteMoviesList);
 
+  const bookmarkIndex = bookmarkMovies.findIndex(
+    (movie) => movie.id === movieData?.id
+  );
   const recommendationPageCount = Math.ceil(recommendationCardList.length / 4);
   const isTrend = movieData?.rating && +movieData.rating >= 8;
   const isGreen =
@@ -124,8 +128,35 @@ const SingleMovie = () => {
 
   const GROUP_BUTTON_LIST = [
     {
-      title: <BookmarkIcon />,
-      onClick: () => {},
+      title: (
+        <div
+          className={classNames({
+            [styles.addedMovie]: savedState,
+          })}
+        >
+          <BookmarkIcon />
+        </div>
+      ),
+      onClick: () => {
+        if (movieData) {
+          if (savedState) {
+            dispatch(
+              removeListItem({
+                id: 376,
+                value: { itemId: movieData.id, itemType: "title" },
+              })
+            );
+          } else {
+            dispatch(
+              addMovieToList({
+                id: 376,
+                value: { itemId: movieData.id, itemType: "title" },
+              })
+            );
+          }
+        }
+        setSavedState(!savedState);
+      },
     },
     {
       title: <SocialIcon />,
@@ -152,6 +183,10 @@ const SingleMovie = () => {
       (item, index) => index >= 4 * (currentPage - 1) && index < 4 * currentPage
     );
   }, [recommendationCardList, currentPage]);
+
+  useEffect(() => {
+    setSavedState(bookmarkIndex > -1);
+  }, [bookmarkMovies]);
 
   useEffect(() => {
     if (id) {

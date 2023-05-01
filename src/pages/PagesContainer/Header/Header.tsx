@@ -5,16 +5,24 @@ import { useSelector } from "react-redux";
 import { AuthSelectors } from "src/redux/reducers/authSlice";
 import Search from "src/components/Search";
 import UserName from "src/components/UserName";
+import classNames from "classnames";
+import { Theme, useThemeContext } from "src/Context/Theme/Context";
 
 const Header = () => {
   const isLoggedIn = useSelector(AuthSelectors.getLoggedIn);
   const userName = useSelector(AuthSelectors.getUserName);
 
+  const { theme } = useThemeContext();
+
   return (
     <div className={styles.wrapper}>
       {isLoggedIn ? (
         <>
-          <div className={styles.logoWrapper}>
+          <div
+            className={classNames(styles.logoWrapper, {
+              [styles.logoWrapperLight]: theme === Theme.Light,
+            })}
+          >
             <PixemaLogoIcon />
           </div>
           <Search />

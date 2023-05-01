@@ -14,5 +14,10 @@
   padding-right: 89px;
 }
 
-.logo {
+.logoWrapperLight {
+  > svg {
+    > path:nth-child(1n + 4) {
+      fill: $black;
+    }
+  }
 }

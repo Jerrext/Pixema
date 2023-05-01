@@ -3,6 +3,7 @@ import styles from "./UserName.module.scss";
 import classNames from "classnames";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "src/redux/reducers/authSlice";
+import { Theme, useThemeContext } from "src/Context/Theme/Context";
 
 type userNameProps = { userName: string };
 
@@ -10,6 +11,11 @@ const UserName: FC<userNameProps> = ({ userName }) => {
   const dispatch = useDispatch();
 
   const [isDropdownOpened, setIsDropdownOpened] = useState(false);
+
+  const { theme } = useThemeContext();
+
+  const isDark = theme === Theme.Light;
+
   const initials = userName
     .split(" ")
     .map((word) => word[0].toUpperCase())
@@ -33,12 +39,18 @@ const UserName: FC<userNameProps> = ({ userName }) => {
   };
 
   return (
-    <div className={styles.userNameWrapper} onClick={onUserNameClick}>
+    <div
+      className={classNames(styles.userNameWrapper, {
+        [styles.userNameWrapperLight]: isDark,
+      })}
+      onClick={onUserNameClick}
+    >
       <div className={styles.initials}>{initials}</div>
       <p>{userName}</p>
       <div
         className={classNames(styles.dropdownWrapper, {
           [styles.dropdownOpenedWrapper]: isDropdownOpened,
+          [styles.dropdownWrapperLight]: isDark,
         })}
       >
         {dropdownButtonsList.map(({ title, onClick }, index) => {

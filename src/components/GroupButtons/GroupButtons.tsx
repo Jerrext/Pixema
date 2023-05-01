@@ -1,8 +1,8 @@
 import React, { FC } from "react";
 import classNames from "classnames";
 import styles from "./GroupButtons.module.scss";
-import { BookmarkIcon, SocialIcon } from "src/assets/icons";
 import { GroupButtonList } from "./@types";
+import { Theme, useThemeContext } from "src/Context/Theme/Context";
 
 type GroupButtonsProps = {
   groupButtonsList: GroupButtonList;
@@ -13,10 +13,12 @@ const GroupButtons: FC<GroupButtonsProps> = ({
   disabled,
   groupButtonsList,
 }) => {
+  const { theme } = useThemeContext();
   return (
     <div
       className={classNames(styles.groupButtonsWrapper, {
         [styles.disabledGroupButtonsWrapper]: disabled,
+        [styles.groupButtonsWrapperLight]: theme === Theme.Light,
       })}
     >
       {groupButtonsList.map((item, index) => {

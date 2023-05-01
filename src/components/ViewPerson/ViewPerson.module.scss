@@ -27,6 +27,7 @@
   border-radius: 10px;
   // height: 150px;
   background-color: $graphite;
+  cursor: default;
   padding: 15px;
 
   &::before {
@@ -70,5 +71,21 @@
     height: 100%;
     object-fit: cover;
     object-position: center center;
+  }
+}
+
+.viewPersonLight {
+  background-color: $light;
+
+  &::before {
+    border-bottom: 10px solid $light;
+  }
+
+  .personDescription {
+    > p {
+      > span:first-child {
+        color: $graphite;
+      }
+    }
   }
 }

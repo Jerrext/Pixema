@@ -3,6 +3,7 @@ import classNames from "classnames";
 import styles from "./Tabs.module.scss";
 import { MovieTabsNames } from "src/utils/@globalTypes";
 import { TabListType } from "./@types";
+import { Theme, useThemeContext } from "src/Context/Theme/Context";
 
 type TabsProps = {
   onClick: (key: MovieTabsNames) => void;
@@ -13,8 +14,14 @@ type TabsProps = {
 const Tabs: FC<TabsProps> = ({ onClick, tabsList, activeTab }) => {
   const onTabClick = (key: MovieTabsNames) => () => onClick(key);
 
+  const { theme } = useThemeContext();
+
   return (
-    <div className={styles.tabsWrapper}>
+    <div
+      className={classNames(styles.tabsWrapper, {
+        [styles.tabsWrapperLight]: theme === Theme.Light,
+      })}
+    >
       {tabsList.map((item) => {
         return (
           <div

@@ -1,31 +1,22 @@
-import React, {
-  FC,
-  KeyboardEvent,
-  ReactNode,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, { FC, ReactNode } from "react";
 import styles from "./Sidebar.module.scss";
 import {
   FavoriteIcon,
   HomeIcon,
-  PixemaLogoIcon,
   SettingsIcon,
   TrendIcon,
 } from "src/assets/icons";
-import { useSelector } from "react-redux";
-import { AuthSelectors } from "src/redux/reducers/authSlice";
-import Search from "src/components/Search/Search";
-import UserName from "src/components/UserName/UserName";
 import { RoutesList } from "src/pages/Router";
-import MenuButton from "src/components/MenuButton/MenuButton";
+import MenuButton from "src/components/MenuButton";
+import { useLocation } from "react-router-dom";
 
 type SidebarProps = {
   footerContent: ReactNode;
 };
 
 const Sidebar: FC<SidebarProps> = ({ footerContent }) => {
+  const location = useLocation();
+
   const navButtonsList = [
     {
       title: "Home",
@@ -65,6 +56,7 @@ const Sidebar: FC<SidebarProps> = ({ footerContent }) => {
                 icon={item.icon}
                 title={item.title}
                 routeLink={item.key}
+                activePage={location.pathname === item.key}
               />
             );
           })}

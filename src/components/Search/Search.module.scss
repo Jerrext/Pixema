@@ -54,3 +54,15 @@
     }
   }
 }
+
+.filterLight {
+  &:hover {
+    > svg > path {
+      stroke: $graphite;
+    }
+
+    &::before {
+      opacity: 1;
+    }
+  }
+}

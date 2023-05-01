@@ -1,4 +1,6 @@
-import React, { FC, ReactNode, useState } from "react";
+import classNames from "classnames";
+import React, { FC, ReactNode } from "react";
+import { Theme, useThemeContext } from "src/Context/Theme/Context";
 import Button from "src/components/Button/Button";
 import styles from "src/pages/FormPages/FormPage.module.scss";
 import { ButtonType } from "src/utils/@globalTypes";
@@ -20,9 +22,14 @@ const FormPage: FC<FormPageProps> = ({
   footerContent,
   disabledButton,
 }) => {
+  const { theme } = useThemeContext();
   return (
     <div className={styles.wrapper}>
-      <div className={styles.formWrapper}>
+      <div
+        className={classNames(styles.formWrapper, {
+          [styles.formWrapperLight]: theme === Theme.Light,
+        })}
+      >
         <h1 className={styles.titlePage}>{titleFormPage}</h1>
         <div className={styles.formContent}>{children}</div>
         <div>

@@ -8,17 +8,15 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   MovieSelectors,
   addMovieToList,
-  getFavoriteMovies,
   removeListItem,
 } from "src/redux/reducers/movieSlice";
 
 type CardProps = {
   card: CardType;
-  bookmark?: boolean;
   classname?: string;
 };
 
-const Card: FC<CardProps> = ({ card, bookmark, classname }) => {
+const Card: FC<CardProps> = ({ card, classname }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -32,10 +30,6 @@ const Card: FC<CardProps> = ({ card, bookmark, classname }) => {
   const isTrend = +rating >= 8;
   const isGreen = +rating < 8 && +rating >= 6;
   const isOrange = +rating < 6;
-
-  useEffect(() => {
-    setSavedState(bookmarkIndex > -1);
-  }, [bookmarkMovies]);
 
   // bookmarkIndex > -1
   const onBookmarkBtnClick = () => {
@@ -54,6 +48,10 @@ const Card: FC<CardProps> = ({ card, bookmark, classname }) => {
   const onTitleClick = () => {
     navigate(`/titles/${id}`);
   };
+
+  useEffect(() => {
+    setSavedState(bookmarkIndex > -1);
+  }, [bookmarkMovies]);
 
   return (
     <div className={classNames(styles.cardWrapper, classname)}>

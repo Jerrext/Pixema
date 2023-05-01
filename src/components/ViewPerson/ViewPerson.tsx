@@ -5,17 +5,24 @@ import { useDispatch } from "react-redux";
 import { logoutUser } from "src/redux/reducers/authSlice";
 import { SingleMovieCredits } from "src/redux/sagas/@types";
 import { UnknownPersonIcon } from "src/assets/icons";
+import { Theme, useThemeContext } from "src/Context/Theme/Context";
 
 type ViewPersonProps = { personData: SingleMovieCredits };
 
 const ViewPerson: FC<ViewPersonProps> = ({ personData }) => {
   const { name, pivot, poster } = personData;
 
+  const { theme } = useThemeContext();
+
   return (
     <>
       <span className={styles.name}>
         {name}
-        <span className={styles.viewPerson}>
+        <span
+          className={classNames(styles.viewPerson, {
+            [styles.viewPersonLight]: theme === Theme.Light,
+          })}
+        >
           <div className={styles.personPoster}>
             {poster ? <img src={poster} /> : <UnknownPersonIcon />}
           </div>

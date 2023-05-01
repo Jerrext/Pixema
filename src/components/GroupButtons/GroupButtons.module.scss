@@ -16,9 +16,10 @@
   align-items: center;
   justify-content: center;
   background-color: $graphite;
+  color: $white;
 
   &:hover {
-    > svg > path {
+    > div > svg > path {
       fill: $white;
     }
   }
@@ -39,7 +40,7 @@
     cursor: not-allowed;
 
     &:hover {
-      > svg > path {
+      > div > svg > path {
         fill: $light;
       }
     }

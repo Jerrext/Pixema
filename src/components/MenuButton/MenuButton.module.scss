@@ -21,8 +21,10 @@
       color: $primary-secondary;
     }
   }
+}
 
-  &:active {
+.activePage {
+  & {
     > svg > path {
       fill: $primary;
     }

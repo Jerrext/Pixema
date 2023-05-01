@@ -3,6 +3,7 @@ import styles from "./Settings.module.scss";
 import Switcher from "src/components/Switcher";
 import { Theme, useThemeContext } from "src/Context/Theme/Context";
 import { THEME } from "src/utils/constants";
+import classNames from "classnames";
 
 const Settings = () => {
   const { theme, onChangeTheme } = useThemeContext();
@@ -17,7 +18,11 @@ const Settings = () => {
   return (
     <div>
       <h2 className={styles.title}>Color mode</h2>
-      <div className={styles.settingsItem}>
+      <div
+        className={classNames(styles.settingsItem, {
+          [styles.settingsItemLight]: !isDark,
+        })}
+      >
         <div>
           <h3 className={styles.blockTitle}>{isDark ? "Dark" : "Light"}</h3>
           <p className={styles.blockDesc}>

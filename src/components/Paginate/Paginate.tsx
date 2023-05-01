@@ -3,6 +3,7 @@ import styles from "./Paginate.module.scss";
 import ReactPaginate from "react-paginate";
 import classNames from "classnames";
 import { ArrowIcon } from "src/assets/icons";
+import { Theme, useThemeContext } from "src/Context/Theme/Context";
 
 type PaginateProps = {
   pageCount: number;
@@ -17,6 +18,8 @@ const Paginate: FC<PaginateProps> = ({
   onPageChange,
   currentPage,
 }) => {
+  const { theme } = useThemeContext();
+  const isLight = theme === Theme.Light;
   return (
     <ReactPaginate
       nextLabel={<ArrowIcon />}
@@ -33,9 +36,11 @@ const Paginate: FC<PaginateProps> = ({
       activeClassName={styles.activePageNumber}
       nextClassName={classNames(styles.arrowButton, {
         [styles.blockedButtonPosts]: currentPage === pageCount,
+        [styles.arrowButtonLight]: isLight,
       })}
       previousClassName={classNames(styles.arrowButton, {
         [styles.blockedButtonPosts]: currentPage === 1,
+        [styles.arrowButtonLight]: isLight,
       })}
       previousLinkClassName={styles.linkPage}
       nextLinkClassName={styles.linkPage}

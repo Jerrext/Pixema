@@ -1,8 +1,6 @@
 import React, { FC, ReactNode, useEffect, useState } from "react";
 import "./ThumbsGallery.scss";
 import classNames from "classnames";
-import { useDispatch } from "react-redux";
-import { logoutUser } from "src/redux/reducers/authSlice";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Navigation, Thumbs } from "swiper";
 import "swiper/css";
@@ -11,6 +9,7 @@ import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import { MovieTabsNames } from "src/utils/@globalTypes";
 import { SingleMovieImage, SingleMovieVideos } from "src/redux/sagas/@types";
+import { Theme, useThemeContext } from "src/Context/Theme/Context";
 
 type ThumbsGalleryProps = {
   videos?: SingleMovieVideos[];
@@ -24,9 +23,14 @@ const ThumbsGallery: FC<ThumbsGalleryProps> = ({
   activeTab,
 }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
+  const { theme } = useThemeContext();
 
   return (
-    <div className="movie-gallery">
+    <div
+      className={classNames("movie-gallery", {
+        "movie-galleryLight": theme === Theme.Light,
+      })}
+    >
       <Swiper
         loop={true}
         spaceBetween={10}

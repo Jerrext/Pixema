@@ -6,14 +6,16 @@ import styles from "./PagesContainer.module.scss";
 import Header from "./Header";
 import { useSelector } from "react-redux";
 import { AuthSelectors } from "src/redux/reducers/authSlice";
-import Sidebar from "./Sidebar/Sidebar";
-import { MovieSelectors } from "src/redux/reducers/movieSlice";
-import Message from "src/components/Message/Message";
+import Sidebar from "./Sidebar";
+import Message from "src/components/Message";
 import { MessageSelectors } from "src/redux/reducers/messageSlice";
+import { Theme, useThemeContext } from "src/Context/Theme/Context";
 
 const PagesContainer = () => {
   const isLoggedIn = useSelector(AuthSelectors.getLoggedIn);
   const message = useSelector(MessageSelectors.getMessage);
+
+  const { theme } = useThemeContext();
 
   const footerContent = (
     <div className={styles.footerText}>© All Rights Reserved</div>
@@ -22,6 +24,7 @@ const PagesContainer = () => {
     <div
       className={classNames(styles.pagesWrapper, {
         [styles.formPagesBackground]: !isLoggedIn,
+        [styles.pageWrapperLight]: theme === Theme.Light,
       })}
     >
       <Header />

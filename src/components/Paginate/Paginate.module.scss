@@ -55,7 +55,7 @@
 
   &:hover {
     svg > path {
-      fill: $white;
+      stroke: $white;
     }
     background-color: $primary-secondary;
     cursor: pointer;
@@ -76,17 +76,24 @@
     transform: translate(-50%, -50%);
   }
 }
+
+.arrowButtonLight {
+  a > svg > path {
+    stroke: $black;
+  }
+}
+
 .blockedButtonPosts {
   &:hover {
     background-color: transparent;
     cursor: not-allowed;
 
     a > svg > path {
-      stroke: $graphite;
+      stroke: $light;
     }
   }
   a > svg > path {
-    stroke: $graphite;
+    stroke: $light;
   }
 }
 

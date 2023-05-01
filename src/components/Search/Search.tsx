@@ -3,6 +3,7 @@ import classNames from "classnames";
 import styles from "./Search.module.scss";
 import Input from "../Input";
 import { FilterIcon } from "src/assets/icons";
+import { Theme, useThemeContext } from "src/Context/Theme/Context";
 
 type SearchProps = {
   disabled?: boolean;
@@ -10,6 +11,8 @@ type SearchProps = {
 
 const Search: FC<SearchProps> = ({ disabled }) => {
   const [searchValue, setSearchValue] = useState("");
+
+  const { theme } = useThemeContext();
 
   const onFilterClick = () => {};
 
@@ -26,6 +29,7 @@ const Search: FC<SearchProps> = ({ disabled }) => {
       <div
         className={classNames(styles.filter, {
           [styles.disabledFilter]: disabled,
+          [styles.filterLight]: theme === Theme.Light,
         })}
         onClick={disabled ? () => {} : onFilterClick}
       >

@@ -40,6 +40,7 @@
   background-color: $primary;
   border-radius: 10px;
   margin-right: 20px;
+  color: $white;
 }
 
 .dropdownWrapper {
@@ -68,4 +69,24 @@
 .dropdownOpenedWrapper {
   display: block;
   cursor: default;
+}
+
+.dropdownWrapperLight {
+  background-color: $white;
+  border: 1px solid $light;
+
+  .dropdownItem {
+    border-bottom: 1px solid $light;
+
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+}
+
+.userNameWrapperLight {
+  &:hover::after,
+  &:hover::before {
+    background-color: $graphite;
+  }
 }

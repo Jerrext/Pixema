@@ -10,6 +10,7 @@ type MenuButtonProps = {
   title: string;
   disabled?: boolean;
   routeLink: RoutesList;
+  activePage: boolean;
 };
 
 const MenuButton: FC<MenuButtonProps> = ({
@@ -17,10 +18,12 @@ const MenuButton: FC<MenuButtonProps> = ({
   disabled,
   routeLink,
   title,
+  activePage,
 }) => {
   return (
     <Link
       className={classNames(styles.homeLinkWrapper, {
+        [styles.activePage]: activePage,
         [styles.disabledLink]: disabled,
       })}
       to={routeLink}

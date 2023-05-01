@@ -76,6 +76,7 @@
 .raringWrapper {
   display: flex;
   gap: 20px;
+  color: $white;
 
   > div {
     background-color: $graphite;
@@ -185,5 +186,11 @@
   height: 550px;
   > div {
     height: 100%;
+  }
+}
+
+.addedMovie {
+  > svg > path {
+    fill: $primary;
   }
 }

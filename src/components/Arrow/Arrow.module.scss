@@ -12,6 +12,17 @@
   }
 }
 
+.arrowWrapperLight {
+  > svg > path {
+    stroke: $graphite;
+  }
+  &:hover {
+    > svg > path {
+      stroke: $secondary;
+    }
+  }
+}
+
 .disabledArrow {
   cursor: not-allowed;
 
