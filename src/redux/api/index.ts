@@ -1,5 +1,7 @@
 import { create } from "apisauce";
 import {
+  CreateListPayload,
+  DetailsListType,
   ListValue,
   SigInPayloadData,
   SigUpPayloadData,
@@ -66,9 +68,29 @@ const getRecommendationMovieListData = (token: string, id: string) => {
   );
 };
 
+const createMyList = (token: string, data: DetailsListType) => {
+  return API.post("/lists", data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
 const getMyList = (token: string, id: string) => {
   return API.get(
     `/lists/${id}`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
+const getMyLists = (token: string, id: string | number) => {
+  return API.get(
+    `/user-profile/${id}/lists`,
     {},
     {
       headers: {
@@ -102,6 +124,8 @@ export default {
   getSingleMovieData,
   getRecommendationMovieListData,
   getMyList,
+  getMyLists,
   addToList,
   removeListItem,
+  createMyList,
 };

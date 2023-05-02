@@ -1,3 +1,5 @@
+import { CardListType } from "src/utils/@globalTypes";
+
 export type PayloadWithCallback<Data> = {
   data: Data;
   callback: Callback;
@@ -47,4 +49,23 @@ export type ListPayload = {
 export type MessagePayload = {
   status: boolean;
   message: string;
+};
+
+export type DetailsListType = {
+  name: string;
+  description: string;
+  public: false;
+};
+
+export type CreateListPayload = {
+  data: {
+    details: DetailsListType;
+  };
+  token?: string;
+};
+
+export type FullListsPayload = {
+  id: number;
+  title: string;
+  list: CardListType;
 };

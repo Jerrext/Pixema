@@ -5,8 +5,8 @@ import { ACCESS_TOKEN_KEY } from "../../utils/constants";
 import API from "../api";
 import { logoutUser } from "../reducers/authSlice";
 
-function* callCheckingAuth(apiCall: any, ...params: any) {
-  const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
+function* callCheckingAuth(apiCall: any, token?: string, ...params: any) {
+  const accessToken = token ? token : localStorage.getItem(ACCESS_TOKEN_KEY);
 
   if (accessToken) {
     const response: ApiResponse<any> = yield call(

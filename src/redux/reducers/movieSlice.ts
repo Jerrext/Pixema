@@ -2,8 +2,19 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import React from "react";
 import { RootState } from "../store";
 import { CardListType, CardType } from "src/utils/@globalTypes";
-import { ListPayload, GetAllMoviesPayload, MessagePayload } from "./@types";
-import { SingleMovieData, SingleMovieResponseData } from "../sagas/@types";
+import {
+  ListPayload,
+  GetAllMoviesPayload,
+  MessagePayload,
+  CreateListPayload,
+  FullListsPayload,
+} from "./@types";
+import {
+  GetListsResponseData,
+  ListData,
+  SingleMovieData,
+  SingleMovieResponseData,
+} from "../sagas/@types";
 
 type MoviesState = {
   moviesList: CardListType;
@@ -13,8 +24,9 @@ type MoviesState = {
   singleMovie: SingleMovieData | null;
   recommendationMovieList: CardListType;
   isRecommendationMovieLoading: boolean;
-  favoriteMoviesList: CardListType;
-  myMoviesList: CardListType;
+  // favoriteMoviesList: CardListType;
+  myMoviesLists: ListData[];
+  fullMyMoviesLists: FullListsPayload[];
   isMyMoviesListLoadng: boolean;
 };
 
@@ -26,8 +38,9 @@ const initialState: MoviesState = {
   singleMovie: null,
   recommendationMovieList: [],
   isRecommendationMovieLoading: false,
-  favoriteMoviesList: [],
-  myMoviesList: [],
+  // favoriteMoviesList: [],
+  myMoviesLists: [],
+  fullMyMoviesLists: [],
   isMyMoviesListLoadng: false,
 };
 
@@ -59,19 +72,30 @@ const MovieSlice = createSlice({
     setRecommendationMovieLoading(state, action: PayloadAction<boolean>) {
       state.isRecommendationMovieLoading = action.payload;
     },
-    getMyMoviesList(_, __: PayloadAction<number>) {},
-    setMyMoviesList(state, action: PayloadAction<CardListType>) {
-      state.myMoviesList = action.payload;
+    getMyMoviesLists(_, __: PayloadAction<undefined>) {},
+    setMyMoviesLists(state, action: PayloadAction<ListData[]>) {
+      state.myMoviesLists = action.payload;
+    },
+    getFullMyMoviesLists(_, __: PayloadAction<number>) {},
+    setFullMyMoviesLists(state, action: PayloadAction<FullListsPayload>) {
+      state.fullMyMoviesLists.push(action.payload);
     },
     addMovieToList(_, __: PayloadAction<ListPayload>) {},
     setMyMoviesListLoading(state, action: PayloadAction<boolean>) {
       state.isMyMoviesListLoadng = action.payload;
     },
-    setFavoriteMoviesList(state, action: PayloadAction<CardListType>) {
-      state.favoriteMoviesList = action.payload;
+    changeMyMoviesLists(state, action: PayloadAction<FullListsPayload>) {
+      const listIndex = state.fullMyMoviesLists.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      state.fullMyMoviesLists.splice(listIndex, 1, action.payload);
     },
-    getFavoriteMovies(_, __: PayloadAction<undefined>) {},
+    // setFavoriteMoviesList(state, action: PayloadAction<CardListType>) {
+    //   state.favoriteMoviesList = action.payload;
+    // },
+    // getFavoriteMovies(_, __: PayloadAction<undefined>) {},
     removeListItem(_, __: PayloadAction<ListPayload>) {},
+    createMyList(_, __: PayloadAction<CreateListPayload>) {},
   },
 });
 
@@ -86,13 +110,18 @@ export const {
   getRecommendationMovieList,
   setRecommendationMovieList,
   setRecommendationMovieLoading,
-  setMyMoviesList,
-  getMyMoviesList,
+  // setMyMoviesList,
+  getMyMoviesLists,
+  setMyMoviesLists,
+  getFullMyMoviesLists,
+  setFullMyMoviesLists,
   addMovieToList,
+  changeMyMoviesLists,
   setMyMoviesListLoading,
-  getFavoriteMovies,
-  setFavoriteMoviesList,
+  // getFavoriteMovies,
+  // setFavoriteMoviesList,
   removeListItem,
+  createMyList,
 } = MovieSlice.actions;
 export default MovieSlice.reducer;
 
@@ -108,8 +137,8 @@ export const MovieSelectors = {
     state.movie.recommendationMovieList,
   getRecommendationMovieLoading: (state: RootState) =>
     state.movie.isRecommendationMovieLoading,
-  getMyMoviesList: (state: RootState) => state.movie.myMoviesList,
+  getFullMyMoviesLists: (state: RootState) => state.movie.fullMyMoviesLists,
   getMyMoviesListLoading: (state: RootState) =>
     state.movie.isMyMoviesListLoadng,
-  getFavoriteMoviesList: (state: RootState) => state.movie.favoriteMoviesList,
+  // getFavoriteMoviesList: (state: RootState) => state.movie.favoriteMoviesList,
 };

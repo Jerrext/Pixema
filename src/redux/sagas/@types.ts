@@ -34,9 +34,9 @@ export type UserSignInData = {
   watchlist: null;
 };
 
-type PaginationData = {
+type PaginationData<T> = {
   current_page: number;
-  data: CardListType;
+  data: T;
   first_page_url: string;
   from: number;
   last_page: number;
@@ -48,7 +48,6 @@ type PaginationData = {
   prev_page_url: null;
   to: number;
   total: number;
-  status: string;
 };
 
 export type UserData = {
@@ -187,6 +186,21 @@ export type SingleMovieData = {
   credits: SingleMovieCredits[];
 };
 
+export type ListData = {
+  id: number;
+  name: string;
+  description: string;
+  user_id: number;
+  system: boolean;
+  public: boolean;
+  auto_update: null;
+  created_at: string;
+  updated_at: string;
+  style: null;
+  image: string;
+  model_type: string;
+};
+
 type GetListData = {
   id: number;
   name: string;
@@ -219,6 +233,18 @@ type AddToListData = {
   items: CardListType;
 };
 
+type CreateListData = {
+  name: string;
+  description: string;
+  auto_update: null;
+  public: boolean;
+  user_id: number;
+  updated_at: string;
+  created_at: string;
+  id: number;
+  model_type: string;
+};
+
 export type UserResponseData = {
   user: UserData;
   status: string;
@@ -230,7 +256,7 @@ export type SingleMovieResponseData = {
 };
 
 export type MoviesResponseData = {
-  pagination: PaginationData;
+  pagination: PaginationData<CardListType>;
   status: string;
 };
 
@@ -240,12 +266,22 @@ export type RecommendationMoviesResponseData = {
 };
 
 export type MyListResponseData = {
-  items: PaginationData;
+  items: PaginationData<CardListType>;
   list: GetListData;
   status: string;
 };
 
 export type ChangeListResponseData = {
   list: AddToListData;
+  status: string;
+};
+
+export type CreateListResponseData = {
+  list: CreateListData;
+  status: string;
+};
+
+export type GetListsResponseData = {
+  pagination: PaginationData<ListData[]>;
   status: string;
 };

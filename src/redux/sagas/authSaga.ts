@@ -22,7 +22,7 @@ import {
 import { UserErrorsData, UserResponseData } from "./@types";
 import { ACCESS_TOKEN_KEY } from "src/utils/constants";
 import callCheckingAuth from "./callCheckingAuth";
-import { setAllMoviesLoading } from "../reducers/movieSlice";
+import { createMyList, setAllMoviesLoading } from "../reducers/movieSlice";
 
 function* signUpUserWorker(action: PayloadAction<SignUpUserPayload>) {
   const { data, callback } = action.payload;
@@ -31,9 +31,22 @@ function* signUpUserWorker(action: PayloadAction<SignUpUserPayload>) {
     data: responseData,
     problem,
     status,
-  }: ApiResponse<UserErrorsData> = yield call(API.signUpUser, data);
+  }: ApiResponse<any> = yield call(API.signUpUser, data);
   if (responseData && ok) {
+    const token = responseData.boostrapData.user.access_token.split("|")[1];
     callback();
+    yield put(
+      createMyList({
+        data: {
+          details: {
+            name: "Favorites",
+            description: "My favorites list",
+            public: false,
+          },
+        },
+        token: token,
+      })
+    );
   } else if (responseData && status === 422) {
     if (responseData.errors) {
       yield put(setInputErrors(responseData.errors));
@@ -74,7 +87,7 @@ function* logoutUserWorker() {
 function* getUserDataWorker(action: PayloadAction<GetUserDataPayload>) {
   const { id } = action.payload;
   const { ok, data, problem }: ApiResponse<UserResponseData> =
-    yield callCheckingAuth(API.getUserData, id);
+    yield callCheckingAuth(API.getUserData, "", id);
   if (data && ok) {
     yield put(setUserData(data.user));
   } else {

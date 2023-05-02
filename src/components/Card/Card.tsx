@@ -22,27 +22,37 @@ const Card: FC<CardProps> = ({ card, classname }) => {
 
   const [savedState, setSavedState] = useState(false);
 
-  const bookmarkMovies = useSelector(MovieSelectors.getFavoriteMoviesList);
+  const moviesLists = useSelector(MovieSelectors.getFullMyMoviesLists);
 
   const { poster, rating, name, year, id } = card;
-  const bookmarkIndex = bookmarkMovies.findIndex((movie) => movie.id === id);
+  const favoriteList = moviesLists.find((item) => item.title === "Favorites");
+  const favoriteIndex = favoriteList?.list.findIndex(
+    (movie) => movie.id === id
+  );
 
   const isTrend = +rating >= 8;
   const isGreen = +rating < 8 && +rating >= 6;
   const isOrange = +rating < 6;
 
-  // bookmarkIndex > -1
   const onBookmarkBtnClick = () => {
-    if (savedState) {
-      dispatch(
-        removeListItem({ id: 376, value: { itemId: id, itemType: "title" } })
-      );
-    } else {
-      dispatch(
-        addMovieToList({ id: 376, value: { itemId: id, itemType: "title" } })
-      );
+    if (favoriteList) {
+      if (savedState) {
+        dispatch(
+          removeListItem({
+            id: favoriteList.id,
+            value: { itemId: id, itemType: "title" },
+          })
+        );
+      } else {
+        dispatch(
+          addMovieToList({
+            id: favoriteList.id,
+            value: { itemId: id, itemType: "title" },
+          })
+        );
+      }
+      setSavedState(!savedState);
     }
-    setSavedState(!savedState);
   };
 
   const onTitleClick = () => {
@@ -50,8 +60,8 @@ const Card: FC<CardProps> = ({ card, classname }) => {
   };
 
   useEffect(() => {
-    setSavedState(bookmarkIndex > -1);
-  }, [bookmarkMovies]);
+    favoriteIndex && setSavedState(favoriteIndex > -1);
+  }, [favoriteIndex]);
 
   return (
     <div className={classNames(styles.cardWrapper, classname)}>

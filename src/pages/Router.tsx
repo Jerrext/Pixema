@@ -17,7 +17,8 @@ import SingleMovie from "./SingleMovie";
 import Favorites from "./Favorites/Favorites";
 import {
   MovieSelectors,
-  getFavoriteMovies,
+  getMyMoviesLists,
+  // getFavoriteMovies,
 } from "src/redux/reducers/movieSlice";
 import Settings from "./Settings/Settings";
 import { changeTheme } from "src/redux/reducers/themeSlice";
@@ -58,7 +59,7 @@ const Router = () => {
     }
     if (isLoggedIn) {
       dispatch(getUserInfo({ id: "me" }));
-      dispatch(getFavoriteMovies());
+      dispatch(getMyMoviesLists());
     }
   }, [isLoggedIn]);
 

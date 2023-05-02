@@ -24,13 +24,11 @@
 }
 
 .activePage {
-  & {
-    > svg > path {
-      fill: $primary;
-    }
-    p {
-      color: $primary;
-    }
+  > svg > path {
+    fill: $primary;
+  }
+  p {
+    color: $primary;
   }
 }
 

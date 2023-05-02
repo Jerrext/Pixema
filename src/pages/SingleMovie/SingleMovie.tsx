@@ -49,9 +49,10 @@ const SingleMovie = () => {
   const isRecommendationMovieLoading = useSelector(
     MovieSelectors.getRecommendationMovieLoading
   );
-  const bookmarkMovies = useSelector(MovieSelectors.getFavoriteMoviesList);
+  const moviesLists = useSelector(MovieSelectors.getFullMyMoviesLists);
 
-  const bookmarkIndex = bookmarkMovies.findIndex(
+  const favoriteList = moviesLists.find((item) => item.title === "Favorites");
+  const favoriteIndex = favoriteList?.list.findIndex(
     (movie) => movie.id === movieData?.id
   );
   const recommendationPageCount = Math.ceil(recommendationCardList.length / 4);
@@ -138,24 +139,24 @@ const SingleMovie = () => {
         </div>
       ),
       onClick: () => {
-        if (movieData) {
+        if (favoriteList && movieData) {
           if (savedState) {
             dispatch(
               removeListItem({
-                id: 376,
+                id: favoriteList.id,
                 value: { itemId: movieData.id, itemType: "title" },
               })
             );
           } else {
             dispatch(
               addMovieToList({
-                id: 376,
+                id: favoriteList.id,
                 value: { itemId: movieData.id, itemType: "title" },
               })
             );
           }
+          setSavedState(!savedState);
         }
-        setSavedState(!savedState);
       },
     },
     {
@@ -185,15 +186,15 @@ const SingleMovie = () => {
   }, [recommendationCardList, currentPage]);
 
   useEffect(() => {
-    setSavedState(bookmarkIndex > -1);
-  }, [bookmarkMovies]);
-
-  useEffect(() => {
     if (id) {
       dispatch(getSingleMovie(id));
       dispatch(getRecommendationMovieList(id));
     }
   }, [id]);
+
+  useEffect(() => {
+    favoriteIndex && setSavedState(favoriteIndex > -1);
+  }, [favoriteIndex]);
 
   return isSingleMovieLoadng ? (
     <Loader />
