@@ -191,6 +191,6 @@
 
 .addedMovie {
   > svg > path {
-    fill: $primary;
+    fill: $primary !important;
   }
 }

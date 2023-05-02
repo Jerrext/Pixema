@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AuthSelectors, getUserInfo } from "src/redux/reducers/authSlice";
 import Home from "./Home/Home";
 import SingleMovie from "./SingleMovie";
-import Favorites from "./Favorites/Favorites";
+import ListPage from "./ListPage";
 import {
   MovieSelectors,
   getMyMoviesLists,
@@ -33,7 +33,9 @@ export enum RoutesList {
   EditProfile = "/edit-profile",
   Settings = "/settings",
   Trends = "/trends",
-  Favorites = "/favorites",
+  Lists = "/lists/:id",
+  // Favorites = "/favorites",
+  // Watched = "/watched",
   SingleMovie = "/titles/:id",
   Default = "*",
 }
@@ -84,9 +86,17 @@ const Router = () => {
             path={RoutesList.SingleMovie}
             element={redirectSignIn(<SingleMovie />)}
           />
-          <Route
+          {/* <Route
             path={RoutesList.Favorites}
-            element={redirectSignIn(<Favorites />)}
+            element={redirectSignIn(<ListPage />)}
+          />
+          <Route
+            path={RoutesList.Watched}
+            element={redirectSignIn(<ListPage />)}
+          /> */}
+          <Route
+            path={RoutesList.Lists}
+            element={redirectSignIn(<ListPage />)}
           />
           <Route
             path={RoutesList.Settings}

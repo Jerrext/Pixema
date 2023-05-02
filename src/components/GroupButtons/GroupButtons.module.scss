@@ -18,13 +18,17 @@
   background-color: $graphite;
   color: $white;
 
+  > div > svg > path {
+    fill: $light;
+  }
+
   &:hover {
     > div > svg > path {
       fill: $white;
     }
   }
 
-  &:last-child:hover {
+  &:hover {
     > svg > path {
       stroke: $white;
     }

@@ -14,3 +14,11 @@
   flex-direction: column;
   gap: 40px;
 }
+
+.circle {
+  margin: 6px;
+  width: 12px;
+  height: 12px;
+  background-color: $secondary;
+  border-radius: 50%;
+}

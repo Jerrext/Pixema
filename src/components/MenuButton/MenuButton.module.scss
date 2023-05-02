@@ -2,7 +2,7 @@
 
 .homeLinkWrapper {
   display: flex;
-  gap: 23px;
+  gap: 15px;
   align-items: center;
   cursor: pointer;
   > svg > path {
@@ -20,6 +20,9 @@
     p {
       color: $primary-secondary;
     }
+    span {
+      background-color: $primary-secondary;
+    }
   }
 }
 
@@ -32,14 +35,31 @@
   }
 }
 
+.dropDownMenu {
+  display: none;
+  margin: 15px 0 0 35px;
+  flex-direction: column;
+  padding-left: 15px;
+  border-left: 1px solid $secondary;
+  gap: 10px;
+}
+
+.dropDownMenuOpened {
+  display: flex;
+}
+
 .disabledLink {
-  pointer-events: none;
   cursor: not-allowed;
+  pointer-events: none;
   > svg > path {
     fill: $graphite;
   }
   p {
     color: $graphite;
+  }
+
+  span {
+    background-color: $graphite;
   }
 
   &:hover {

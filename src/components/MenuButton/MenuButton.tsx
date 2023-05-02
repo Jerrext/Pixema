@@ -1,16 +1,18 @@
-import React, { ChangeEvent, FC, KeyboardEvent, ReactNode } from "react";
+import React, { FC, ReactNode, useState } from "react";
 import classNames from "classnames";
 import styles from "./MenuButton.module.scss";
-import { HomeIcon } from "src/assets/icons";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { RoutesList } from "src/pages/Router";
+import { DropDownListType, MenuButtonType } from "./@types";
 
 type MenuButtonProps = {
   icon: ReactNode;
   title: string;
   disabled?: boolean;
-  routeLink: RoutesList;
-  activePage: boolean;
+  buttonType: MenuButtonType;
+  routeLink?: RoutesList | string;
+  dropDownList?: DropDownListType;
+  location?: string;
 };
 
 const MenuButton: FC<MenuButtonProps> = ({
@@ -18,12 +20,19 @@ const MenuButton: FC<MenuButtonProps> = ({
   disabled,
   routeLink,
   title,
-  activePage,
+  location,
+  buttonType,
+  dropDownList,
 }) => {
-  return (
+  const [dropDownMenuState, setDropDownMenuState] = useState(false);
+  const onDropDownButtonClick = () => {
+    setDropDownMenuState(!dropDownMenuState);
+  };
+
+  return buttonType === MenuButtonType.Link && routeLink ? (
     <Link
       className={classNames(styles.homeLinkWrapper, {
-        [styles.activePage]: activePage,
+        [styles.activePage]: location === routeLink,
         [styles.disabledLink]: disabled,
       })}
       to={routeLink}
@@ -31,6 +40,38 @@ const MenuButton: FC<MenuButtonProps> = ({
       {icon}
       <p>{title}</p>
     </Link>
+  ) : (
+    <div>
+      <div
+        className={classNames(styles.homeLinkWrapper, {
+          [styles.disabledLink]: disabled,
+        })}
+        onClick={onDropDownButtonClick}
+      >
+        {icon}
+        <p>{title}</p>
+      </div>
+      <div
+        className={classNames(styles.dropDownMenu, {
+          [styles.dropDownMenuOpened]: dropDownMenuState,
+        })}
+      >
+        {dropDownList &&
+          dropDownList.map((item) => {
+            return (
+              <Link
+                className={classNames(styles.homeLinkWrapper, {
+                  [styles.activePage]: location === item.routeLink,
+                })}
+                key={item.routeLink}
+                to={item.routeLink}
+              >
+                <p>{item.title}</p>
+              </Link>
+            );
+          })}
+      </div>
+    </div>
   );
 };
 

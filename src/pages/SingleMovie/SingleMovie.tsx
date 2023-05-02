@@ -32,6 +32,7 @@ import Tabs from "src/components/Tabs";
 import { MovieTabsNames } from "src/utils/@globalTypes";
 import ViewPerson from "src/components/ViewPerson";
 import { setMessage } from "src/redux/reducers/messageSlice";
+import { FullListsPayload } from "src/redux/reducers/@types";
 
 const SingleMovie = () => {
   const { id } = useParams();
@@ -40,6 +41,7 @@ const SingleMovie = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [tabState, setTabState] = useState(MovieTabsNames.Images);
   const [savedState, setSavedState] = useState(false);
+  const [watchedState, setWatchedState] = useState(false);
 
   const isSingleMovieLoadng = useSelector(MovieSelectors.getSingleMovieLoadng);
   const movieData = useSelector(MovieSelectors.getSingleMovie);
@@ -52,9 +54,13 @@ const SingleMovie = () => {
   const moviesLists = useSelector(MovieSelectors.getFullMyMoviesLists);
 
   const favoriteList = moviesLists.find((item) => item.title === "Favorites");
-  const favoriteIndex = favoriteList?.list.findIndex(
-    (movie) => movie.id === movieData?.id
-  );
+  const favoriteIndex = favoriteList
+    ? favoriteList.list.findIndex((movie) => movie.id === movieData?.id)
+    : -1;
+  const watchedList = moviesLists.find((item) => item.title === "watchlist");
+  const watchedIndex = watchedList
+    ? watchedList.list.findIndex((movie) => movie.id === movieData?.id)
+    : -1;
   const recommendationPageCount = Math.ceil(recommendationCardList.length / 4);
   const isTrend = movieData?.rating && +movieData.rating >= 8;
   const isGreen =
@@ -127,6 +133,32 @@ const SingleMovie = () => {
     },
   ];
 
+  const changeList =
+    (
+      list: FullListsPayload,
+      state: boolean,
+      setState: React.Dispatch<React.SetStateAction<boolean>>
+    ) =>
+    () => {
+      if (movieData) {
+        if (state) {
+          dispatch(
+            removeListItem({
+              id: list.id,
+              value: { itemId: movieData.id, itemType: "title" },
+            })
+          );
+        } else {
+          dispatch(
+            addMovieToList({
+              id: list.id,
+              value: { itemId: movieData.id, itemType: "title" },
+            })
+          );
+        }
+        setState(!state);
+      }
+    };
   const GROUP_BUTTON_LIST = [
     {
       title: (
@@ -138,26 +170,21 @@ const SingleMovie = () => {
           <BookmarkIcon />
         </div>
       ),
-      onClick: () => {
-        if (favoriteList && movieData) {
-          if (savedState) {
-            dispatch(
-              removeListItem({
-                id: favoriteList.id,
-                value: { itemId: movieData.id, itemType: "title" },
-              })
-            );
-          } else {
-            dispatch(
-              addMovieToList({
-                id: favoriteList.id,
-                value: { itemId: movieData.id, itemType: "title" },
-              })
-            );
-          }
-          setSavedState(!savedState);
-        }
-      },
+      onClick:
+        favoriteList && changeList(favoriteList, savedState, setSavedState),
+    },
+    {
+      title: (
+        <div
+          className={classNames({
+            [styles.addedMovie]: watchedState,
+          })}
+        >
+          <EyeIcon />
+        </div>
+      ),
+      onClick:
+        watchedList && changeList(watchedList, watchedState, setWatchedState),
     },
     {
       title: <SocialIcon />,
@@ -193,8 +220,12 @@ const SingleMovie = () => {
   }, [id]);
 
   useEffect(() => {
-    favoriteIndex && setSavedState(favoriteIndex > -1);
+    setSavedState(favoriteIndex > -1);
   }, [favoriteIndex]);
+
+  useEffect(() => {
+    setWatchedState(watchedIndex > -1);
+  }, [watchedIndex]);
 
   return isSingleMovieLoadng ? (
     <Loader />

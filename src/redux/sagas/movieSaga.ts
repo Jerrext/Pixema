@@ -123,7 +123,6 @@ function* getMyMoviesListsWorker() {
     for (let i = 0; i < data.pagination.data.length; i++) {
       yield put(getFullMyMoviesLists(data.pagination.data[i].id));
     }
-    yield put(setMyMoviesListLoading(false));
   } else {
     yield put(
       setMessage({
@@ -155,6 +154,7 @@ function* getFullMyMoviesListsWorker(action: PayloadAction<number>) {
     );
   }
 }
+
 //
 function* addMovieToListWorker(action: PayloadAction<ListPayload>) {
   const { id, value } = action.payload;

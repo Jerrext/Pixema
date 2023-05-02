@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from "react";
 import classNames from "classnames";
 import styles from "./Card.module.scss";
 import { CardType } from "src/utils/@globalTypes";
-import { BookmarkIcon, TrendIcon } from "src/assets/icons";
+import { BookmarkIcon, EyeIcon, TrendIcon } from "src/assets/icons";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -10,6 +10,7 @@ import {
   addMovieToList,
   removeListItem,
 } from "src/redux/reducers/movieSlice";
+import { FullListsPayload } from "src/redux/reducers/@types";
 
 type CardProps = {
   card: CardType;
@@ -21,14 +22,19 @@ const Card: FC<CardProps> = ({ card, classname }) => {
   const navigate = useNavigate();
 
   const [savedState, setSavedState] = useState(false);
+  // const [watchedState, setWatchedState] = useState(false);
 
   const moviesLists = useSelector(MovieSelectors.getFullMyMoviesLists);
 
   const { poster, rating, name, year, id } = card;
   const favoriteList = moviesLists.find((item) => item.title === "Favorites");
-  const favoriteIndex = favoriteList?.list.findIndex(
-    (movie) => movie.id === id
-  );
+  const favoriteIndex = favoriteList
+    ? favoriteList.list.findIndex((movie) => movie.id === card.id)
+    : -1;
+  const watchedList = moviesLists.find((item) => item.title === "watchlist");
+  const watchedIndex = watchedList
+    ? watchedList.list.findIndex((movie) => movie.id === card.id)
+    : -1;
 
   const isTrend = +rating >= 8;
   const isGreen = +rating < 8 && +rating >= 6;
@@ -51,8 +57,8 @@ const Card: FC<CardProps> = ({ card, classname }) => {
           })
         );
       }
-      setSavedState(!savedState);
     }
+    setSavedState(!savedState);
   };
 
   const onTitleClick = () => {
@@ -60,7 +66,11 @@ const Card: FC<CardProps> = ({ card, classname }) => {
   };
 
   useEffect(() => {
-    favoriteIndex && setSavedState(favoriteIndex > -1);
+    setSavedState(favoriteIndex > -1);
+  }, [favoriteIndex]);
+
+  useEffect(() => {
+    setSavedState(favoriteIndex > -1);
   }, [favoriteIndex]);
 
   return (
@@ -81,6 +91,13 @@ const Card: FC<CardProps> = ({ card, classname }) => {
       >
         {isTrend && <TrendIcon />}
         <div>{rating ? rating : 0}</div>
+      </div>
+      <div
+        className={classNames(styles.watched, {
+          [styles.watchedMovie]: watchedIndex > -1,
+        })}
+      >
+        <EyeIcon />
       </div>
       <div
         className={classNames(styles.bookmark, {

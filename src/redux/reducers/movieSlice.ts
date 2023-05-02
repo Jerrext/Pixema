@@ -138,6 +138,7 @@ export const MovieSelectors = {
   getRecommendationMovieLoading: (state: RootState) =>
     state.movie.isRecommendationMovieLoading,
   getFullMyMoviesLists: (state: RootState) => state.movie.fullMyMoviesLists,
+  getMyMoviesLists: (state: RootState) => state.movie.myMoviesLists,
   getMyMoviesListLoading: (state: RootState) =>
     state.movie.isMyMoviesListLoadng,
   // getFavoriteMoviesList: (state: RootState) => state.movie.favoriteMoviesList,

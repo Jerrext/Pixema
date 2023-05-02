@@ -45,25 +45,27 @@
 .bookmark {
   position: absolute;
   padding: 2px 8px;
-  height: 28px;
-  text-align: center;
-  top: 20px;
-  border-radius: 6px;
+  height: 33px;
+  top: 0;
 }
 
 .rating {
-  left: 20px;
+  left: 0;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 4px;
+  min-width: 40px;
   color: $white;
+  border-radius: 20px 0 20px 0;
 }
 
 .bookmark {
   cursor: pointer;
   opacity: 0;
-  right: 20px;
+  right: 0;
   background-color: $graphite;
+  border-radius: 0 17px 0 20px;
   transition: 0.5s;
   > svg > path {
     fill: $secondary;
@@ -105,4 +107,24 @@
   > svg > path {
     fill: $primary;
   }
+}
+
+.watched {
+  display: none;
+  position: absolute;
+  right: 0;
+  bottom: 65px;
+  border-radius: 20px 0 20px 0;
+  background-color: $white;
+  width: 33px;
+  height: 33px;
+  align-items: center;
+  justify-content: center;
+  > svg > path {
+    fill: $primary;
+  }
+}
+
+.watchedMovie {
+  display: flex;
 }
