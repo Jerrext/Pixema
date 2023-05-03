@@ -92,7 +92,12 @@ function* getRecommendationMovieListWorker(action: PayloadAction<string>) {
     yield put(setRecommendationMovieList(data.titles));
     yield put(setRecommendationMovieLoading(false));
   } else {
-    console.warn("Error getting recommendation movies", problem);
+    yield put(
+      setMessage({
+        status: false,
+        message: `Error getting recommendation movies ${problem}`,
+      })
+    );
   }
 }
 

@@ -33,6 +33,7 @@ import { MovieTabsNames } from "src/utils/@globalTypes";
 import ViewPerson from "src/components/ViewPerson";
 import { setMessage } from "src/redux/reducers/messageSlice";
 import { FullListsPayload } from "src/redux/reducers/@types";
+import ListSelect from "src/components/ListSelect/ListSelect";
 
 const SingleMovie = () => {
   const { id } = useParams();
@@ -53,6 +54,9 @@ const SingleMovie = () => {
   );
   const moviesLists = useSelector(MovieSelectors.getFullMyMoviesLists);
 
+  const filteredMoviesLists = moviesLists.filter(
+    (item) => item.title !== "Favorites" && item.title !== "watchlist"
+  );
   const favoriteList = moviesLists.find((item) => item.title === "Favorites");
   const favoriteIndex = favoriteList
     ? favoriteList.list.findIndex((movie) => movie.id === movieData?.id)
@@ -237,6 +241,13 @@ const SingleMovie = () => {
             <div className={styles.movieCard}>
               <img src={movieData?.poster} className={styles.moviePoster}></img>
               <GroupButtons groupButtonsList={GROUP_BUTTON_LIST} />
+              {filteredMoviesLists.length !== 0 && (
+                <ListSelect
+                  title="Lists"
+                  lists={filteredMoviesLists}
+                  movieId={movieData?.id}
+                />
+              )}
             </div>
           </div>
           <div className={styles.movieText}>
