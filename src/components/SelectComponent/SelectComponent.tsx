@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import Select, { OnChangeValue } from "react-select";
 import "./SelectComponent.scss";
 import classNames from "classnames";
@@ -10,6 +10,11 @@ type SelectComponentProps = {
   isDisabled?: boolean;
   optionsList: OptionsListType;
   isMulti?: boolean;
+  currentValues: string[] | string;
+  setSelecValue: (value: string[] | string) => void;
+  defaultValueId?: number;
+  isSearchable?: boolean;
+  isClearable?: boolean;
 };
 
 const SelectComponent: FC<SelectComponentProps> = ({
@@ -18,9 +23,12 @@ const SelectComponent: FC<SelectComponentProps> = ({
   isDisabled,
   isMulti,
   optionsList,
+  currentValues,
+  setSelecValue,
+  isSearchable,
+  defaultValueId,
+  isClearable,
 }) => {
-  const [currentValues, setCurrentValues] = useState<string[] | string>();
-
   const getValue = () => {
     if (currentValues) {
       return isMulti
@@ -34,7 +42,7 @@ const SelectComponent: FC<SelectComponentProps> = ({
   };
 
   const onChange = (newValue: OnChangeValue<OptionType, boolean>) => {
-    setCurrentValues(
+    setSelecValue(
       isMulti
         ? (newValue as OptionsListType).map((value) => value.value)
         : newValue
@@ -42,6 +50,10 @@ const SelectComponent: FC<SelectComponentProps> = ({
         : ""
     );
   };
+
+  useEffect(() => {
+    defaultValueId && optionsList && onChange(optionsList[defaultValueId]);
+  }, [defaultValueId]);
 
   return (
     <div
@@ -68,7 +80,8 @@ const SelectComponent: FC<SelectComponentProps> = ({
         value={getValue()}
         className="customSelect"
         classNamePrefix="customSelect"
-        isClearable={true}
+        isClearable={isClearable}
+        isSearchable={isSearchable}
         options={optionsList}
         placeholder={placeholder}
         isDisabled={isDisabled}

@@ -1,0 +1,87 @@
+@import "src/assets/colors";
+
+.windowWrapper {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba($black, 0.8);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.window {
+  width: 700px;
+  background-color: $dark;
+  border-radius: 20px;
+  padding: 30px;
+  position: relative;
+}
+
+.closeBtn {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  width: 30px;
+  height: 30px;
+  background-color: rgba($black, 0);
+  border-radius: 5px;
+  transition: 0.3s;
+  cursor: pointer;
+
+  &::after,
+  &::before {
+    content: "";
+    position: absolute;
+    height: 2px;
+    width: 20px;
+    top: 50%;
+    left: 50%;
+    background-color: $secondary;
+    transition: 0.3s;
+  }
+
+  &::after {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  &::before {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+
+  &:hover {
+    background-color: rgba($black, 0.2);
+  }
+
+  &:hover::after,
+  &:hover::before {
+    background-color: $light;
+  }
+}
+
+.windowTitle {
+  text-align: center;
+  font-size: 25px;
+  text-transform: uppercase;
+}
+
+.windowContent {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.topInputsWrapper {
+  display: flex;
+  gap: 20px;
+
+  > div {
+    flex: 1;
+  }
+}
+
+.createBtn {
+  margin-top: 10px;
+}

@@ -8,12 +8,13 @@ type InputProps = {
   title?: string;
   placeholder: string;
   onKeyDown?: (event: KeyboardEvent<HTMLInputElement>) => void;
-  inputType: string;
+  inputType?: string;
   disabled?: boolean;
   errText?: string;
   className?: string;
   onChange: (value: string) => void;
   onBlur?: () => void;
+  textarea?: boolean;
 };
 
 const Input: FC<InputProps> = ({
@@ -27,29 +28,48 @@ const Input: FC<InputProps> = ({
   onChange,
   onBlur,
   onKeyDown,
+  textarea,
 }) => {
   const { theme } = useThemeContext();
 
   const onChangeText = (e: ChangeEvent<HTMLInputElement>) => {
     onChange(e.target.value);
   };
+
+  const onChangeTextarea = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    onChange(e.target.value);
+  };
   return (
     <div className={styles.inputWrapper}>
       <p className={styles.title}>{title}</p>
-      <input
-        value={value}
-        className={classNames(styles.input, className, {
-          [styles.disabledInp]: disabled,
-          [styles.errorInput]: errText,
-          [styles.inputLight]: theme === Theme.Light,
-        })}
-        type={inputType}
-        onKeyDown={onKeyDown}
-        placeholder={placeholder}
-        onBlur={onBlur}
-        disabled={disabled}
-        onChange={onChangeText}
-      />
+      {textarea ? (
+        <textarea
+          value={value}
+          className={classNames(styles.input, className, styles.textarea, {
+            [styles.disabledInp]: disabled,
+            [styles.errorInput]: errText,
+          })}
+          placeholder={placeholder}
+          disabled={disabled}
+          onBlur={onBlur}
+          onChange={onChangeTextarea}
+        ></textarea>
+      ) : (
+        <input
+          value={value}
+          className={classNames(styles.input, className, {
+            [styles.disabledInp]: disabled,
+            [styles.errorInput]: errText,
+            [styles.inputLight]: theme === Theme.Light,
+          })}
+          type={inputType}
+          onKeyDown={onKeyDown}
+          placeholder={placeholder}
+          onBlur={onBlur}
+          disabled={disabled}
+          onChange={onChangeText}
+        />
+      )}
       {errText && <p className={styles.errorText}>{errText}</p>}
     </div>
   );

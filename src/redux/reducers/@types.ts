@@ -54,7 +54,7 @@ export type MessagePayload = {
 export type DetailsListType = {
   name: string;
   description: string;
-  public: false;
+  public: boolean;
 };
 
 export type CreateListPayload = {

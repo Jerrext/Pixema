@@ -12,6 +12,7 @@ import {
   getRecommendationMovieList,
   getSingleMovie,
   removeListItem,
+  setAddListWindowVisibility,
   setAllMoviesLoading,
   setFullMyMoviesLists,
   // setFavoriteMoviesList,
@@ -217,12 +218,13 @@ function* createMyListWorker(action: PayloadAction<CreateListPayload>) {
     data
   );
   if (ok && responseData) {
-    // yield put(setMyMoviesList([]));
+    yield put(getMyMoviesLists());
+    yield put(setAddListWindowVisibility(false));
   } else {
     yield put(
       setMessage({
         status: false,
-        message: `Error create favorite list ${problem}`,
+        message: `List creation error ${problem}`,
       })
     );
   }

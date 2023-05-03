@@ -39,13 +39,54 @@
   display: none;
   margin: 15px 0 0 35px;
   flex-direction: column;
-  padding-left: 15px;
-  border-left: 1px solid $secondary;
   gap: 10px;
 }
 
 .dropDownMenuOpened {
   display: flex;
+}
+
+.listsWrapper {
+  border-left: 1px solid $secondary;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-left: 15px;
+}
+
+.addList {
+  height: 30px;
+  width: 100px;
+  border-radius: 5px;
+  position: relative;
+  cursor: pointer;
+  transition: 0.3s;
+  background-color: rgba($dark, 0.2);
+
+  &::after,
+  &::before {
+    height: 2px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    width: 15px;
+    content: "";
+    background-color: $secondary;
+    transition: 0.3s;
+  }
+
+  &::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+
+  &:hover {
+    background-color: rgba($dark, 1);
+    &::after,
+    &::before {
+      background-color: $light;
+    }
+  }
 }
 
 .disabledLink {

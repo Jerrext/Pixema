@@ -28,6 +28,7 @@ type MoviesState = {
   myMoviesLists: ListData[];
   fullMyMoviesLists: FullListsPayload[];
   isMyMoviesListLoadng: boolean;
+  isAddListWindowOpened: boolean;
 };
 
 const initialState: MoviesState = {
@@ -42,6 +43,7 @@ const initialState: MoviesState = {
   myMoviesLists: [],
   fullMyMoviesLists: [],
   isMyMoviesListLoadng: false,
+  isAddListWindowOpened: false,
 };
 
 const MovieSlice = createSlice({
@@ -96,6 +98,9 @@ const MovieSlice = createSlice({
     // getFavoriteMovies(_, __: PayloadAction<undefined>) {},
     removeListItem(_, __: PayloadAction<ListPayload>) {},
     createMyList(_, __: PayloadAction<CreateListPayload>) {},
+    setAddListWindowVisibility(state, action: PayloadAction<boolean>) {
+      state.isAddListWindowOpened = action.payload;
+    },
   },
 });
 
@@ -122,6 +127,7 @@ export const {
   // setFavoriteMoviesList,
   removeListItem,
   createMyList,
+  setAddListWindowVisibility,
 } = MovieSlice.actions;
 export default MovieSlice.reducer;
 
@@ -141,5 +147,8 @@ export const MovieSelectors = {
   getMyMoviesLists: (state: RootState) => state.movie.myMoviesLists,
   getMyMoviesListLoading: (state: RootState) =>
     state.movie.isMyMoviesListLoadng,
+  getAddListWindowVisibility: (state: RootState) =>
+    state.movie.isAddListWindowOpened,
+
   // getFavoriteMoviesList: (state: RootState) => state.movie.favoriteMoviesList,
 };

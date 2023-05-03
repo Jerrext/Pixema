@@ -4,6 +4,8 @@ import styles from "./MenuButton.module.scss";
 import { Link } from "react-router-dom";
 import { RoutesList } from "src/pages/Router";
 import { DropDownListType, MenuButtonType } from "./@types";
+import { useDispatch } from "react-redux";
+import { setAddListWindowVisibility } from "src/redux/reducers/movieSlice";
 
 type MenuButtonProps = {
   icon: ReactNode;
@@ -24,9 +26,15 @@ const MenuButton: FC<MenuButtonProps> = ({
   buttonType,
   dropDownList,
 }) => {
+  const dispatch = useDispatch();
+
   const [dropDownMenuState, setDropDownMenuState] = useState(false);
   const onDropDownButtonClick = () => {
     setDropDownMenuState(!dropDownMenuState);
+  };
+
+  const onAddListBtnClick = (isAddListWindowOpened: boolean) => () => {
+    dispatch(setAddListWindowVisibility(isAddListWindowOpened));
   };
 
   return buttonType === MenuButtonType.Link && routeLink ? (
@@ -56,20 +64,23 @@ const MenuButton: FC<MenuButtonProps> = ({
           [styles.dropDownMenuOpened]: dropDownMenuState,
         })}
       >
-        {dropDownList &&
-          dropDownList.map((item) => {
-            return (
-              <Link
-                className={classNames(styles.homeLinkWrapper, {
-                  [styles.activePage]: location === item.routeLink,
-                })}
-                key={item.routeLink}
-                to={item.routeLink}
-              >
-                <p>{item.title}</p>
-              </Link>
-            );
-          })}
+        <div className={styles.listsWrapper}>
+          {dropDownList &&
+            dropDownList.map((item) => {
+              return (
+                <Link
+                  className={classNames(styles.homeLinkWrapper, {
+                    [styles.activePage]: location === item.routeLink,
+                  })}
+                  key={item.routeLink}
+                  to={item.routeLink}
+                >
+                  <p>{item.title}</p>
+                </Link>
+              );
+            })}
+        </div>
+        <div className={styles.addList} onClick={onAddListBtnClick(true)}></div>
       </div>
     </div>
   );
