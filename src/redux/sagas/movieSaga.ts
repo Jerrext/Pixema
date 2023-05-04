@@ -12,9 +12,9 @@ import {
   getRecommendationMovieList,
   getSingleMovie,
   removeListItem,
-  setAddListWindowVisibility,
   setAllMoviesLoading,
   setFullMyMoviesLists,
+  setModalWindow,
   // setFavoriteMoviesList,
   setMoviesList,
   // setMyMoviesList,
@@ -219,7 +219,13 @@ function* createMyListWorker(action: PayloadAction<CreateListPayload>) {
   );
   if (ok && responseData) {
     yield put(getMyMoviesLists());
-    yield put(setAddListWindowVisibility(false));
+    yield put(setModalWindow(null));
+    yield put(
+      setMessage({
+        status: true,
+        message: `${responseData.list.name} list created successfully`,
+      })
+    );
   } else {
     yield put(
       setMessage({

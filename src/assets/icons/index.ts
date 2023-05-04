@@ -14,3 +14,5 @@ export { UnknownPersonIcon } from "./UnknownPersonIcon";
 export { CheckMarkIcon } from "./CheckMarkIcon";
 export { ErrorIcon } from "./ErrorIcon";
 export { CheckMark2Icon } from "./CheckMark2Icon";
+export { TrashCanIcon } from "./TrashCanIcon";
+export { EditIcon } from "./EditIcon";

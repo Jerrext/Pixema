@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React from "react";
 import styles from "./Settings.module.scss";
 import Switcher from "src/components/Switcher";
 import { Theme, useThemeContext } from "src/Context/Theme/Context";

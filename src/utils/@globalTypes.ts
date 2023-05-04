@@ -35,3 +35,9 @@ export enum MovieTabsNames {
   Videos = "Videos",
   Images = "Images",
 }
+
+export enum ModalWindowType {
+  AddNewList,
+  RemoveList,
+  EditList,
+}

@@ -70,7 +70,6 @@
   display: flex;
   flex-direction: column;
   gap: 30px;
-  margin-top: 20px;
 }
 
 .topInputsWrapper {
@@ -84,4 +83,20 @@
 
 .createBtn {
   margin-top: 10px;
+}
+
+.closeBtnHide {
+  display: none;
+}
+
+.confirmControls {
+  display: flex;
+  gap: 20px;
+  > div {
+    flex: 1;
+  }
+}
+
+.windowRemoveConfirm {
+  width: 400px;
 }

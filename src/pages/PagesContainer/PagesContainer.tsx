@@ -11,14 +11,12 @@ import Message from "src/components/Message";
 import { MessageSelectors } from "src/redux/reducers/messageSlice";
 import { Theme, useThemeContext } from "src/Context/Theme/Context";
 import { MovieSelectors } from "src/redux/reducers/movieSlice";
-import AddNewListWindow from "src/components/AddNewListWindow/AddNewListWindow";
+import ModalWindow from "src/components/ModalWindow/ModalWindow";
 
 const PagesContainer = () => {
   const isLoggedIn = useSelector(AuthSelectors.getLoggedIn);
   const message = useSelector(MessageSelectors.getMessage);
-  const isAddListWindowOpened = useSelector(
-    MovieSelectors.getAddListWindowVisibility
-  );
+  const modalWindow = useSelector(MovieSelectors.getModalWindow);
 
   const { theme } = useThemeContext();
 
@@ -43,7 +41,7 @@ const PagesContainer = () => {
       </div>
       {!isLoggedIn && <div className={styles.footer}>{footerContent}</div>}
       {message && <Message status={message.status} message={message.message} />}
-      {isAddListWindowOpened && <AddNewListWindow />}
+      {modalWindow !== null && <ModalWindow modalWindowType={modalWindow} />}
     </div>
   );
 };

@@ -1,7 +1,11 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import React from "react";
 import { RootState } from "../store";
-import { CardListType, CardType } from "src/utils/@globalTypes";
+import {
+  CardListType,
+  CardType,
+  ModalWindowType,
+} from "src/utils/@globalTypes";
 import {
   ListPayload,
   GetAllMoviesPayload,
@@ -28,7 +32,8 @@ type MoviesState = {
   myMoviesLists: ListData[];
   fullMyMoviesLists: FullListsPayload[];
   isMyMoviesListLoadng: boolean;
-  isAddListWindowOpened: boolean;
+  // modalWindow: Modal
+  modalWindow: ModalWindowType | null;
 };
 
 const initialState: MoviesState = {
@@ -43,7 +48,7 @@ const initialState: MoviesState = {
   myMoviesLists: [],
   fullMyMoviesLists: [],
   isMyMoviesListLoadng: false,
-  isAddListWindowOpened: false,
+  modalWindow: null,
 };
 
 const MovieSlice = createSlice({
@@ -98,8 +103,8 @@ const MovieSlice = createSlice({
     // getFavoriteMovies(_, __: PayloadAction<undefined>) {},
     removeListItem(_, __: PayloadAction<ListPayload>) {},
     createMyList(_, __: PayloadAction<CreateListPayload>) {},
-    setAddListWindowVisibility(state, action: PayloadAction<boolean>) {
-      state.isAddListWindowOpened = action.payload;
+    setModalWindow(state, action: PayloadAction<ModalWindowType | null>) {
+      state.modalWindow = action.payload;
     },
   },
 });
@@ -127,7 +132,7 @@ export const {
   // setFavoriteMoviesList,
   removeListItem,
   createMyList,
-  setAddListWindowVisibility,
+  setModalWindow,
 } = MovieSlice.actions;
 export default MovieSlice.reducer;
 
@@ -147,8 +152,7 @@ export const MovieSelectors = {
   getMyMoviesLists: (state: RootState) => state.movie.myMoviesLists,
   getMyMoviesListLoading: (state: RootState) =>
     state.movie.isMyMoviesListLoadng,
-  getAddListWindowVisibility: (state: RootState) =>
-    state.movie.isAddListWindowOpened,
+  getModalWindow: (state: RootState) => state.movie.modalWindow,
 
   // getFavoriteMoviesList: (state: RootState) => state.movie.favoriteMoviesList,
 };

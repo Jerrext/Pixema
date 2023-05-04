@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 import { RoutesList } from "src/pages/Router";
 import { DropDownListType, MenuButtonType } from "./@types";
 import { useDispatch } from "react-redux";
-import { setAddListWindowVisibility } from "src/redux/reducers/movieSlice";
+import { setModalWindow } from "src/redux/reducers/movieSlice";
+import { ModalWindowType } from "src/utils/@globalTypes";
 
 type MenuButtonProps = {
   icon: ReactNode;
@@ -33,8 +34,8 @@ const MenuButton: FC<MenuButtonProps> = ({
     setDropDownMenuState(!dropDownMenuState);
   };
 
-  const onAddListBtnClick = (isAddListWindowOpened: boolean) => () => {
-    dispatch(setAddListWindowVisibility(isAddListWindowOpened));
+  const onAddListBtnClick = () => {
+    dispatch(setModalWindow(ModalWindowType.AddNewList));
   };
 
   return buttonType === MenuButtonType.Link && routeLink ? (
@@ -80,7 +81,7 @@ const MenuButton: FC<MenuButtonProps> = ({
               );
             })}
         </div>
-        <div className={styles.addList} onClick={onAddListBtnClick(true)}></div>
+        <div className={styles.addList} onClick={onAddListBtnClick}></div>
       </div>
     </div>
   );

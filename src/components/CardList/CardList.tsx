@@ -11,10 +11,12 @@ type CardListProps = {
 
 const CardList: FC<CardListProps> = ({ cardList }) => {
   return cardList.length > 0 ? (
-    <div className={styles.wrapper}>
-      {cardList.map((item) => {
-        return <Card card={item} key={item.id} />;
-      })}
+    <div className={styles.cardListWrapper}>
+      <div className={styles.wrapper}>
+        {cardList.map((item) => {
+          return <Card card={item} key={item.id} />;
+        })}
+      </div>
     </div>
   ) : (
     <EmptyState
