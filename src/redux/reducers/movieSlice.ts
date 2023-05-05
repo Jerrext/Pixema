@@ -110,6 +110,15 @@ const MovieSlice = createSlice({
       state.currentList = action.payload;
     },
     removeList(_, __: PayloadAction<RemoveListPayload>) {},
+    clearMoviesData(state, __: PayloadAction<undefined>) {
+      state.currentList = null;
+      state.moviesList = [];
+      state.pagesCount = 0;
+      state.singleMovie = null;
+      state.recommendationMovieList = [];
+      state.myMoviesLists = [];
+      state.fullMyMoviesLists = [];
+    },
   },
 });
 
@@ -137,6 +146,7 @@ export const {
   setCurrentList,
   removeList,
   clearFullMyMoviesLists,
+  clearMoviesData,
 } = MovieSlice.actions;
 export default MovieSlice.reducer;
 

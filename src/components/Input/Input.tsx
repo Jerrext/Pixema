@@ -48,6 +48,7 @@ const Input: FC<InputProps> = ({
           className={classNames(styles.input, className, styles.textarea, {
             [styles.disabledInp]: disabled,
             [styles.errorInput]: errText,
+            [styles.inputLight]: theme === Theme.Light,
           })}
           placeholder={placeholder}
           disabled={disabled}

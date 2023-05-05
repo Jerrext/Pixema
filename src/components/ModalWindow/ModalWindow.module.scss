@@ -100,3 +100,14 @@
 .windowRemoveConfirm {
   width: 400px;
 }
+
+.windowLight {
+  background-color: $white;
+
+  .closeBtn {
+    &:hover::after,
+    &:hover::before {
+      background-color: $black;
+    }
+  }
+}

@@ -10,7 +10,7 @@ import { Theme, useThemeContext } from "src/Context/Theme/Context";
 
 const Header = () => {
   const isLoggedIn = useSelector(AuthSelectors.getLoggedIn);
-  const userName = useSelector(AuthSelectors.getUserName);
+  const userData = useSelector(AuthSelectors.getUserData);
 
   const { theme } = useThemeContext();
 
@@ -26,7 +26,9 @@ const Header = () => {
             <PixemaLogoIcon />
           </div>
           <Search />
-          <UserName userName={userName ? userName : "Loading..."} />
+          <UserName
+            userName={userData ? userData.display_name : "Loading..."}
+          />
         </>
       ) : (
         <PixemaLogoIcon />

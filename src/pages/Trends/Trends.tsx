@@ -9,7 +9,7 @@ import {
 import Loader from "src/components/Loader";
 import Paginate from "src/components/Paginate";
 
-const Home = () => {
+const Trends = () => {
   const dispatch = useDispatch();
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,7 +24,7 @@ const Home = () => {
 
   useEffect(() => {
     const page = currentPage;
-    dispatch(getAllMovies({ page }));
+    dispatch(getAllMovies({ page, score: "8,9.9" }));
     return () => {
       dispatch(setMoviesList([]));
     };
@@ -47,4 +47,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Trends;

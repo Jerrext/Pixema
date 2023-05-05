@@ -41,9 +41,16 @@
   }
 }
 
+.inputLight {
+  background-color: $white;
+  border: 2px solid $light;
+  color: $black;
+}
+
 .disabledInp {
   background-color: $secondary;
   cursor: not-allowed;
+  border: 2px solid $secondary;
 
   &::placeholder {
     color: $light;
@@ -71,11 +78,6 @@
   color: $white;
 }
 
-.inputLight {
-  background-color: $white;
-  border: 2px solid $light;
-  color: $black;
-}
 .textarea {
   resize: none;
   height: 150px;

@@ -7,6 +7,8 @@ import {
   getRecommendationMovieList,
   getSingleMovie,
   removeListItem,
+  setRecommendationMovieList,
+  setSingleMovie,
 } from "src/redux/reducers/movieSlice";
 import Loader from "src/components/Loader";
 import { useParams } from "react-router-dom";
@@ -33,7 +35,7 @@ import { MovieTabsNames } from "src/utils/@globalTypes";
 import ViewPerson from "src/components/ViewPerson";
 import { setMessage } from "src/redux/reducers/messageSlice";
 import { FullListsPayload } from "src/redux/reducers/@types";
-import ListSelect from "src/components/ListSelect/ListSelect";
+import ListSelect from "src/components/ListSelect";
 
 const SingleMovie = () => {
   const { id } = useParams();
@@ -221,6 +223,10 @@ const SingleMovie = () => {
       dispatch(getSingleMovie(id));
       dispatch(getRecommendationMovieList(id));
     }
+    return () => {
+      dispatch(setSingleMovie(null));
+      dispatch(setRecommendationMovieList([]));
+    };
   }, [id]);
 
   useEffect(() => {

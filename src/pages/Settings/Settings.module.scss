@@ -1,5 +1,12 @@
 @import "src/assets/colors";
 
+.settingsWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  max-width: 1265px;
+}
+
 .title {
   font-weight: 600;
   font-size: 24px;
@@ -32,4 +39,14 @@
 .settingsItemLight {
   background-color: $white;
   border: 1px solid $light;
+
+  p {
+    color: $graphite;
+  }
+}
+
+.profile {
+  > div {
+    flex: 1;
+  }
 }

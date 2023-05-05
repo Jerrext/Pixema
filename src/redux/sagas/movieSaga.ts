@@ -52,9 +52,9 @@ import { setMessage } from "../reducers/messageSlice";
 
 function* getMoviesWorker(action: PayloadAction<GetAllMoviesPayload>) {
   yield put(setAllMoviesLoading(true));
-  const { page } = action.payload;
+  const { page, score } = action.payload;
   const { ok, data, problem }: ApiResponse<MoviesResponseData> =
-    yield callCheckingAuth(API.getMovies, "", page);
+    yield callCheckingAuth(API.getMovies, "", page, score);
   if (ok && data) {
     yield put(setMoviesList(data.pagination.data));
     yield put(setPagesCount(data.pagination.last_page));

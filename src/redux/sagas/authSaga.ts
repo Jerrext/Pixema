@@ -22,7 +22,13 @@ import {
 import { UserErrorsData, UserResponseData } from "./@types";
 import { ACCESS_TOKEN_KEY } from "src/utils/constants";
 import callCheckingAuth from "./callCheckingAuth";
-import { createMyList, setAllMoviesLoading } from "../reducers/movieSlice";
+import {
+  clearFullMyMoviesLists,
+  clearMoviesData,
+  createMyList,
+  setAllMoviesLoading,
+  setMyMoviesLists,
+} from "../reducers/movieSlice";
 
 function* signUpUserWorker(action: PayloadAction<SignUpUserPayload>) {
   const { data, callback } = action.payload;
@@ -82,6 +88,7 @@ function* logoutUserWorker() {
   localStorage.removeItem(ACCESS_TOKEN_KEY);
   yield put(setLoggedIn(false));
   yield put(setUserData(null));
+  yield put(clearMoviesData());
 }
 
 function* getUserDataWorker(action: PayloadAction<GetUserDataPayload>) {

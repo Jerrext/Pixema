@@ -38,17 +38,16 @@
   }
 
   &__menu {
-    background-color: $graphite;
     left: 0;
     top: auto !important;
     margin-top: 10px;
     border-radius: 10px;
     padding: 2px 0;
+    overflow: hidden;
   }
 
   &__option {
     padding: 15px 20px;
-    border-bottom: 1px solid $dark;
     cursor: pointer !important;
 
     &:hover {

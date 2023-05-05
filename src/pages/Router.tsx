@@ -24,18 +24,16 @@ import Settings from "./Settings/Settings";
 import { changeTheme } from "src/redux/reducers/themeSlice";
 import { THEME } from "src/utils/constants";
 import { Theme } from "src/Context/Theme/Context";
+import Trends from "./Trends/Trends";
 
 export enum RoutesList {
   Home = "/",
   SignIn = "/sign-in",
   SignUp = "/sign-up",
   ResetPassword = "/reset-password",
-  EditProfile = "/edit-profile",
   Settings = "/settings",
   Trends = "/trends",
   Lists = "/lists/:id",
-  // Favorites = "/favorites",
-  // Watched = "/watched",
   SingleMovie = "/titles/:id",
   Default = "*",
 }
@@ -83,17 +81,13 @@ const Router = () => {
             }
           />
           <Route
+            path={RoutesList.Trends}
+            element={redirectSignIn(<Trends />)}
+          />
+          <Route
             path={RoutesList.SingleMovie}
             element={redirectSignIn(<SingleMovie />)}
           />
-          {/* <Route
-            path={RoutesList.Favorites}
-            element={redirectSignIn(<ListPage />)}
-          />
-          <Route
-            path={RoutesList.Watched}
-            element={redirectSignIn(<ListPage />)}
-          /> */}
           <Route
             path={RoutesList.Lists}
             element={redirectSignIn(<ListPage />)}

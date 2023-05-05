@@ -3,6 +3,7 @@ import Select, { OnChangeValue } from "react-select";
 import "./SelectComponent.scss";
 import classNames from "classnames";
 import { OptionType, OptionsListType } from "./types";
+import { Theme, useThemeContext } from "src/Context/Theme/Context";
 
 type SelectComponentProps = {
   title: string;
@@ -29,6 +30,10 @@ const SelectComponent: FC<SelectComponentProps> = ({
   defaultValueId,
   isClearable,
 }) => {
+  const { theme } = useThemeContext();
+
+  const isLight = theme === Theme.Light;
+
   const getValue = () => {
     if (currentValues) {
       return isMulti
@@ -66,14 +71,37 @@ const SelectComponent: FC<SelectComponentProps> = ({
         styles={{
           control: (baseStyles, state) => ({
             ...baseStyles,
-            backgroundColor: state.isDisabled ? "#80858B" : "#323537",
+            backgroundColor: state.isDisabled
+              ? "#80858B"
+              : isLight
+              ? "#FFFFFF"
+              : "#323537",
+            color: state.isDisabled
+              ? "#AFB2B6"
+              : isLight
+              ? "#000000"
+              : "#FFFFFF",
             border: state.isFocused
               ? "2px solid #7B61FF"
+              : state.isDisabled
+              ? "2px solid #80858b"
+              : isLight
+              ? "2px solid #afb2b6"
               : "2px solid transparent",
           }),
-          placeholder: (baseStyles, state) => ({
+          // placeholder: (baseStyles, state) => ({
+          //   ...baseStyles,
+          //   // color: state.isDisabled ? "#AFB2B6" : "#80858B",
+          // }),
+          menu: (baseStyles, state) => ({
             ...baseStyles,
-            color: state.isDisabled ? "#AFB2B6" : "#80858B",
+            backgroundColor: isLight ? "#FFFFFF" : "#323537",
+            border: isLight ? "1px solid #afb2b6" : "1px solid #242426",
+          }),
+          option: (baseStyles, state) => ({
+            ...baseStyles,
+            backgroundColor: isLight ? "#FFFFFF" : "323537",
+            borderBottom: isLight ? "1px solid #afb2b6" : "1px solid #242426",
           }),
         }}
         onChange={onChange}

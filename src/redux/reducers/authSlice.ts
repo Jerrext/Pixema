@@ -63,5 +63,5 @@ export const AuthSelectors = {
     state.auth.inputErrors?.email && state.auth.inputErrors?.email[0],
   getPasswordErrors: (state: RootState) =>
     state.auth.inputErrors?.password && state.auth.inputErrors?.password[0],
-  getUserName: (state: RootState) => state.auth.userData?.display_name,
+  getUserData: (state: RootState) => state.auth.userData,
 };

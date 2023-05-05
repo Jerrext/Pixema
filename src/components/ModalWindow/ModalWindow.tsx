@@ -119,6 +119,7 @@ const ModalWindow: FC<ModalWindowProps> = ({
       <div
         className={classNames(styles.window, {
           [styles.windowRemoveConfirm]: isRemoveWindow,
+          [styles.windowLight]: theme === Theme.Light,
         })}
         onClick={(e) => {
           e.stopPropagation();

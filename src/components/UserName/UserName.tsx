@@ -4,11 +4,14 @@ import classNames from "classnames";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "src/redux/reducers/authSlice";
 import { Theme, useThemeContext } from "src/Context/Theme/Context";
+import { useNavigate } from "react-router-dom";
+import { RoutesList } from "src/pages/Router";
 
 type userNameProps = { userName: string };
 
 const UserName: FC<userNameProps> = ({ userName }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [isDropdownOpened, setIsDropdownOpened] = useState(false);
 
@@ -24,7 +27,9 @@ const UserName: FC<userNameProps> = ({ userName }) => {
   const dropdownButtonsList = [
     {
       title: "Edit profile",
-      onClick: () => {},
+      onClick: () => {
+        navigate(RoutesList.Settings);
+      },
     },
     {
       title: "Logout",

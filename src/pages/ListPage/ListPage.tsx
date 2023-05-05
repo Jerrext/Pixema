@@ -9,14 +9,13 @@ import {
   setMyMoviesListLoading,
 } from "src/redux/reducers/movieSlice";
 import Loader from "src/components/Loader";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { EditIcon, TrashCanIcon } from "src/assets/icons";
 import { ButtonType, ModalWindowType } from "src/utils/@globalTypes";
 import Button from "src/components/Button";
 
 const ListPage = () => {
   const dispatch = useDispatch();
-  const location = useLocation();
   const { id } = useParams();
 
   const isMyMoviesListLoading = useSelector(
@@ -54,6 +53,9 @@ const ListPage = () => {
       const currentList = moviesLists.find((item) => item.id === +id);
       currentList && dispatch(setCurrentList(currentList));
     }
+    return () => {
+      dispatch(setCurrentList(null));
+    };
   }, [id, moviesLists]);
 
   return isMyMoviesListLoading ? (
@@ -65,22 +67,22 @@ const ListPage = () => {
           <Button
             title={
               <>
-                <span>Remove list</span>
-                <TrashCanIcon />
-              </>
-            }
-            onClick={onRemoveListBtnClick}
-            type={ButtonType.Secondary}
-            className={styles.listBtn}
-          />
-          <Button
-            title={
-              <>
                 <span>Edit list</span>
                 <EditIcon />
               </>
             }
             onClick={onEditListBtnClick}
+            type={ButtonType.Primary}
+            className={styles.listBtn}
+          />
+          <Button
+            title={
+              <>
+                <span>Remove list</span>
+                <TrashCanIcon />
+              </>
+            }
+            onClick={onRemoveListBtnClick}
             type={ButtonType.Secondary}
             className={styles.listBtn}
           />

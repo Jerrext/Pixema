@@ -31,6 +31,7 @@ export type GetUserDataPayload = {
 
 export interface GetAllMoviesPayload {
   page: number;
+  score?: string;
 }
 
 export type SignUpUserPayload = PayloadWithCallback<SigUpPayloadData>;
