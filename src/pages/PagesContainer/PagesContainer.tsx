@@ -17,6 +17,7 @@ const PagesContainer = () => {
   const isLoggedIn = useSelector(AuthSelectors.getLoggedIn);
   const message = useSelector(MessageSelectors.getMessage);
   const modalWindow = useSelector(MovieSelectors.getModalWindow);
+  const currentList = useSelector(MovieSelectors.getCurrentList);
 
   const { theme } = useThemeContext();
 
@@ -41,7 +42,9 @@ const PagesContainer = () => {
       </div>
       {!isLoggedIn && <div className={styles.footer}>{footerContent}</div>}
       {message && <Message status={message.status} message={message.message} />}
-      {modalWindow !== null && <ModalWindow modalWindowType={modalWindow} />}
+      {modalWindow !== null && (
+        <ModalWindow modalWindowType={modalWindow} currentList={currentList} />
+      )}
     </div>
   );
 };

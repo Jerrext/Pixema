@@ -116,6 +116,18 @@ const removeListItem = (token: string, id: number, value: ListValue) => {
   });
 };
 
+const removeList = (token: string, id: number) => {
+  return API.delete(
+    `/lists/${id}`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
 export default {
   signUpUser,
   signInUser,
@@ -128,4 +140,5 @@ export default {
   addToList,
   removeListItem,
   createMyList,
+  removeList,
 };

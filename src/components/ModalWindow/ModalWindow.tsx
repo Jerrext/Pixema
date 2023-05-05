@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   MovieSelectors,
   createMyList,
+  removeList,
   setModalWindow,
   // setAddListWindowVisibility,
 } from "src/redux/reducers/movieSlice";
@@ -13,13 +14,21 @@ import Input from "../Input/Input";
 import SelectComponent from "../SelectComponent/SelectComponent";
 import Button from "../Button/Button";
 import { ButtonType, ModalWindowType } from "src/utils/@globalTypes";
+import { ListData } from "src/redux/sagas/@types";
+import { useNavigate } from "react-router-dom";
+import { RoutesList } from "src/pages/Router";
 
 type ModalWindowProps = {
   modalWindowType: ModalWindowType;
+  currentList?: ListData | null;
 };
 
-const ModalWindow: FC<ModalWindowProps> = ({ modalWindowType }) => {
+const ModalWindow: FC<ModalWindowProps> = ({
+  modalWindowType,
+  currentList,
+}) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { theme } = useThemeContext();
 
   const [currentValues, setCurrentValues] = useState<string[] | string>("");
@@ -65,7 +74,15 @@ const ModalWindow: FC<ModalWindowProps> = ({ modalWindowType }) => {
   };
 
   const onRemoveBtnClick = () => {
-    // dispatch()
+    currentList &&
+      dispatch(
+        removeList({
+          id: currentList.id,
+          callback: () => {
+            navigate(RoutesList.Home);
+          },
+        })
+      );
   };
 
   useEffect(() => {

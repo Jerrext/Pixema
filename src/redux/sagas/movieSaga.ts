@@ -3,6 +3,7 @@ import { all, put, takeEvery, takeLatest } from "redux-saga/effects";
 import {
   addMovieToList,
   changeMyMoviesLists,
+  clearFullMyMoviesLists,
   createMyList,
   getAllMovies,
   getFullMyMoviesLists,
@@ -11,6 +12,7 @@ import {
   getMyMoviesLists,
   getRecommendationMovieList,
   getSingleMovie,
+  removeList,
   removeListItem,
   setAllMoviesLoading,
   setFullMyMoviesLists,
@@ -44,6 +46,7 @@ import {
   ListPayload,
   GetAllMoviesPayload,
   CreateListPayload,
+  RemoveListPayload,
 } from "../reducers/@types";
 import { setMessage } from "../reducers/messageSlice";
 
@@ -218,6 +221,7 @@ function* createMyListWorker(action: PayloadAction<CreateListPayload>) {
     data
   );
   if (ok && responseData) {
+    yield put(clearFullMyMoviesLists());
     yield put(getMyMoviesLists());
     yield put(setModalWindow(null));
     yield put(
@@ -236,6 +240,34 @@ function* createMyListWorker(action: PayloadAction<CreateListPayload>) {
   }
 }
 
+function* removeListWorker(action: PayloadAction<RemoveListPayload>) {
+  const { id, callback } = action.payload;
+  const { ok, problem }: ApiResponse<undefined> = yield callCheckingAuth(
+    API.removeList,
+    "",
+    id
+  );
+  if (ok) {
+    yield put(clearFullMyMoviesLists());
+    yield put(getMyMoviesLists());
+    yield put(setModalWindow(null));
+    yield put(
+      setMessage({
+        status: true,
+        message: `List deleted successfully`,
+      })
+    );
+    callback();
+  } else {
+    yield put(
+      setMessage({
+        status: false,
+        message: `List deletion error ${problem}`,
+      })
+    );
+  }
+}
+
 export default function* movieSaga() {
   yield all([
     takeLatest(getAllMovies, getMoviesWorker),
@@ -248,5 +280,6 @@ export default function* movieSaga() {
     // takeLatest(getFavoriteMovies, getFavoriteMoviesListWorker),
     takeLatest(removeListItem, removeListItemWorker),
     takeLatest(createMyList, createMyListWorker),
+    takeLatest(removeList, removeListWorker),
   ]);
 }

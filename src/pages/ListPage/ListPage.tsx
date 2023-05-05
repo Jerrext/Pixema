@@ -4,15 +4,15 @@ import CardList from "src/components/CardList/";
 import { useDispatch, useSelector } from "react-redux";
 import {
   MovieSelectors,
+  setCurrentList,
   setModalWindow,
   setMyMoviesListLoading,
-  // setRemoveListConfirmationVisibility,
 } from "src/redux/reducers/movieSlice";
 import Loader from "src/components/Loader";
 import { useLocation, useParams } from "react-router-dom";
 import { EditIcon, TrashCanIcon } from "src/assets/icons";
 import { ButtonType, ModalWindowType } from "src/utils/@globalTypes";
-import Button from "src/components/Button/Button";
+import Button from "src/components/Button";
 
 const ListPage = () => {
   const dispatch = useDispatch();
@@ -47,8 +47,14 @@ const ListPage = () => {
     if (moviesLists.length === fullMoviesLists.length) {
       dispatch(setMyMoviesListLoading(false));
     }
-    console.log(filteredListsId);
   }, [fullMoviesLists, moviesLists]);
+
+  useEffect(() => {
+    if (id) {
+      const currentList = moviesLists.find((item) => item.id === +id);
+      currentList && dispatch(setCurrentList(currentList));
+    }
+  }, [id, moviesLists]);
 
   return isMyMoviesListLoading ? (
     <Loader />

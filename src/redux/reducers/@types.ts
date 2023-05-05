@@ -69,3 +69,8 @@ export type FullListsPayload = {
   title: string;
   list: CardListType;
 };
+
+export type RemoveListPayload = {
+  id: number;
+  callback: () => void;
+};

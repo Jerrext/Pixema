@@ -12,6 +12,7 @@ import {
   MessagePayload,
   CreateListPayload,
   FullListsPayload,
+  RemoveListPayload,
 } from "./@types";
 import {
   GetListsResponseData,
@@ -28,12 +29,11 @@ type MoviesState = {
   singleMovie: SingleMovieData | null;
   recommendationMovieList: CardListType;
   isRecommendationMovieLoading: boolean;
-  // favoriteMoviesList: CardListType;
   myMoviesLists: ListData[];
   fullMyMoviesLists: FullListsPayload[];
   isMyMoviesListLoadng: boolean;
-  // modalWindow: Modal
   modalWindow: ModalWindowType | null;
+  currentList: ListData | null;
 };
 
 const initialState: MoviesState = {
@@ -44,11 +44,11 @@ const initialState: MoviesState = {
   singleMovie: null,
   recommendationMovieList: [],
   isRecommendationMovieLoading: false,
-  // favoriteMoviesList: [],
   myMoviesLists: [],
   fullMyMoviesLists: [],
   isMyMoviesListLoadng: false,
   modalWindow: null,
+  currentList: null,
 };
 
 const MovieSlice = createSlice({
@@ -81,11 +81,15 @@ const MovieSlice = createSlice({
     },
     getMyMoviesLists(_, __: PayloadAction<undefined>) {},
     setMyMoviesLists(state, action: PayloadAction<ListData[]>) {
-      state.myMoviesLists = action.payload;
+      state.myMoviesLists = action.payload.sort((a, b) => a.id - b.id);
     },
     getFullMyMoviesLists(_, __: PayloadAction<number>) {},
     setFullMyMoviesLists(state, action: PayloadAction<FullListsPayload>) {
       state.fullMyMoviesLists.push(action.payload);
+      state.fullMyMoviesLists.sort((a, b) => a.id - b.id);
+    },
+    clearFullMyMoviesLists(state, __: PayloadAction<undefined>) {
+      state.fullMyMoviesLists = [];
     },
     addMovieToList(_, __: PayloadAction<ListPayload>) {},
     setMyMoviesListLoading(state, action: PayloadAction<boolean>) {
@@ -97,15 +101,15 @@ const MovieSlice = createSlice({
       );
       state.fullMyMoviesLists.splice(listIndex, 1, action.payload);
     },
-    // setFavoriteMoviesList(state, action: PayloadAction<CardListType>) {
-    //   state.favoriteMoviesList = action.payload;
-    // },
-    // getFavoriteMovies(_, __: PayloadAction<undefined>) {},
     removeListItem(_, __: PayloadAction<ListPayload>) {},
     createMyList(_, __: PayloadAction<CreateListPayload>) {},
     setModalWindow(state, action: PayloadAction<ModalWindowType | null>) {
       state.modalWindow = action.payload;
     },
+    setCurrentList(state, action: PayloadAction<ListData | null>) {
+      state.currentList = action.payload;
+    },
+    removeList(_, __: PayloadAction<RemoveListPayload>) {},
   },
 });
 
@@ -120,7 +124,6 @@ export const {
   getRecommendationMovieList,
   setRecommendationMovieList,
   setRecommendationMovieLoading,
-  // setMyMoviesList,
   getMyMoviesLists,
   setMyMoviesLists,
   getFullMyMoviesLists,
@@ -128,11 +131,12 @@ export const {
   addMovieToList,
   changeMyMoviesLists,
   setMyMoviesListLoading,
-  // getFavoriteMovies,
-  // setFavoriteMoviesList,
   removeListItem,
   createMyList,
   setModalWindow,
+  setCurrentList,
+  removeList,
+  clearFullMyMoviesLists,
 } = MovieSlice.actions;
 export default MovieSlice.reducer;
 
@@ -153,6 +157,5 @@ export const MovieSelectors = {
   getMyMoviesListLoading: (state: RootState) =>
     state.movie.isMyMoviesListLoadng,
   getModalWindow: (state: RootState) => state.movie.modalWindow,
-
-  // getFavoriteMoviesList: (state: RootState) => state.movie.favoriteMoviesList,
+  getCurrentList: (state: RootState) => state.movie.currentList,
 };
