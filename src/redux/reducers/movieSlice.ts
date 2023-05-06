@@ -5,6 +5,7 @@ import {
   CardListType,
   CardType,
   ModalWindowType,
+  SearchListType,
 } from "src/utils/@globalTypes";
 import {
   ListPayload,
@@ -34,6 +35,7 @@ type MoviesState = {
   isMyMoviesListLoadng: boolean;
   modalWindow: ModalWindowType | null;
   currentList: ListData | null;
+  searchList: SearchListType;
 };
 
 const initialState: MoviesState = {
@@ -49,6 +51,7 @@ const initialState: MoviesState = {
   isMyMoviesListLoadng: false,
   modalWindow: null,
   currentList: null,
+  searchList: [],
 };
 
 const MovieSlice = createSlice({
@@ -119,6 +122,13 @@ const MovieSlice = createSlice({
       state.myMoviesLists = [];
       state.fullMyMoviesLists = [];
     },
+    // set(state, action: PayloadAction<boolean>) {
+    //   state.isMyMoviesListLoadng = action.payload;
+    // },
+    getSearchList(_, __: PayloadAction<string>) {},
+    setSearchList(state, action: PayloadAction<SearchListType>) {
+      state.searchList = action.payload;
+    },
   },
 });
 
@@ -147,6 +157,8 @@ export const {
   removeList,
   clearFullMyMoviesLists,
   clearMoviesData,
+  getSearchList,
+  setSearchList,
 } = MovieSlice.actions;
 export default MovieSlice.reducer;
 
@@ -168,4 +180,5 @@ export const MovieSelectors = {
     state.movie.isMyMoviesListLoadng,
   getModalWindow: (state: RootState) => state.movie.modalWindow,
   getCurrentList: (state: RootState) => state.movie.currentList,
+  getSearchMovieList: (state: RootState) => state.movie.searchList,
 };

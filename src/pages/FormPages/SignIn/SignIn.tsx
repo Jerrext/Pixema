@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
 import styles from "./SignIn.module.scss";
-import { CardListType } from "src/utils/@globalTypes";
 import FormPage from "../FormPage";
 import { Link, useNavigate } from "react-router-dom";
 import { RoutesList } from "src/pages/Router";
@@ -90,15 +89,6 @@ const SignIn = () => {
     );
   }, [emailError, passwordError, emailTouched, passwordTouched]);
 
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-    { value: "chocdolate", label: "Chocolate" },
-    { value: "strawdberry", label: "Strawberry" },
-    { value: "vanidlla", label: "Vanilla" },
-  ];
-
   return (
     <FormPage
       titleFormPage="Sign In"
@@ -130,9 +120,9 @@ const SignIn = () => {
           onChange={setPassword}
           inputType="password"
         />
-        <Link to={RoutesList.ResetPassword} className={styles.forgotPassword}>
+        {/* <Link to={RoutesList.ResetPassword} className={styles.forgotPassword}>
           Forgot password?
-        </Link>
+        </Link> */}
       </div>
     </FormPage>
   );

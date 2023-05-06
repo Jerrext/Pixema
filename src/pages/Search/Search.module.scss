@@ -1,0 +1,61 @@
+@import "src/assets/colors";
+
+.title {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 36px;
+}
+
+.settingsItem {
+  border-radius: 10px;
+  background-color: $graphite;
+  display: flex;
+  align-items: center;
+  padding: 24px 40px;
+  margin-top: 16px;
+  justify-content: space-between;
+}
+
+.blockTitle {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.blockDesc {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: $light;
+}
+
+.settingsItemLight {
+  background-color: $white;
+  border: 1px solid $light;
+}
+
+.listControls {
+  display: flex;
+  justify-content: end;
+  gap: 20px;
+  padding: 0 0 30px;
+}
+
+.listBtn {
+  display: flex;
+  gap: 5px;
+
+  svg {
+    transform: scale(0.7);
+
+    > path {
+      fill: $white;
+    }
+  }
+
+  &:hover {
+    svg > path {
+      fill: $light;
+    }
+  }
+}

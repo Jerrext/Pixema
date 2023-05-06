@@ -36,6 +36,7 @@ import ViewPerson from "src/components/ViewPerson";
 import { setMessage } from "src/redux/reducers/messageSlice";
 import { FullListsPayload } from "src/redux/reducers/@types";
 import ListSelect from "src/components/ListSelect";
+import EmptyState from "src/components/EmptyState";
 
 const SingleMovie = () => {
   const { id } = useParams();
@@ -67,7 +68,9 @@ const SingleMovie = () => {
   const watchedIndex = watchedList
     ? watchedList.list.findIndex((movie) => movie.id === movieData?.id)
     : -1;
-  const recommendationPageCount = Math.ceil(recommendationCardList.length / 4);
+  const recommendationPageCount = Math.ceil(
+    (recommendationCardList.length + 0.001) / 4
+  );
   const isTrend = movieData?.rating && +movieData.rating >= 8;
   const isGreen =
     movieData?.rating && +movieData.rating < 8 && +movieData.rating >= 6;
@@ -303,15 +306,15 @@ const SingleMovie = () => {
                 </table>
               </div>
             </div>
-            <div className={styles.preview}>
-              <h2>Preview</h2>
-              <Tabs
-                onClick={onTabClick}
-                activeTab={tabState}
-                tabsList={TABS_LIST}
-              />
-              {movieData &&
-                (tabState === MovieTabsNames.Videos ? (
+            {movieData && movieData.images.length > 0 && (
+              <div className={styles.preview}>
+                <h2>Preview</h2>
+                <Tabs
+                  onClick={onTabClick}
+                  activeTab={tabState}
+                  tabsList={TABS_LIST}
+                />
+                {tabState === MovieTabsNames.Videos ? (
                   <ThumbsGallery
                     videos={movieData.videos}
                     activeTab={tabState}
@@ -321,8 +324,9 @@ const SingleMovie = () => {
                     images={movieData.images}
                     activeTab={tabState}
                   />
-                ))}
-            </div>
+                )}
+              </div>
+            )}
 
             {movieData && (
               <div className={styles.playerWrapper}>
@@ -335,6 +339,7 @@ const SingleMovie = () => {
                 </div>
               </div>
             )}
+
             <div className={styles.recommendation}>
               <div className={styles.recommendationTop}>
                 <h2>Recommendation</h2>
@@ -351,13 +356,17 @@ const SingleMovie = () => {
               </div>
               {isRecommendationMovieLoading ? (
                 <Loader />
-              ) : (
+              ) : recommendationPageList.length > 0 ? (
                 <div className={styles.recommendationCardList}>
                   {recommendationPageList.map((item) => {
                     return (
                       <Card key={item.id} card={item} classname={styles.card} />
                     );
                   })}
+                </div>
+              ) : (
+                <div className={styles.emptyState}>
+                  <EmptyState title="List of related movies is empty" />
                 </div>
               )}
             </div>

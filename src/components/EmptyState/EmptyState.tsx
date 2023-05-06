@@ -5,7 +5,7 @@ import styles from "./EmptyState.module.scss";
 
 type EmptyStateProps = {
   title: string;
-  description: string;
+  description?: string;
 };
 
 const EmptyState: FC<EmptyStateProps> = ({ title, description }) => {

@@ -11,6 +11,7 @@ import {
   // getMyMoviesList,
   getMyMoviesLists,
   getRecommendationMovieList,
+  getSearchList,
   getSingleMovie,
   removeList,
   removeListItem,
@@ -25,6 +26,7 @@ import {
   setPagesCount,
   setRecommendationMovieList,
   setRecommendationMovieLoading,
+  setSearchList,
   setSingleMovie,
   setSingleMovieLoading,
 } from "../reducers/movieSlice";
@@ -36,6 +38,7 @@ import {
   CreateListResponseData,
   // CreateListResponseDate,
   GetListsResponseData,
+  GetSearchListResponseData,
   MoviesResponseData,
   MyListResponseData,
   RecommendationMoviesResponseData,
@@ -90,10 +93,21 @@ function* getSingleMovieWorker(action: PayloadAction<string>) {
 function* getRecommendationMovieListWorker(action: PayloadAction<string>) {
   yield put(setRecommendationMovieLoading(true));
   const id = action.payload;
-  const { ok, data, problem }: ApiResponse<RecommendationMoviesResponseData> =
-    yield callCheckingAuth(API.getRecommendationMovieListData, "", id);
+  const {
+    ok,
+    status,
+    data,
+    problem,
+  }: ApiResponse<RecommendationMoviesResponseData> = yield callCheckingAuth(
+    API.getRecommendationMovieListData,
+    "",
+    id
+  );
   if (ok && data) {
     yield put(setRecommendationMovieList(data.titles));
+    yield put(setRecommendationMovieLoading(false));
+  } else if (status === 404) {
+    yield put(setRecommendationMovieList([]));
     yield put(setRecommendationMovieLoading(false));
   } else {
     yield put(
@@ -224,12 +238,6 @@ function* createMyListWorker(action: PayloadAction<CreateListPayload>) {
     yield put(clearFullMyMoviesLists());
     yield put(getMyMoviesLists());
     yield put(setModalWindow(null));
-    yield put(
-      setMessage({
-        status: true,
-        message: `${responseData.list.name} list created successfully`,
-      })
-    );
   } else {
     yield put(
       setMessage({
@@ -268,6 +276,23 @@ function* removeListWorker(action: PayloadAction<RemoveListPayload>) {
   }
 }
 
+function* getSearchListWorker(action: PayloadAction<string>) {
+  yield put(setAllMoviesLoading(true));
+  const { ok, data, problem }: ApiResponse<GetSearchListResponseData> =
+    yield callCheckingAuth(API.getSearchList, "", action.payload);
+  if (ok && data) {
+    yield put(setSearchList(data.results));
+    yield put(setAllMoviesLoading(false));
+  } else {
+    yield put(
+      setMessage({
+        status: false,
+        message: `Search error ${problem}`,
+      })
+    );
+  }
+}
+
 export default function* movieSaga() {
   yield all([
     takeLatest(getAllMovies, getMoviesWorker),
@@ -281,5 +306,6 @@ export default function* movieSaga() {
     takeLatest(removeListItem, removeListItemWorker),
     takeLatest(createMyList, createMyListWorker),
     takeLatest(removeList, removeListWorker),
+    takeLatest(getSearchList, getSearchListWorker),
   ]);
 }

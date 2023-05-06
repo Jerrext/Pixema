@@ -1,4 +1,4 @@
-import { CardListType } from "src/utils/@globalTypes";
+import { CardListType, SearchListType } from "src/utils/@globalTypes";
 
 export type UserSignInResponseData = {
   themes: {};
@@ -283,5 +283,11 @@ export type CreateListResponseData = {
 
 export type GetListsResponseData = {
   pagination: PaginationData<ListData[]>;
+  status: string;
+};
+
+export type GetSearchListResponseData = {
+  results: any;
+  query: string;
   status: string;
 };

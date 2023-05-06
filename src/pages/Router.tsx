@@ -25,6 +25,7 @@ import { changeTheme } from "src/redux/reducers/themeSlice";
 import { THEME } from "src/utils/constants";
 import { Theme } from "src/Context/Theme/Context";
 import Trends from "./Trends/Trends";
+import Search from "./Search/Search";
 
 export enum RoutesList {
   Home = "/",
@@ -35,6 +36,7 @@ export enum RoutesList {
   Trends = "/trends",
   Lists = "/lists/:id",
   SingleMovie = "/titles/:id",
+  SearchMovie = "/search/:query",
   Default = "*",
 }
 
@@ -95,6 +97,10 @@ const Router = () => {
           <Route
             path={RoutesList.Settings}
             element={redirectSignIn(<Settings />)}
+          />
+          <Route
+            path={RoutesList.SearchMovie}
+            element={redirectSignIn(<Search />)}
           />
           <Route path={RoutesList.Default} element={"404"} />
         </Route>

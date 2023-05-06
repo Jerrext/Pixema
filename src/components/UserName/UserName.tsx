@@ -26,7 +26,7 @@ const UserName: FC<userNameProps> = ({ userName }) => {
 
   const dropdownButtonsList = [
     {
-      title: "Edit profile",
+      title: "Profile",
       onClick: () => {
         navigate(RoutesList.Settings);
       },

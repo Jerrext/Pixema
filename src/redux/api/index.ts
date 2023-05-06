@@ -35,7 +35,7 @@ const getUserData = (token: string, id: number | string) => {
 const getMovies = (token: string, page: number, score?: string) => {
   return API.get(
     `/titles`,
-    { perPage: PER_PAGE, page, score },
+    { perPage: PER_PAGE, page, score, includeAdult: false },
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -128,6 +128,18 @@ const removeList = (token: string, id: number) => {
   );
 };
 
+const getSearchList = (token: string, query: string) => {
+  return API.get(
+    `/search/${query}`,
+    { limit: 100 },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
 export default {
   signUpUser,
   signInUser,
@@ -141,4 +153,5 @@ export default {
   removeListItem,
   createMyList,
   removeList,
+  getSearchList,
 };

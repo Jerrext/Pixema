@@ -8,6 +8,7 @@
 .search {
   width: 100%;
   margin: 0;
+  padding-right: 70px;
 }
 
 .filter {
@@ -18,6 +19,7 @@
   width: 24px;
   cursor: pointer;
   transform: translateY(-50%);
+  // transition: 0.3s;
 
   &::before {
     position: absolute;
@@ -38,6 +40,20 @@
 
     &::before {
       opacity: 1;
+    }
+  }
+}
+.magnifier {
+  position: absolute;
+  cursor: pointer;
+  top: 56%;
+  transform: translateY(-50%) scale(0.8);
+  right: 45px;
+  // transition: 0.3s;
+
+  &:hover {
+    > svg > path {
+      stroke: $white;
     }
   }
 }

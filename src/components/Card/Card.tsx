@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
 import classNames from "classnames";
 import styles from "./Card.module.scss";
-import { CardType } from "src/utils/@globalTypes";
+import { CardType, SearchCardType } from "src/utils/@globalTypes";
 import { BookmarkIcon, EyeIcon, TrendIcon } from "src/assets/icons";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,7 +13,7 @@ import {
 import { FullListsPayload } from "src/redux/reducers/@types";
 
 type CardProps = {
-  card: CardType;
+  card: CardType | SearchCardType;
   classname?: string;
 };
 
@@ -82,16 +82,18 @@ const Card: FC<CardProps> = ({ card, classname }) => {
         className={styles.title}
         onClick={onTitleClick}
       >{`${name} (${year})`}</p>
-      <div
-        className={classNames(styles.rating, {
-          [styles.trendRating]: isTrend,
-          [styles.greenRating]: isGreen,
-          [styles.orangeRating]: isOrange,
-        })}
-      >
-        {isTrend && <TrendIcon />}
-        <div>{rating ? rating : 0}</div>
-      </div>
+      {rating && (
+        <div
+          className={classNames(styles.rating, {
+            [styles.trendRating]: isTrend,
+            [styles.greenRating]: isGreen,
+            [styles.orangeRating]: isOrange,
+          })}
+        >
+          {isTrend && <TrendIcon />}
+          <div>{rating}</div>
+        </div>
+      )}
       <div
         className={classNames(styles.watched, {
           [styles.watchedMovie]: watchedIndex > -1,
