@@ -1,0 +1,13 @@
+@import "src/assets/colors";
+
+.confirmControls {
+  display: flex;
+  gap: 20px;
+  > div {
+    flex: 1;
+  }
+}
+
+.windowRemoveConfirm {
+  width: 400px;
+}

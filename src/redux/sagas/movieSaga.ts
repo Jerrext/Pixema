@@ -13,6 +13,7 @@ import {
   getRecommendationMovieList,
   getSearchList,
   getSingleMovie,
+  // getValueLists,
   removeList,
   removeListItem,
   setAllMoviesLoading,
@@ -55,9 +56,33 @@ import { setMessage } from "../reducers/messageSlice";
 
 function* getMoviesWorker(action: PayloadAction<GetAllMoviesPayload>) {
   yield put(setAllMoviesLoading(true));
-  const { page, score } = action.payload;
+  const {
+    page,
+    order,
+    type,
+    genre,
+    released,
+    runtime,
+    score,
+    language,
+    certification,
+    country,
+  } = action.payload;
   const { ok, data, problem }: ApiResponse<MoviesResponseData> =
-    yield callCheckingAuth(API.getMovies, "", page, score);
+    yield callCheckingAuth(
+      API.getMovies,
+      "",
+      page,
+      order,
+      type,
+      genre,
+      released,
+      runtime,
+      score,
+      language,
+      certification,
+      country
+    );
   if (ok && data) {
     yield put(setMoviesList(data.pagination.data));
     yield put(setPagesCount(data.pagination.last_page));
@@ -293,6 +318,25 @@ function* getSearchListWorker(action: PayloadAction<string>) {
   }
 }
 
+// function* getValueListsWorker() {
+//   yield put(setAllMoviesLoading(true));
+//   const { ok, data, problem }: ApiResponse<any> = yield callCheckingAuth(
+//     API.getValueLists,
+//     ""
+//   );
+//   if (ok && data) {
+//     yield put(setSearchList(data.results));
+//     yield put(setAllMoviesLoading(false));
+//   } else {
+//     yield put(
+//       setMessage({
+//         status: false,
+//         message: `Search error ${problem}`,
+//       })
+//     );
+//   }
+// }
+
 export default function* movieSaga() {
   yield all([
     takeLatest(getAllMovies, getMoviesWorker),
@@ -307,5 +351,6 @@ export default function* movieSaga() {
     takeLatest(createMyList, createMyListWorker),
     takeLatest(removeList, removeListWorker),
     takeLatest(getSearchList, getSearchListWorker),
+    // takeLatest(getValueLists, getValueListsWorker),
   ]);
 }

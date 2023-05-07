@@ -12,7 +12,7 @@ type SelectComponentProps = {
   optionsList: OptionsListType;
   isMulti?: boolean;
   currentValues: string[] | string;
-  setSelecValue: (value: string[] | string) => void;
+  setSelecValue: (value: any) => void;
   defaultValueId?: number;
   isSearchable?: boolean;
   isClearable?: boolean;
@@ -57,7 +57,9 @@ const SelectComponent: FC<SelectComponentProps> = ({
   };
 
   useEffect(() => {
-    defaultValueId && optionsList && onChange(optionsList[defaultValueId]);
+    defaultValueId !== undefined &&
+      optionsList &&
+      onChange(optionsList[defaultValueId]);
   }, [defaultValueId]);
 
   return (
@@ -89,10 +91,10 @@ const SelectComponent: FC<SelectComponentProps> = ({
               ? "2px solid #afb2b6"
               : "2px solid transparent",
           }),
-          // placeholder: (baseStyles, state) => ({
-          //   ...baseStyles,
-          //   // color: state.isDisabled ? "#AFB2B6" : "#80858B",
-          // }),
+          placeholder: (baseStyles, state) => ({
+            ...baseStyles,
+            paddingLeft: isMulti ? "13px" : "0",
+          }),
           menu: (baseStyles, state) => ({
             ...baseStyles,
             backgroundColor: isLight ? "#FFFFFF" : "#323537",

@@ -31,7 +31,15 @@ export type GetUserDataPayload = {
 
 export interface GetAllMoviesPayload {
   page: number;
+  order?: string;
+  type?: string;
+  genre?: string;
+  released?: string;
+  runtime?: string;
   score?: string;
+  language?: string;
+  certification?: string;
+  country?: string;
 }
 
 export type SignUpUserPayload = PayloadWithCallback<SigUpPayloadData>;

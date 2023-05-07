@@ -4,11 +4,17 @@
   position: fixed;
   width: 100vw;
   height: 100vh;
-  background-color: rgba($black, 0.8);
   z-index: 999;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.overlay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: rgba($black, 0.8);
 }
 
 .window {
@@ -62,8 +68,9 @@
 
 .windowTitle {
   text-align: center;
-  font-size: 25px;
-  text-transform: uppercase;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 36px;
 }
 
 .windowContent {
@@ -72,33 +79,8 @@
   gap: 30px;
 }
 
-.topInputsWrapper {
-  display: flex;
-  gap: 20px;
-
-  > div {
-    flex: 1;
-  }
-}
-
-.createBtn {
-  margin-top: 10px;
-}
-
 .closeBtnHide {
   display: none;
-}
-
-.confirmControls {
-  display: flex;
-  gap: 20px;
-  > div {
-    flex: 1;
-  }
-}
-
-.windowRemoveConfirm {
-  width: 400px;
 }
 
 .windowLight {

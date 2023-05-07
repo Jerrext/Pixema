@@ -5,12 +5,16 @@ import Input from "../Input";
 import { FilterIcon, MagnifierIcon } from "src/assets/icons";
 import { Theme, useThemeContext } from "src/Context/Theme/Context";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setModalWindow } from "src/redux/reducers/movieSlice";
+import { ModalWindowType } from "src/utils/@globalTypes";
 
 type SearchProps = {
   disabled?: boolean;
 };
 
 const Search: FC<SearchProps> = ({ disabled }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState("");
 
@@ -18,7 +22,9 @@ const Search: FC<SearchProps> = ({ disabled }) => {
 
   const isLight = theme === Theme.Light;
 
-  const onFilterClick = () => {};
+  const onFilterClick = () => {
+    dispatch(setModalWindow(ModalWindowType.FilterWindow));
+  };
 
   const onSearchClick = () => {
     searchValue.length > 0 && navigate(`/search/${searchValue}`);

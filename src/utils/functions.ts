@@ -26,3 +26,16 @@ export const getWordWithCapitalLetter = (word: string) => {
 export const getMoneyFormat = (number: number) => {
   return "$" + number.toLocaleString("ru-RU");
 };
+
+export const getCurrentYear = () => {
+  const date = new Date();
+  return date.getFullYear();
+};
+
+export const getFilterRange = (filter: string) => {
+  const value = filter.split(",");
+  return {
+    max: +value[1],
+    min: +value[0],
+  };
+};

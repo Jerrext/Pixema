@@ -4,6 +4,7 @@ import { RootState } from "../store";
 import {
   CardListType,
   CardType,
+  FiltersType,
   ModalWindowType,
   SearchListType,
 } from "src/utils/@globalTypes";
@@ -21,6 +22,11 @@ import {
   SingleMovieData,
   SingleMovieResponseData,
 } from "../sagas/@types";
+import {
+  RELEASED_RANGE,
+  RUNTIME_RANGE,
+  SCORE_RANGE,
+} from "src/utils/constants";
 
 type MoviesState = {
   moviesList: CardListType;
@@ -36,6 +42,7 @@ type MoviesState = {
   modalWindow: ModalWindowType | null;
   currentList: ListData | null;
   searchList: SearchListType;
+  filtersData: FiltersType;
 };
 
 const initialState: MoviesState = {
@@ -52,6 +59,17 @@ const initialState: MoviesState = {
   modalWindow: null,
   currentList: null,
   searchList: [],
+  filtersData: {
+    order: "",
+    type: "",
+    genre: "",
+    released: `${RELEASED_RANGE.min},${RELEASED_RANGE.max}`,
+    runtime: `${RUNTIME_RANGE.min},${RUNTIME_RANGE.max}`,
+    score: `${SCORE_RANGE.min},${SCORE_RANGE.max}`,
+    country: "",
+    language: "",
+    certification: "",
+  },
 };
 
 const MovieSlice = createSlice({
@@ -122,12 +140,17 @@ const MovieSlice = createSlice({
       state.myMoviesLists = [];
       state.fullMyMoviesLists = [];
     },
-    // set(state, action: PayloadAction<boolean>) {
-    //   state.isMyMoviesListLoadng = action.payload;
-    // },
     getSearchList(_, __: PayloadAction<string>) {},
     setSearchList(state, action: PayloadAction<SearchListType>) {
       state.searchList = action.payload;
+    },
+    setFiltersData(state, action: PayloadAction<FiltersType>) {
+      const payload: any = action.payload;
+      const newFilterData: any = Object.assign({}, state.filtersData);
+      Object.keys(payload).forEach(
+        (key) => (newFilterData[key] = payload[key])
+      );
+      state.filtersData = newFilterData;
     },
   },
 });
@@ -159,6 +182,7 @@ export const {
   clearMoviesData,
   getSearchList,
   setSearchList,
+  setFiltersData,
 } = MovieSlice.actions;
 export default MovieSlice.reducer;
 
@@ -181,4 +205,5 @@ export const MovieSelectors = {
   getModalWindow: (state: RootState) => state.movie.modalWindow,
   getCurrentList: (state: RootState) => state.movie.currentList,
   getSearchMovieList: (state: RootState) => state.movie.searchList,
+  getFilters: (state: RootState) => state.movie.filtersData,
 };

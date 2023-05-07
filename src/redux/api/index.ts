@@ -32,10 +32,34 @@ const getUserData = (token: string, id: number | string) => {
   );
 };
 
-const getMovies = (token: string, page: number, score?: string) => {
+const getMovies = (
+  token: string,
+  page: number,
+  order?: string,
+  type?: string,
+  genre?: string,
+  released?: string,
+  runtime?: string,
+  score?: string,
+  language?: string,
+  certification?: string,
+  country?: string
+) => {
   return API.get(
     `/titles`,
-    { perPage: PER_PAGE, page, score, includeAdult: false },
+    {
+      perPage: PER_PAGE,
+      page,
+      order,
+      type,
+      genre,
+      released,
+      runtime,
+      score,
+      language,
+      certification,
+      country,
+    },
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -127,7 +151,7 @@ const removeList = (token: string, id: number) => {
     }
   );
 };
-
+//secure/value-lists/tmdb-countries,tmdb-languages
 const getSearchList = (token: string, query: string) => {
   return API.get(
     `/search/${query}`,
@@ -139,6 +163,19 @@ const getSearchList = (token: string, query: string) => {
     }
   );
 };
+
+// const getValueLists = (token: string) => {
+//   return API.get(
+//     `/value-lists/tmdb-countries,tmdb-languages`,
+//     {},
+//     {
+//       headers: {
+//         "Content-Type": "application/json",
+//         Authorization: `Bearer ${token}`,
+//       },
+//     }
+//   );
+// };
 
 export default {
   signUpUser,
@@ -154,4 +191,5 @@ export default {
   createMyList,
   removeList,
   getSearchList,
+  // getValueLists,
 };

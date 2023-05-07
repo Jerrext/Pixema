@@ -17,9 +17,9 @@ function* callCheckingAuth(apiCall: any, token?: string, ...params: any) {
 
     if (response.status === 401) {
       yield put(logoutUser());
-    } else {
-      return response;
     }
+
+    return response;
   } else {
     yield put(logoutUser());
   }

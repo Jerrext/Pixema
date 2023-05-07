@@ -3,6 +3,7 @@
 .input-range {
   &__track {
     height: 0.4rem;
+    transition: unset;
 
     &--background {
       background: $light;
@@ -20,17 +21,38 @@
     line-height: 24px;
     font-family: "Exo 2", sans-serif;
 
-    &--value {
-      transform: translateY(-8px);
-    }
-
     &--min,
     &--max {
-      transform: translateY(5px);
+      transform: translateY(10px);
     }
   }
 
   &__slider {
     background: $primary;
+
+    &-container {
+      transition: unset;
+
+      .input-range__label-container {
+        background-color: $graphite;
+        padding: 5px;
+        top: -13px;
+      }
+
+      &:first-of-type .input-range__label-container {
+        border-radius: 5px 5px 0 5px;
+        left: -100%;
+      }
+
+      &:last-of-type .input-range__label-container {
+        border-radius: 5px 5px 5px 0;
+        left: 0;
+      }
+    }
   }
+}
+
+.rangeComponent {
+  padding: 26px 50px;
+  margin-top: 18px;
 }

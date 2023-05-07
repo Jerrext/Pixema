@@ -12,20 +12,20 @@ import PagesContainer from "./PagesContainer";
 import SignUp from "./FormPages/SignUp";
 import { useDispatch, useSelector } from "react-redux";
 import { AuthSelectors, getUserInfo } from "src/redux/reducers/authSlice";
-import Home from "./Home/Home";
+import Home from "./Home";
 import SingleMovie from "./SingleMovie";
 import ListPage from "./ListPage";
 import {
   MovieSelectors,
   getMyMoviesLists,
-  // getFavoriteMovies,
 } from "src/redux/reducers/movieSlice";
 import Settings from "./Settings/Settings";
 import { changeTheme } from "src/redux/reducers/themeSlice";
 import { THEME } from "src/utils/constants";
 import { Theme } from "src/Context/Theme/Context";
-import Trends from "./Trends/Trends";
-import Search from "./Search/Search";
+import Trends from "./Trends";
+import Search from "./Search";
+import Filters from "./Filters";
 
 export enum RoutesList {
   Home = "/",
@@ -37,6 +37,7 @@ export enum RoutesList {
   Lists = "/lists/:id",
   SingleMovie = "/titles/:id",
   SearchMovie = "/search/:query",
+  Filters = "/filters/:filters",
   Default = "*",
 }
 
@@ -81,6 +82,10 @@ const Router = () => {
             element={
               isLoggedIn ? <Navigate to={RoutesList.Home} /> : <SignUp />
             }
+          />
+          <Route
+            path={RoutesList.Filters}
+            element={redirectSignIn(<Filters />)}
           />
           <Route
             path={RoutesList.Trends}

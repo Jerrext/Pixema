@@ -1,0 +1,51 @@
+@import "src/assets/colors";
+
+.filtersWindow {
+  position: absolute;
+  width: 650px;
+  border-radius: 0;
+  height: 100%;
+  right: 0;
+  overflow: auto;
+  padding: 48px 40px;
+
+  h3 {
+    text-align: left;
+    font-weight: 600;
+  }
+}
+
+.filtersContent {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.btnWrapper {
+  display: flex;
+  gap: 40px;
+  margin-top: 50px;
+
+  > div {
+    flex: 1;
+  }
+}
+
+.rangeWrapper {
+  padding: 0 20px;
+}
+
+.filtersItem {
+  display: flex;
+  gap: 20px;
+  // padding: 12px;
+
+  &:first-child {
+    border-bottom: 2px solid $graphite;
+    padding-bottom: 24px;
+  }
+
+  > div {
+    flex: 1;
+  }
+}

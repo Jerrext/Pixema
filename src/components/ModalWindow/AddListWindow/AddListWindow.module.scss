@@ -1,0 +1,14 @@
+@import "src/assets/colors";
+
+.topInputsWrapper {
+  display: flex;
+  gap: 20px;
+
+  > div {
+    flex: 1;
+  }
+}
+
+.createBtn {
+  margin-top: 10px;
+}

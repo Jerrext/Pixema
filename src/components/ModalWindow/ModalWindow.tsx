@@ -19,181 +19,47 @@ import { useNavigate } from "react-router-dom";
 import { RoutesList } from "src/pages/Router";
 
 type ModalWindowProps = {
-  modalWindowType: ModalWindowType;
-  currentList?: ListData | null;
+  modalWindowType?: ModalWindowType;
+  children: ReactNode;
+  windowTitle: string;
+  windowClassName?: string;
+  // closeBtnClassName?: string;
+  closeBtnHide?: boolean;
 };
 
 const ModalWindow: FC<ModalWindowProps> = ({
   modalWindowType,
-  currentList,
+  children,
+  windowTitle,
+  windowClassName,
+  // closeBtnClassName,
+  closeBtnHide,
 }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { theme } = useThemeContext();
-
-  const [currentValues, setCurrentValues] = useState<string[] | string>("");
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-
-  const [titleError, setTitleError] = useState("");
-  const [descriptionError, setDescriptionError] = useState("");
-
-  const [titleTouched, setTitleTouched] = useState(false);
-  const [descriptionTouched, setDescriptionTouched] = useState(false);
-
-  const options = [
-    { value: "true", label: "Public" },
-    { value: "false", label: "Private" },
-  ];
-
-  const isPublic = currentValues === "true" ? true : false;
-  const isRemoveWindow = modalWindowType === ModalWindowType.RemoveList;
-
-  const setSelecValue = (value: string[] | string) => {
-    setCurrentValues(value);
-  };
-
-  const onBlurTitle = () => {
-    setTitleTouched(true);
-  };
-
-  const onBlurDescription = () => {
-    setDescriptionTouched(true);
-  };
-
-  const onCreateBtnClick = () => {
-    dispatch(
-      createMyList({
-        data: { details: { name: title, description, public: isPublic } },
-      })
-    );
-  };
 
   const onCloseWindowBtnClick = () => {
     dispatch(setModalWindow(null));
   };
 
-  const onRemoveBtnClick = () => {
-    currentList &&
-      dispatch(
-        removeList({
-          id: currentList.id,
-          callback: () => {
-            navigate(RoutesList.Home);
-          },
-        })
-      );
-  };
-
-  useEffect(() => {
-    if (titleTouched) {
-      if (title.length === 0) {
-        setTitleError("Title is required field");
-      } else {
-        setTitleError("");
-      }
-    }
-  }, [title, titleTouched]);
-
-  useEffect(() => {
-    if (descriptionTouched) {
-      if (description.length === 0) {
-        setDescriptionError("Description is required field");
-      } else {
-        setDescriptionError("");
-      }
-    }
-  }, [description, descriptionTouched]);
-
-  const isValid = useMemo(() => {
-    return (
-      titleError.length === 0 &&
-      descriptionError.length === 0 &&
-      titleTouched &&
-      descriptionTouched
-    );
-  }, [titleError, descriptionError, titleTouched, descriptionTouched]);
-
   return (
-    <div className={styles.windowWrapper} onClick={onCloseWindowBtnClick}>
+    <div className={styles.windowWrapper}>
+      <div className={styles.overlay} onClick={onCloseWindowBtnClick}></div>
       <div
-        className={classNames(styles.window, {
-          [styles.windowRemoveConfirm]: isRemoveWindow,
+        className={classNames(styles.window, windowClassName, {
+          // [styles.windowRemoveConfirm]: isRemoveWindow,
           [styles.windowLight]: theme === Theme.Light,
         })}
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
       >
         <div
           className={classNames(styles.closeBtn, {
-            [styles.closeBtnHide]: isRemoveWindow,
+            [styles.closeBtnHide]: closeBtnHide,
           })}
           onClick={onCloseWindowBtnClick}
         ></div>
         <div className={styles.windowContent}>
-          {modalWindowType === ModalWindowType.AddNewList && (
-            <>
-              <h3 className={styles.windowTitle}>Create a new list</h3>
-              <div className={styles.topInputsWrapper}>
-                <Input
-                  value={title}
-                  title="Name"
-                  placeholder="List name"
-                  errText={titleError}
-                  onBlur={onBlurTitle}
-                  onChange={setTitle}
-                  inputType="text"
-                  className={styles.input}
-                />
-                <SelectComponent
-                  title="Visibility"
-                  placeholder="List visibility"
-                  optionsList={options}
-                  currentValues={currentValues}
-                  setSelecValue={setSelecValue}
-                  defaultValueId={1}
-                  isSearchable={false}
-                  isClearable={false}
-                />
-              </div>
-              <Input
-                value={description}
-                title="Description"
-                textarea
-                placeholder="List description"
-                errText={descriptionError}
-                onBlur={onBlurDescription}
-                onChange={setDescription}
-                className={styles.input}
-              />
-              <Button
-                title="Create"
-                onClick={onCreateBtnClick}
-                disabled={!isValid}
-                type={ButtonType.Primary}
-                className={styles.createBtn}
-              />
-            </>
-          )}
-          {isRemoveWindow && (
-            <>
-              <h3 className={styles.windowTitle}>Confirm the removal</h3>
-              <p>Are you sure you want to remove this list?</p>
-              <div className={styles.confirmControls}>
-                <Button
-                  title="Yes"
-                  onClick={onRemoveBtnClick}
-                  type={ButtonType.Secondary}
-                />
-                <Button
-                  title="Cancel"
-                  onClick={onCloseWindowBtnClick}
-                  type={ButtonType.Secondary}
-                />
-              </div>
-            </>
-          )}
+          <h3 className={styles.windowTitle}>{windowTitle}</h3>
+          {children}
         </div>
       </div>
     </div>
