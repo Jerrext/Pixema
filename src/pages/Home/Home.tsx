@@ -24,7 +24,7 @@ const Home = () => {
   const onPageChange = ({ selected }: { selected: number }) => {
     setCurrentPage(selected + 1);
 
-    navigate(`/home/page=${selected + 1}`);
+    navigate(`/trends/page=${selected + 1}`);
   };
 
   useEffect(() => {

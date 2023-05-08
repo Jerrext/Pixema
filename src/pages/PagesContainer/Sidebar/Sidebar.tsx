@@ -43,7 +43,7 @@ const Sidebar: FC<SidebarProps> = ({ footerContent }) => {
         key: RoutesList.Trends,
         disabled: false,
         buttonType: MenuButtonType.Link,
-        routeLink: RoutesList.Trends,
+        routeLink: "/trends/page=1",
       },
       {
         title: "Favorites",

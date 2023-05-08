@@ -30,7 +30,7 @@ import NotFound from "./NotFound/NotFound";
 
 export enum RoutesList {
   Home = "/",
-  Browse = "/home/:pageUrl",
+  Browse = "/home",
   SignIn = "/sign-in",
   SignUp = "/sign-up",
   ResetPassword = "/reset-password",
@@ -74,10 +74,13 @@ const Router = () => {
         <Route path={RoutesList.Home} element={<PagesContainer />}>
           <Route
             path={RoutesList.Home}
+            element={<Navigate to={RoutesList.Browse} />}
+          />
+          <Route
+            path={RoutesList.Browse}
             element={<Navigate to={"/home/page=1"} />}
           />
-          <Route path={RoutesList.Browse} element={redirectSignIn(<Home />)} />
-
+          <Route path={"/home/:pageUrl"} element={<Home />} />
           <Route
             path={RoutesList.SignIn}
             element={
@@ -96,6 +99,10 @@ const Router = () => {
           />
           <Route
             path={RoutesList.Trends}
+            element={<Navigate to={"/trends/page=1"} />}
+          />
+          <Route
+            path={"/trends/:pageUrl"}
             element={redirectSignIn(<Trends />)}
           />
           <Route

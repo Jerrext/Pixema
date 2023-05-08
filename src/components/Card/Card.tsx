@@ -12,6 +12,7 @@ import {
 } from "src/redux/reducers/movieSlice";
 import { FullListsPayload } from "src/redux/reducers/@types";
 import { Theme, useThemeContext } from "src/Context/Theme/Context";
+import { imageSize } from "src/utils/constants";
 
 type CardProps = {
   card: CardType | SearchCardType;
@@ -29,6 +30,7 @@ const Card: FC<CardProps> = ({ card, classname }) => {
   const moviesLists = useSelector(MovieSelectors.getFullMyMoviesLists);
 
   const { poster, rating, name, year, id, adult } = card;
+
   const favoriteList = moviesLists.find((item) => item.title === "Favorites");
   const favoriteIndex = favoriteList
     ? favoriteList.list.findIndex((movie) => movie.id === card.id)
@@ -41,6 +43,8 @@ const Card: FC<CardProps> = ({ card, classname }) => {
   const isTrend = +rating >= 8;
   const isGreen = +rating < 8 && +rating >= 6;
   const isOrange = +rating < 6;
+
+  const newPoster = poster.replace(imageSize, "w300");
 
   const onBookmarkBtnClick = () => {
     if (favoriteList) {
@@ -86,7 +90,7 @@ const Card: FC<CardProps> = ({ card, classname }) => {
         {adult ? (
           <div className={styles.censoredTitle}>Censored</div>
         ) : (
-          <img src={poster} alt={name} />
+          <img src={newPoster} alt={name} />
         )}
       </div>
       <p

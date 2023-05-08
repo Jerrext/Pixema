@@ -8,8 +8,11 @@ import {
 } from "src/redux/reducers/movieSlice";
 import Loader from "src/components/Loader";
 import Paginate from "src/components/Paginate";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Trends = () => {
+  const { pageUrl } = useParams();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -20,11 +23,16 @@ const Trends = () => {
 
   const onPageChange = ({ selected }: { selected: number }) => {
     setCurrentPage(selected + 1);
+
+    navigate(`/trends/page=${selected + 1}`);
   };
 
   useEffect(() => {
-    const page = currentPage;
-    dispatch(getAllMovies({ page, score: "8,9.9" }));
+    if (pageUrl) {
+      const page = +pageUrl.split("=")[1];
+      dispatch(getAllMovies({ page, score: "8,9.9" }));
+      setCurrentPage(page);
+    }
     return () => {
       dispatch(setMoviesList([]));
     };

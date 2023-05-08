@@ -36,3 +36,5 @@ export const FILTERS_RESET = {
   language: "",
   certification: "",
 };
+
+export const imageSize = /original/gi;

@@ -10,6 +10,7 @@ import "swiper/css/thumbs";
 import { MovieTabsNames } from "src/utils/@globalTypes";
 import { SingleMovieImage, SingleMovieVideos } from "src/redux/sagas/@types";
 import { Theme, useThemeContext } from "src/Context/Theme/Context";
+import { imageSize } from "src/utils/constants";
 
 type ThumbsGalleryProps = {
   videos?: SingleMovieVideos[];
@@ -24,6 +25,9 @@ const ThumbsGallery: FC<ThumbsGalleryProps> = ({
 }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
   const { theme } = useThemeContext();
+
+  // const smallImage = images.replace(imageSize, "w400");
+  // const bigImage = movieData?.poster.replace(imageSize, "w400");
 
   return (
     <div
@@ -79,9 +83,10 @@ const ThumbsGallery: FC<ThumbsGalleryProps> = ({
           className="mySwiper"
         >
           {images?.map((item) => {
+            const newImg = item.url.replace(imageSize, "w300");
             return (
               <SwiperSlide key={item.id}>
-                <img src={item.url} />
+                <img src={newImg} />
               </SwiperSlide>
             );
           })}

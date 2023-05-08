@@ -37,6 +37,7 @@ import { setMessage } from "src/redux/reducers/messageSlice";
 import { FullListsPayload } from "src/redux/reducers/@types";
 import ListSelect from "src/components/ListSelect";
 import EmptyState from "src/components/EmptyState";
+import { imageSize } from "src/utils/constants";
 
 const SingleMovie = () => {
   const { id } = useParams();
@@ -76,6 +77,8 @@ const SingleMovie = () => {
     movieData?.rating && +movieData.rating < 8 && +movieData.rating >= 6;
   const isOrange = movieData?.rating && +movieData.rating < 6;
   const emptyValue = "Empty";
+
+  const newPoster = movieData?.poster.replace(imageSize, "w400");
 
   const getCreditsDepartment = (department: string) => {
     const data = movieData?.credits.filter(
@@ -248,7 +251,7 @@ const SingleMovie = () => {
         <div className={styles.wrapper}>
           <div className={styles.movieCardWrapper}>
             <div className={styles.movieCard}>
-              <img src={movieData?.poster} className={styles.moviePoster}></img>
+              <img src={newPoster} className={styles.moviePoster}></img>
               <GroupButtons groupButtonsList={GROUP_BUTTON_LIST} />
               {filteredMoviesLists.length !== 0 && (
                 <ListSelect
