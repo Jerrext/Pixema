@@ -1,0 +1,41 @@
+@import "src/assets/colors";
+
+.wrapper {
+  background-color: $dark;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.text {
+  color: $light;
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1em;
+  margin-top: 20px;
+}
+
+.status {
+  font-size: 150px;
+  line-height: 1em;
+  color: $white;
+}
+
+.homeBtn {
+  margin-top: 40px;
+  border-radius: 30px;
+}
+
+.wrapperLight {
+  background-color: $white;
+
+  .status {
+    color: $light;
+  }
+
+  .text {
+    color: $secondary;
+  }
+}

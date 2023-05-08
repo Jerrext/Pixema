@@ -56,3 +56,11 @@
   padding: 26px 50px;
   margin-top: 18px;
 }
+
+.rangeWrapperLight {
+  .input-range__slider-container {
+    .input-range__label-container {
+      background-color: $secondary;
+    }
+  }
+}

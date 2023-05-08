@@ -11,6 +11,7 @@ import {
   removeListItem,
 } from "src/redux/reducers/movieSlice";
 import { FullListsPayload } from "src/redux/reducers/@types";
+import { Theme, useThemeContext } from "src/Context/Theme/Context";
 
 type CardProps = {
   card: CardType | SearchCardType;
@@ -21,8 +22,9 @@ const Card: FC<CardProps> = ({ card, classname }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const { theme } = useThemeContext();
+
   const [savedState, setSavedState] = useState(false);
-  // const [watchedState, setWatchedState] = useState(false);
 
   const moviesLists = useSelector(MovieSelectors.getFullMyMoviesLists);
 
@@ -75,7 +77,11 @@ const Card: FC<CardProps> = ({ card, classname }) => {
 
   return (
     <div className={classNames(styles.cardWrapper, classname)}>
-      <div className={styles.posterWrapper}>
+      <div
+        className={classNames(styles.posterWrapper, {
+          [styles.posterWrapperLight]: theme === Theme.Light,
+        })}
+      >
         <MovieIcon />
         {adult ? (
           <div className={styles.censoredTitle}>Censored</div>

@@ -1,9 +1,9 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC } from "react";
 import "react-input-range/lib/css/index.css";
 import "./RangeComponent.scss";
 import InputRange, { Range } from "react-input-range";
-import { title } from "process";
 import classNames from "classnames";
+import { Theme, useThemeContext } from "src/Context/Theme/Context";
 
 type RangeComponentProps = {
   maxValue: number;
@@ -26,6 +26,8 @@ const RangeComponent: FC<RangeComponentProps> = ({
   setNewRangeState,
   formatLabel,
 }) => {
+  const { theme } = useThemeContext();
+
   const onChange = (value: number | Range) => {
     const valuesArr = Object.values(value).map(
       (item) => Math.round(item * 10) / 10
@@ -40,7 +42,11 @@ const RangeComponent: FC<RangeComponentProps> = ({
   return (
     <div className="rangeWrapper">
       <p>{title}</p>
-      <div className={classNames(classNameRange, "rangeComponent")}>
+      <div
+        className={classNames(classNameRange, "rangeComponent", {
+          rangeWrapperLight: theme === Theme.Light,
+        })}
+      >
         <InputRange
           draggableTrack
           maxValue={maxValue}

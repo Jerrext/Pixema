@@ -6,15 +6,24 @@ import { Theme, useThemeContext } from "src/Context/Theme/Context";
 import ModalWindow from "../ModalWindow";
 import SelectComponent from "src/components/SelectComponent/SelectComponent";
 import Button from "src/components/Button/Button";
-import { ButtonType, FiltersType } from "src/utils/@globalTypes";
+import {
+  ButtonType,
+  FiltersType,
+  ModalWindowType,
+} from "src/utils/@globalTypes";
 import { useDispatch } from "react-redux";
-import { getAllMovies } from "src/redux/reducers/movieSlice";
+import {
+  getAllMovies,
+  setFiltersData,
+  setModalWindow,
+} from "src/redux/reducers/movieSlice";
 import { useNavigate } from "react-router-dom";
 import { RoutesList } from "src/pages/Router";
 import RangeComponent from "src/components/RangeComponent/RangeComponent";
 import { getCurrentYear, getFilterRange } from "src/utils/functions";
 import { Range } from "react-input-range";
 import {
+  FILTERS_RESET,
   RELEASED_RANGE,
   RUNTIME_RANGE,
   SCORE_RANGE,
@@ -22,17 +31,21 @@ import {
 
 type FilterProps = {
   filters: FiltersType;
+  modalWindowType: ModalWindowType;
 };
 
-const FilterWindow: FC<FilterProps> = ({ filters }) => {
+const FilterWindow: FC<FilterProps> = ({ filters, modalWindowType }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const { theme } = useThemeContext();
+  // const { theme } = useThemeContext();
 
   const genres = filters.genre.split(",");
   const released = getFilterRange(filters.released);
   const runtime = getFilterRange(filters.runtime);
   const score = getFilterRange(filters.score);
+
+  const [animState, setAnimState] = useState(false);
 
   const [sortValue, setSortValue] = useState(filters.order);
   const [typeValue, setTypeValue] = useState(filters.type);
@@ -541,7 +554,9 @@ const FilterWindow: FC<FilterProps> = ({ filters }) => {
   const formatRuntime = (value: number) => `${value} min`;
   const formatScore = (value: number) => value.toFixed(1);
 
-  const onClearBtnClick = () => {};
+  const onClearBtnClick = () => {
+    dispatch(setFiltersData(FILTERS_RESET));
+  };
 
   const onShowBtnClick = () => {
     const filtersUrlParams = Object.entries(filtersUrlData)
@@ -553,10 +568,24 @@ const FilterWindow: FC<FilterProps> = ({ filters }) => {
     } else {
       navigate(RoutesList.Home);
     }
+    dispatch(setModalWindow(null));
   };
 
+  useEffect(() => {
+    setAnimState(true);
+    return () => {
+      setAnimState(false);
+    };
+  }, []);
+
   return (
-    <ModalWindow windowTitle="Filters" windowClassName={styles.filtersWindow}>
+    <ModalWindow
+      windowTitle="Filters"
+      windowClassName={classNames(styles.filtersWindow, {
+        [styles.filtersShow]: animState,
+      })}
+      closeBtnClassName={styles.closeBtn}
+    >
       <div className={styles.filtersContent}>
         <div className={styles.filtersItem}>
           <SelectComponent

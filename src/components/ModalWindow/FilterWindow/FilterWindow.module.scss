@@ -5,14 +5,19 @@
   width: 650px;
   border-radius: 0;
   height: 100%;
-  right: 0;
+  right: -100%;
   overflow: auto;
   padding: 48px 40px;
+  transition: 0.5s;
 
   h3 {
     text-align: left;
     font-weight: 600;
   }
+}
+
+.filtersShow {
+  right: 0;
 }
 
 .filtersContent {
@@ -41,11 +46,16 @@
   // padding: 12px;
 
   &:first-child {
-    border-bottom: 2px solid $graphite;
+    border-bottom: 1px solid $secondary;
     padding-bottom: 24px;
   }
 
   > div {
     flex: 1;
   }
+}
+
+.closeBtn {
+  top: 50px;
+  right: 40px;
 }

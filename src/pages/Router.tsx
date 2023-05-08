@@ -26,6 +26,7 @@ import { Theme } from "src/Context/Theme/Context";
 import Trends from "./Trends";
 import Search from "./Search";
 import Filters from "./Filters";
+import NotFound from "./NotFound/NotFound";
 
 export enum RoutesList {
   Home = "/",
@@ -113,8 +114,8 @@ const Router = () => {
             path={RoutesList.SearchMovie}
             element={redirectSignIn(<Search />)}
           />
-          <Route path={RoutesList.Default} element={"404"} />
         </Route>
+        <Route path={RoutesList.Default} element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

@@ -59,6 +59,7 @@
   padding: 2px 8px;
   height: 33px;
   top: 0;
+  z-index: 2;
 }
 
 .rating {
@@ -132,6 +133,7 @@
   height: 33px;
   align-items: center;
   justify-content: center;
+  z-index: 2;
   > svg > path {
     fill: $primary;
   }
@@ -158,4 +160,16 @@
   font-size: 40px;
   color: $light;
   box-shadow: 0 0 20px -5px $black;
+}
+
+.posterWrapperLight {
+  background-color: $light;
+
+  > svg > path {
+    fill: $secondary;
+  }
+
+  .censoredTitle {
+    color: $white;
+  }
 }

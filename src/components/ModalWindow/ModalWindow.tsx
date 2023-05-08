@@ -1,38 +1,23 @@
-import React, { FC, ReactNode, useEffect, useMemo, useState } from "react";
+import React, { FC, ReactNode } from "react";
 import classNames from "classnames";
 import styles from "./ModalWindow.module.scss";
 import { Theme, useThemeContext } from "src/Context/Theme/Context";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  MovieSelectors,
-  createMyList,
-  removeList,
-  setModalWindow,
-  // setAddListWindowVisibility,
-} from "src/redux/reducers/movieSlice";
-import Input from "../Input/Input";
-import SelectComponent from "../SelectComponent/SelectComponent";
-import Button from "../Button/Button";
-import { ButtonType, ModalWindowType } from "src/utils/@globalTypes";
-import { ListData } from "src/redux/sagas/@types";
-import { useNavigate } from "react-router-dom";
-import { RoutesList } from "src/pages/Router";
+import { useDispatch } from "react-redux";
+import { setModalWindow } from "src/redux/reducers/movieSlice";
 
 type ModalWindowProps = {
-  modalWindowType?: ModalWindowType;
   children: ReactNode;
   windowTitle: string;
   windowClassName?: string;
-  // closeBtnClassName?: string;
+  closeBtnClassName?: string;
   closeBtnHide?: boolean;
 };
 
 const ModalWindow: FC<ModalWindowProps> = ({
-  modalWindowType,
   children,
   windowTitle,
   windowClassName,
-  // closeBtnClassName,
+  closeBtnClassName,
   closeBtnHide,
 }) => {
   const dispatch = useDispatch();
@@ -47,12 +32,11 @@ const ModalWindow: FC<ModalWindowProps> = ({
       <div className={styles.overlay} onClick={onCloseWindowBtnClick}></div>
       <div
         className={classNames(styles.window, windowClassName, {
-          // [styles.windowRemoveConfirm]: isRemoveWindow,
           [styles.windowLight]: theme === Theme.Light,
         })}
       >
         <div
-          className={classNames(styles.closeBtn, {
+          className={classNames(styles.closeBtn, closeBtnClassName, {
             [styles.closeBtnHide]: closeBtnHide,
           })}
           onClick={onCloseWindowBtnClick}

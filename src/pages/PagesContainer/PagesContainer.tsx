@@ -11,11 +11,10 @@ import Message from "src/components/Message";
 import { MessageSelectors } from "src/redux/reducers/messageSlice";
 import { Theme, useThemeContext } from "src/Context/Theme/Context";
 import { MovieSelectors } from "src/redux/reducers/movieSlice";
-import ModalWindow from "src/components/ModalWindow/ModalWindow";
-import AddListWindow from "src/components/ModalWindow/AddListWindow/AddListWindow";
+import AddListWindow from "src/components/ModalWindow/AddListWindow";
 import { ModalWindowType } from "src/utils/@globalTypes";
-import RemoveListWindow from "src/components/ModalWindow/RemoveListWindow/RemoveListWindow";
-import FilterWindow from "src/components/ModalWindow/FilterWindow/FilterWindow";
+import RemoveListWindow from "src/components/ModalWindow/RemoveListWindow";
+import FilterWindow from "src/components/ModalWindow/FilterWindow";
 
 const PagesContainer = () => {
   const isLoggedIn = useSelector(AuthSelectors.getLoggedIn);
@@ -37,7 +36,7 @@ const PagesContainer = () => {
       case ModalWindowType.RemoveList:
         return <RemoveListWindow currentList={currentList} />;
       case ModalWindowType.FilterWindow:
-        return <FilterWindow filters={filters} />;
+        return <FilterWindow filters={filters} modalWindowType={modalWindow} />;
       default:
         return;
     }
