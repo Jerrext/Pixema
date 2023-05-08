@@ -29,7 +29,7 @@ export type GetUserDataPayload = {
   id: number | string;
 };
 
-export interface GetAllMoviesPayload {
+export type GetAllMoviesPayload = {
   page: number;
   order?: string;
   type?: string;
@@ -40,7 +40,7 @@ export interface GetAllMoviesPayload {
   language?: string;
   certification?: string;
   country?: string;
-}
+};
 
 export type SignUpUserPayload = PayloadWithCallback<SigUpPayloadData>;
 export type SignInUserPayload = PayloadWithCallback<SigInPayloadData>;

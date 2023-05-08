@@ -24,7 +24,7 @@ const Home = () => {
 
   useEffect(() => {
     const page = currentPage;
-    dispatch(getAllMovies({ page }));
+    dispatch(getAllMovies({ page, certification: "R" }));
     return () => {
       dispatch(setMoviesList([]));
     };

@@ -10,11 +10,11 @@ import {
 } from "src/utils/@globalTypes";
 import {
   ListPayload,
-  GetAllMoviesPayload,
   MessagePayload,
   CreateListPayload,
   FullListsPayload,
   RemoveListPayload,
+  GetAllMoviesPayload,
 } from "./@types";
 import {
   GetListsResponseData,
@@ -60,6 +60,7 @@ const initialState: MoviesState = {
   currentList: null,
   searchList: [],
   filtersData: {
+    page: 1,
     order: "",
     type: "",
     genre: "",

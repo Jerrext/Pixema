@@ -9,10 +9,11 @@ import {
 } from "src/redux/reducers/movieSlice";
 import Loader from "src/components/Loader";
 import Paginate from "src/components/Paginate";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Filters = () => {
   const { filters } = useParams();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -23,6 +24,13 @@ const Filters = () => {
 
   const onPageChange = ({ selected }: { selected: number }) => {
     setCurrentPage(selected + 1);
+
+    if (filters) {
+      const filtersArr = filters.split("&");
+      filtersArr.splice(filtersArr.length - 1, 1, `page=${selected + 1}`);
+      const newFiltersUrl = filtersArr.join("&");
+      navigate(`/filters/${newFiltersUrl}`);
+    }
   };
 
   useEffect(() => {
@@ -30,10 +38,8 @@ const Filters = () => {
       const filtersUrlData = Object.fromEntries(
         filters.split("&").map((item) => item.split("="))
       );
-
-      dispatch(setFiltersData(filtersUrlData));
-
       const {
+        page,
         order,
         type,
         genre,
@@ -44,7 +50,10 @@ const Filters = () => {
         certification,
         country,
       } = filtersUrlData;
-      const page = currentPage;
+
+      setCurrentPage(page);
+
+      dispatch(setFiltersData(filtersUrlData));
       dispatch(
         getAllMovies({
           page,
@@ -64,7 +73,7 @@ const Filters = () => {
     return () => {
       dispatch(setMoviesList([]));
     };
-  }, [currentPage, filters]);
+  }, [filters]);
 
   return isAllMoviesLoadng ? (
     <Loader />

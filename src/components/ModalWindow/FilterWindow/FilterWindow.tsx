@@ -537,6 +537,7 @@ const FilterWindow: FC<FilterProps> = ({ filters }) => {
     country: countryValue,
     language: languageValue,
     certification: certificationValue,
+    page: 1,
   };
 
   const formatRuntime = (value: number) => `${value} min`;

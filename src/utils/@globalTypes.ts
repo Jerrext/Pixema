@@ -87,13 +87,14 @@ export enum ModalWindowType {
 }
 
 export type FiltersType = {
+  page: number;
   order: string;
   type: string;
   genre: string;
   released: string;
   runtime: string;
   score: string;
-  country: string;
   language: string;
   certification: string;
+  country: string;
 };
