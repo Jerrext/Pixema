@@ -67,6 +67,7 @@ function* getMoviesWorker(action: PayloadAction<GetAllMoviesPayload>) {
     language,
     certification,
     country,
+    include_adult,
   } = action.payload;
   const { ok, data, problem }: ApiResponse<MoviesResponseData> =
     yield callCheckingAuth(
@@ -81,7 +82,8 @@ function* getMoviesWorker(action: PayloadAction<GetAllMoviesPayload>) {
       score,
       language,
       certification,
-      country
+      country,
+      include_adult
     );
   if (ok && data) {
     yield put(setMoviesList(data.pagination.data));

@@ -10,6 +10,7 @@ import {
 import Loader from "src/components/Loader";
 import Paginate from "src/components/Paginate";
 import { useNavigate, useParams } from "react-router-dom";
+import { FILTERS_RESET } from "src/utils/constants";
 
 const Filters = () => {
   const { filters } = useParams();
@@ -72,6 +73,7 @@ const Filters = () => {
 
     return () => {
       dispatch(setMoviesList([]));
+      dispatch(setFiltersData(FILTERS_RESET));
     };
   }, [filters]);
 

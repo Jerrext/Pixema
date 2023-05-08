@@ -29,6 +29,7 @@ import Filters from "./Filters";
 
 export enum RoutesList {
   Home = "/",
+  Browse = "/home/:pageUrl",
   SignIn = "/sign-in",
   SignUp = "/sign-up",
   ResetPassword = "/reset-password",
@@ -70,7 +71,12 @@ const Router = () => {
     <BrowserRouter>
       <Routes>
         <Route path={RoutesList.Home} element={<PagesContainer />}>
-          <Route path={RoutesList.Home} element={redirectSignIn(<Home />)} />
+          <Route
+            path={RoutesList.Home}
+            element={<Navigate to={"/home/page=1"} />}
+          />
+          <Route path={RoutesList.Browse} element={redirectSignIn(<Home />)} />
+
           <Route
             path={RoutesList.SignIn}
             element={

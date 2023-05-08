@@ -23,6 +23,7 @@ import {
   SingleMovieResponseData,
 } from "../sagas/@types";
 import {
+  FILTERS_RESET,
   RELEASED_RANGE,
   RUNTIME_RANGE,
   SCORE_RANGE,
@@ -59,18 +60,7 @@ const initialState: MoviesState = {
   modalWindow: null,
   currentList: null,
   searchList: [],
-  filtersData: {
-    page: 1,
-    order: "",
-    type: "",
-    genre: "",
-    released: `${RELEASED_RANGE.min},${RELEASED_RANGE.max}`,
-    runtime: `${RUNTIME_RANGE.min},${RUNTIME_RANGE.max}`,
-    score: `${SCORE_RANGE.min},${SCORE_RANGE.max}`,
-    country: "",
-    language: "",
-    certification: "",
-  },
+  filtersData: FILTERS_RESET,
 };
 
 const MovieSlice = createSlice({

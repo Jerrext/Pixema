@@ -40,6 +40,7 @@ export type GetAllMoviesPayload = {
   language?: string;
   certification?: string;
   country?: string;
+  include_adult?: boolean;
 };
 
 export type SignUpUserPayload = PayloadWithCallback<SigUpPayloadData>;

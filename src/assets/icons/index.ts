@@ -17,3 +17,4 @@ export { CheckMark2Icon } from "./CheckMark2Icon";
 export { TrashCanIcon } from "./TrashCanIcon";
 export { EditIcon } from "./EditIcon";
 export { MagnifierIcon } from "./MagnifierIcon";
+export { MovieIcon } from "./MovieIcon";

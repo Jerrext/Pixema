@@ -25,7 +25,6 @@ type FilterProps = {
 };
 
 const FilterWindow: FC<FilterProps> = ({ filters }) => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { theme } = useThemeContext();
@@ -515,11 +514,11 @@ const FilterWindow: FC<FilterProps> = ({ filters }) => {
   ];
 
   const certificationOptions = [
-    { value: "nc-17", label: "NC-17" },
     { value: "r", label: "R" },
     { value: "pg-13", label: "PG-13" },
     { value: "pg", label: "PG" },
     { value: "g", label: "G" },
+    { value: "nc-17", label: "NC-17" },
   ];
 
   const getRange = (rangeState: Range, min: number, max: number) => {
@@ -537,7 +536,6 @@ const FilterWindow: FC<FilterProps> = ({ filters }) => {
     country: countryValue,
     language: languageValue,
     certification: certificationValue,
-    page: 1,
   };
 
   const formatRuntime = (value: number) => `${value} min`;
@@ -551,7 +549,7 @@ const FilterWindow: FC<FilterProps> = ({ filters }) => {
       .map((item) => item.join("="))
       .join("&");
     if (filtersUrlParams) {
-      navigate(`/filters/${filtersUrlParams}`);
+      navigate(`/filters/${filtersUrlParams}&page=1`);
     } else {
       navigate(RoutesList.Home);
     }
@@ -565,7 +563,7 @@ const FilterWindow: FC<FilterProps> = ({ filters }) => {
             title="Sort by"
             placeholder="Popularity"
             optionsList={orderOptions}
-            currentValues={filters.order}
+            currentValues={sortValue}
             setSelecValue={setSortValue}
             isSearchable={false}
             isClearable

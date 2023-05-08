@@ -23,3 +23,16 @@ export const SCORE_RANGE = {
   max: 9.9,
   min: 1,
 };
+
+export const FILTERS_RESET = {
+  page: 1,
+  order: "",
+  type: "",
+  genre: "",
+  released: `${RELEASED_RANGE.min},${RELEASED_RANGE.max}`,
+  runtime: `${RUNTIME_RANGE.min},${RUNTIME_RANGE.max}`,
+  score: `${SCORE_RANGE.min},${SCORE_RANGE.max}`,
+  country: "",
+  language: "",
+  certification: "",
+};

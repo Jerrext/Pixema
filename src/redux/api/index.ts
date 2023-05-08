@@ -43,7 +43,8 @@ const getMovies = (
   score?: string,
   language?: string,
   certification?: string,
-  country?: string
+  country?: string,
+  include_adult?: boolean
 ) => {
   return API.get(
     `/titles`,
@@ -59,6 +60,7 @@ const getMovies = (
       language,
       certification,
       country,
+      include_adult,
     },
     {
       headers: {

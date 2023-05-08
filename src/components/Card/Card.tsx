@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from "react";
 import classNames from "classnames";
 import styles from "./Card.module.scss";
 import { CardType, SearchCardType } from "src/utils/@globalTypes";
-import { BookmarkIcon, EyeIcon, TrendIcon } from "src/assets/icons";
+import { BookmarkIcon, EyeIcon, MovieIcon, TrendIcon } from "src/assets/icons";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -26,7 +26,7 @@ const Card: FC<CardProps> = ({ card, classname }) => {
 
   const moviesLists = useSelector(MovieSelectors.getFullMyMoviesLists);
 
-  const { poster, rating, name, year, id } = card;
+  const { poster, rating, name, year, id, adult } = card;
   const favoriteList = moviesLists.find((item) => item.title === "Favorites");
   const favoriteIndex = favoriteList
     ? favoriteList.list.findIndex((movie) => movie.id === card.id)
@@ -76,13 +76,20 @@ const Card: FC<CardProps> = ({ card, classname }) => {
   return (
     <div className={classNames(styles.cardWrapper, classname)}>
       <div className={styles.posterWrapper}>
-        <img src={poster} alt={name} />
+        <MovieIcon />
+        {adult ? (
+          <div className={styles.censoredTitle}>Censored</div>
+        ) : (
+          <img src={poster} alt={name} />
+        )}
       </div>
       <p
-        className={styles.title}
+        className={classNames(styles.title, {
+          [styles.censored]: adult,
+        })}
         onClick={onTitleClick}
       >{`${name} (${year})`}</p>
-      {rating && (
+      {rating && !adult && (
         <div
           className={classNames(styles.rating, {
             [styles.trendRating]: isTrend,
@@ -101,14 +108,16 @@ const Card: FC<CardProps> = ({ card, classname }) => {
       >
         <EyeIcon />
       </div>
-      <div
-        className={classNames(styles.bookmark, {
-          [styles.addedMovie]: savedState,
-        })}
-        onClick={onBookmarkBtnClick}
-      >
-        <BookmarkIcon />
-      </div>
+      {!adult && (
+        <div
+          className={classNames(styles.bookmark, {
+            [styles.addedMovie]: savedState,
+          })}
+          onClick={onBookmarkBtnClick}
+        >
+          <BookmarkIcon />
+        </div>
+      )}
     </div>
   );
 };
