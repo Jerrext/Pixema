@@ -94,7 +94,9 @@ const Card: FC<CardProps> = ({ card, classname }) => {
           [styles.censored]: adult,
         })}
         onClick={onTitleClick}
-      >{`${name} (${year})`}</p>
+      >
+        {adult ? "Censored Title" : `${name} (${year})`}
+      </p>
       {rating && !adult && (
         <div
           className={classNames(styles.rating, {

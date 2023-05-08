@@ -32,6 +32,7 @@ import {
 type FilterProps = {
   filters: FiltersType;
   modalWindowType: ModalWindowType;
+  // filterReset:
 };
 
 const FilterWindow: FC<FilterProps> = ({ filters, modalWindowType }) => {
@@ -39,11 +40,6 @@ const FilterWindow: FC<FilterProps> = ({ filters, modalWindowType }) => {
   const dispatch = useDispatch();
 
   // const { theme } = useThemeContext();
-
-  const genres = filters.genre.split(",");
-  const released = getFilterRange(filters.released);
-  const runtime = getFilterRange(filters.runtime);
-  const score = getFilterRange(filters.score);
 
   const [animState, setAnimState] = useState(false);
 
@@ -54,10 +50,10 @@ const FilterWindow: FC<FilterProps> = ({ filters, modalWindowType }) => {
   const [certificationValue, setCertificationValue] = useState(
     filters.certification
   );
-  const [genreValue, setGenreValues] = useState<string[]>(genres);
-  const [yearState, setYearState] = useState<Range>(released);
-  const [runtimeState, setRuntimeState] = useState<Range>(runtime);
-  const [scoreState, setScoreState] = useState<Range>(score);
+  const [genreValue, setGenreValues] = useState<string[]>(filters.genre);
+  const [yearState, setYearState] = useState<Range>(filters.released);
+  const [runtimeState, setRuntimeState] = useState<Range>(filters.runtime);
+  const [scoreState, setScoreState] = useState<Range>(filters.score);
 
   const orderOptions = [
     { value: "popularity:desc", label: "Popularity" },
@@ -555,7 +551,15 @@ const FilterWindow: FC<FilterProps> = ({ filters, modalWindowType }) => {
   const formatScore = (value: number) => value.toFixed(1);
 
   const onClearBtnClick = () => {
-    dispatch(setFiltersData(FILTERS_RESET));
+    setSortValue(FILTERS_RESET.order);
+    setTypeValue(FILTERS_RESET.type);
+    setCountryValue(FILTERS_RESET.country);
+    setLanguageValue(FILTERS_RESET.language);
+    setCertificationValue(FILTERS_RESET.certification);
+    setGenreValues(FILTERS_RESET.genre);
+    setYearState(FILTERS_RESET.released);
+    setRuntimeState(FILTERS_RESET.runtime);
+    setScoreState(FILTERS_RESET.score);
   };
 
   const onShowBtnClick = () => {

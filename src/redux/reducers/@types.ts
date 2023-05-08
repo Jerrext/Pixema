@@ -84,3 +84,16 @@ export type RemoveListPayload = {
   id: number;
   callback: () => void;
 };
+
+export type FiltersPayload = {
+  page: number;
+  order: string;
+  type: string;
+  genre: string;
+  released: string;
+  runtime: string;
+  score: string;
+  language: string;
+  certification: string;
+  country: string;
+};

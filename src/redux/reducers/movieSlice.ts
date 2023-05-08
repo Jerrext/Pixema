@@ -10,24 +10,14 @@ import {
 } from "src/utils/@globalTypes";
 import {
   ListPayload,
-  MessagePayload,
   CreateListPayload,
   FullListsPayload,
   RemoveListPayload,
   GetAllMoviesPayload,
+  FiltersPayload,
 } from "./@types";
-import {
-  GetListsResponseData,
-  ListData,
-  SingleMovieData,
-  SingleMovieResponseData,
-} from "../sagas/@types";
-import {
-  FILTERS_RESET,
-  RELEASED_RANGE,
-  RUNTIME_RANGE,
-  SCORE_RANGE,
-} from "src/utils/constants";
+import { ListData, SingleMovieData } from "../sagas/@types";
+import { FILTERS_RESET } from "src/utils/constants";
 
 type MoviesState = {
   moviesList: CardListType;
@@ -136,12 +126,7 @@ const MovieSlice = createSlice({
       state.searchList = action.payload;
     },
     setFiltersData(state, action: PayloadAction<FiltersType>) {
-      const payload: any = action.payload;
-      const newFilterData: any = Object.assign({}, state.filtersData);
-      Object.keys(payload).forEach(
-        (key) => (newFilterData[key] = payload[key])
-      );
-      state.filtersData = newFilterData;
+      state.filtersData = action.payload;
     },
   },
 });

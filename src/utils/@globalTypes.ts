@@ -90,10 +90,10 @@ export type FiltersType = {
   page: number;
   order: string;
   type: string;
-  genre: string;
-  released: string;
-  runtime: string;
-  score: string;
+  genre: string[];
+  released: Range;
+  runtime: Range;
+  score: Range;
   language: string;
   certification: string;
   country: string;

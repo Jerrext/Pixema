@@ -36,9 +36,31 @@ const Filters = () => {
 
   useEffect(() => {
     if (filters) {
-      const filtersUrlData = Object.fromEntries(
-        filters.split("&").map((item) => item.split("="))
+      const filtersUrlData = filters.split("&").map((item) => item.split("="));
+
+      const filtersData = Object.fromEntries(
+        filtersUrlData.slice().map((item) => {
+          if (item[0] === "genre") {
+            return [item[0], item[1].split(",")];
+          } else if (
+            item[0] === "score" ||
+            item[0] === "released" ||
+            item[0] === "runtime"
+          ) {
+            const range = item[1].split(",");
+            return [item[0], { max: +range[1], min: +range[0] }];
+          } else {
+            return item;
+          }
+        })
       );
+
+      const newFilterData: any = Object.assign({}, FILTERS_RESET);
+
+      Object.keys(filtersData).forEach((key) => {
+        newFilterData[key] = filtersData[key];
+      });
+
       const {
         page,
         order,
@@ -50,11 +72,11 @@ const Filters = () => {
         language,
         certification,
         country,
-      } = filtersUrlData;
+      } = Object.fromEntries(filtersUrlData);
 
       setCurrentPage(page);
 
-      dispatch(setFiltersData(filtersUrlData));
+      dispatch(setFiltersData(newFilterData));
       dispatch(
         getAllMovies({
           page,
