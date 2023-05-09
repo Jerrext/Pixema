@@ -137,6 +137,7 @@ const MovieSlice = createSlice({
       const newRatings: RatingDataType[] = [];
       action.payload.forEach((item) =>
         newRatings.push({
+          id: item.id,
           reviewableId: item.reviewable_id,
           userId: item.user_id,
           score: item.score,
@@ -146,6 +147,7 @@ const MovieSlice = createSlice({
       );
       state.ratings = newRatings;
     },
+    removeCurrentRating(_, __: PayloadAction<number>) {},
   },
 });
 
@@ -181,6 +183,7 @@ export const {
   addReview,
   getRatings,
   setRatings,
+  removeCurrentRating,
 } = MovieSlice.actions;
 export default MovieSlice.reducer;
 

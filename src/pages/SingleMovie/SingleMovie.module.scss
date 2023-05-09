@@ -180,7 +180,6 @@
 }
 
 .recommendationCardList {
-  overflow-x: auto;
   display: flex;
   gap: 30px;
   margin-top: 40px;
@@ -278,6 +277,38 @@
     margin-top: 5px;
     font-weight: 400;
     color: $secondary;
+  }
+}
+
+.scoreWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $graphite;
+  border-radius: 10px;
+  padding: 10px 20px;
+  color: $white;
+}
+
+.clearScoreBtn {
+  background-color: $graphite;
+  border-radius: 5px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.3s;
+
+  > svg > path {
+    transition: 0.3s;
+  }
+
+  &:hover {
+    background-color: $dark;
+
+    > svg > path {
+      fill: $white;
+    }
   }
 }
 

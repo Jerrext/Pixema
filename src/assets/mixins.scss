@@ -8,4 +8,9 @@
   color: $white;
   align-items: center;
   cursor: pointer;
+  transition: 0.3s;
+
+  svg > path {
+    transition: 0.3s !important;
+  }
 }

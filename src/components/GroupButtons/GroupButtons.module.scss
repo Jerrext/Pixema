@@ -20,6 +20,12 @@
 
   > div > svg > path {
     fill: $light;
+    transition: 0.3s;
+  }
+
+  > svg > circle,
+  > svg > path {
+    transition: 0.3s;
   }
 
   &:hover {

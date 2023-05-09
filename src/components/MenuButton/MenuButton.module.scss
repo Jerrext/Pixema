@@ -5,12 +5,19 @@
   gap: 15px;
   align-items: center;
   cursor: pointer;
+
   > svg > path {
     fill: $secondary;
+    transition: 0.3s;
   }
   p {
     color: $secondary;
     font-size: 18px;
+    transition: 0.3s;
+  }
+
+  span {
+    transition: 0.3s;
   }
 
   &:hover {

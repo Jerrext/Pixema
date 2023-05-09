@@ -6,7 +6,6 @@
   align-items: center;
   padding-right: 24px;
   position: relative;
-  // max-width: 264px;
   cursor: pointer;
   &::after,
   &::before {
@@ -58,6 +57,8 @@
   padding: 15px 20px;
   border-bottom: 1px solid $graphite;
   cursor: pointer;
+  transition: 0.3s;
+
   &:last-child {
     border-bottom: 0;
   }

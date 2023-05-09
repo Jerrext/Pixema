@@ -194,6 +194,18 @@ const getRating = (token: string, id: string | number) => {
   );
 };
 
+const removeRating = (token: string, id: number) => {
+  return API.delete(
+    `/reviews/${id}`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
 export default {
   signUpUser,
   signInUser,
@@ -211,4 +223,5 @@ export default {
   editMyList,
   createReview,
   getRating,
+  removeRating,
 };

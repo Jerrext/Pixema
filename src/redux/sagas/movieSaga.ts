@@ -16,6 +16,7 @@ import {
   getSingleMovie,
   removeList,
   removeListItem,
+  removeCurrentRating,
   setAllMoviesLoading,
   setFullMyMoviesLists,
   setModalWindow,
@@ -332,6 +333,7 @@ function* createReviewWorker(action: PayloadAction<AddReviewPayload>) {
     action.payload
   );
   if (ok && data) {
+    yield put(getRatings("me"));
     yield put(setModalWindow(null));
     yield put(
       setMessage({
@@ -358,7 +360,22 @@ function* getRatingWorker(action: PayloadAction<string | number>) {
     yield put(
       setMessage({
         status: false,
-        message: `Error sending review ${problem}`,
+        message: `Error getting rating ${problem}`,
+      })
+    );
+  }
+}
+
+function* removeRatingWorker(action: PayloadAction<number>) {
+  const { ok, problem }: ApiResponse<GetRatingsResponseData> =
+    yield callCheckingAuth(API.removeRating, "", action.payload);
+  if (ok) {
+    yield put(getRatings("me"));
+  } else {
+    yield put(
+      setMessage({
+        status: false,
+        message: `Rating deletion error ${problem}`,
       })
     );
   }
@@ -379,5 +396,6 @@ export default function* movieSaga() {
     takeLatest(editList, editMyListWorker),
     takeLatest(addReview, createReviewWorker),
     takeLatest(getRatings, getRatingWorker),
+    takeLatest(removeCurrentRating, removeRatingWorker),
   ]);
 }

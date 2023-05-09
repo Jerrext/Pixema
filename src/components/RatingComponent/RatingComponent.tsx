@@ -1,9 +1,6 @@
 import React, { FC, useState } from "react";
 import styles from "./RatingComponent.module.scss";
 import { Rating } from "react-simple-star-rating";
-import classNames from "classnames";
-import { Theme, useThemeContext } from "src/Context/Theme/Context";
-import { TrashCanIcon } from "src/assets/icons";
 
 type RatingComponentProps = {
   title: string;
@@ -16,8 +13,6 @@ const RatingComponent: FC<RatingComponentProps> = ({
   setRating,
   rating,
 }) => {
-  const { theme } = useThemeContext();
-
   const [moveRating, setMoveRating] = useState(1);
 
   const handleRating = (rate: number) => {

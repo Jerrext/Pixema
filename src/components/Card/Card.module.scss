@@ -4,8 +4,11 @@
   min-height: 345px;
   width: 209px;
   position: relative;
+  transition: 0.3s;
 
   &:hover {
+    transform: scale(1.02);
+
     .bookmark {
       opacity: 1;
     }
@@ -46,6 +49,7 @@
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+  transition: 0.3s;
 
   &:hover {
     color: $primary;

@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./WriteReviewWindow.module.scss";
 import { useDispatch } from "react-redux";
 import { ButtonType } from "src/utils/@globalTypes";
@@ -6,11 +6,7 @@ import Button from "src/components/Button";
 import ModalWindow from "../ModalWindow";
 import RatingComponent from "src/components/RatingComponent";
 import Input from "src/components/Input";
-import {
-  addReview,
-  getRatings,
-  setModalWindow,
-} from "src/redux/reducers/movieSlice";
+import { addReview, setModalWindow } from "src/redux/reducers/movieSlice";
 import { useParams } from "react-router-dom";
 
 const WriteReviewWindow = () => {
@@ -35,8 +31,6 @@ const WriteReviewWindow = () => {
           addReview({ mediaId: +id, mediaType: "title", review, score: rating })
         );
       }
-
-      dispatch(getRatings("me"));
     }
   };
 

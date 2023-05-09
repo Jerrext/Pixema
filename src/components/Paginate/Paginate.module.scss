@@ -16,6 +16,8 @@
   color: #53607a;
   outline: none;
   user-select: none;
+  transition: 0.3s;
+
   &:hover {
     cursor: pointer;
     background-color: $primary-secondary;
@@ -26,6 +28,7 @@
 .linkPage {
   padding: 3px 10px;
   outline: none;
+
   &:focus {
     outline: none;
   }
@@ -51,6 +54,7 @@
   border-radius: 4px;
   user-select: none;
   position: relative;
+  transition: 0.3s;
 
   &:hover {
     svg > path {

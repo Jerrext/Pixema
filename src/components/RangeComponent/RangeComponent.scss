@@ -3,7 +3,7 @@
 .input-range {
   &__track {
     height: 0.4rem;
-    transition: unset;
+    transition: 0.1s;
 
     &--background {
       background: $light;
@@ -31,7 +31,7 @@
     background: $primary;
 
     &-container {
-      transition: unset;
+      transition: 0.1s;
 
       .input-range__label-container {
         background-color: $graphite;

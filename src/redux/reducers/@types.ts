@@ -107,6 +107,7 @@ export type AddReviewPayload = {
 };
 
 export type RatingDataType = {
+  id: number;
   reviewableId: number;
   score: number;
   createdAt: string;

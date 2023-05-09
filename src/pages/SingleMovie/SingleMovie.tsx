@@ -7,6 +7,7 @@ import {
   getRatings,
   getRecommendationMovieList,
   getSingleMovie,
+  removeCurrentRating,
   removeListItem,
   setModalWindow,
   setRecommendationMovieList,
@@ -24,6 +25,7 @@ import {
   ReviewIcon,
   SocialIcon,
   StarIcon,
+  TrashCanIcon,
   TrendIcon,
 } from "src/assets/icons";
 import {
@@ -95,7 +97,6 @@ const SingleMovie = () => {
     movieData?.rating && +movieData.rating < 8 && +movieData.rating >= 6;
   const isOrange = movieData?.rating && +movieData.rating < 6;
   const emptyValue = "Empty";
-  // const ratingScore = ratingsData.find(item => )
 
   const newPoster = movieData?.poster
     ? movieData.poster.replace(imageSize, "w400")
@@ -248,6 +249,10 @@ const SingleMovie = () => {
     dispatch(setModalWindow(ModalWindowType.WriteReviewWindow));
   };
 
+  const onClearScoreBtnClick = () => {
+    currentRating && dispatch(removeCurrentRating(currentRating.id));
+  };
+
   const recommendationPageList = useMemo(() => {
     return recommendationCardList.filter(
       (item, index) => index >= 4 * (currentPage - 1) && index < 4 * currentPage
@@ -290,7 +295,17 @@ const SingleMovie = () => {
                 <img src={newPoster} alt={movieData?.name} />
               </div>
               {currentRating ? (
-                `Your Score: ${currentRating.score}`
+                <div className={styles.scoreWrapper}>
+                  <div className={styles.scoreItem}>
+                    Your Score: {currentRating.score}
+                  </div>
+                  <div
+                    className={styles.clearScoreBtn}
+                    onClick={onClearScoreBtnClick}
+                  >
+                    <TrashCanIcon />
+                  </div>
+                </div>
               ) : (
                 <Button
                   title={
