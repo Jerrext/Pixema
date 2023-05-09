@@ -99,8 +99,13 @@ const SingleMovie = () => {
       (item) => item.pivot.department === department
     );
     return data?.length !== 0
-      ? data?.map((item) => {
-          return <ViewPerson key={item.id} personData={item} />;
+      ? data?.map((item, index, array) => {
+          return (
+            <>
+              <ViewPerson key={item.id} personData={item} />
+              {index !== array.length - 1 && ", "}
+            </>
+          );
         })
       : emptyValue;
   };
@@ -283,7 +288,6 @@ const SingleMovie = () => {
                 }
                 onClick={onReviewBtnClick}
                 type={ButtonType.Secondary}
-                disabled
                 className={styles.rateBtn}
               />
               {filteredMoviesLists.length !== 0 && (

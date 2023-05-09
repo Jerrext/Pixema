@@ -13,6 +13,7 @@ import {
   FullListsPayload,
   RemoveListPayload,
   GetAllMoviesPayload,
+  AddReviewPayload,
 } from "./@types";
 import { ListData, SingleMovieData } from "../sagas/@types";
 import { FILTERS_RESET } from "src/utils/constants";
@@ -127,6 +128,7 @@ const MovieSlice = createSlice({
       state.filtersData = action.payload;
     },
     editList(_, __: PayloadAction<DetailsListPayload>) {},
+    addReview(_, __: PayloadAction<AddReviewPayload>) {},
   },
 });
 
@@ -159,6 +161,7 @@ export const {
   setSearchList,
   setFiltersData,
   editList,
+  addReview,
 } = MovieSlice.actions;
 export default MovieSlice.reducer;
 

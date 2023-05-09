@@ -98,3 +98,10 @@ export type FiltersPayload = {
   certification: string;
   country: string;
 };
+
+export type AddReviewPayload = {
+  mediaId: number;
+  mediaType: string;
+  review?: string;
+  score: number;
+};

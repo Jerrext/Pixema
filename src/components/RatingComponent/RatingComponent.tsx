@@ -7,12 +7,17 @@ import { TrashCanIcon } from "src/assets/icons";
 
 type RatingComponentProps = {
   title: string;
+  rating: number;
+  setRating: (value: React.SetStateAction<number>) => void;
 };
 
-const RatingComponent: FC<RatingComponentProps> = ({ title }) => {
+const RatingComponent: FC<RatingComponentProps> = ({
+  title,
+  setRating,
+  rating,
+}) => {
   const { theme } = useThemeContext();
 
-  const [rating, setRating] = useState(1);
   const [moveRating, setMoveRating] = useState(1);
 
   const handleRating = (rate: number) => {

@@ -2,6 +2,7 @@ import React from "react";
 import { all, put, takeEvery, takeLatest } from "redux-saga/effects";
 import {
   addMovieToList,
+  addReview,
   changeMyMoviesLists,
   clearFullMyMoviesLists,
   createMyList,
@@ -46,6 +47,7 @@ import {
   GetAllMoviesPayload,
   DetailsListPayload,
   RemoveListPayload,
+  AddReviewPayload,
 } from "../reducers/@types";
 import { setMessage } from "../reducers/messageSlice";
 
@@ -318,6 +320,30 @@ function* getSearchListWorker(action: PayloadAction<string>) {
   }
 }
 
+function* createReviewWorker(action: PayloadAction<AddReviewPayload>) {
+  const { ok, data, problem }: ApiResponse<any> = yield callCheckingAuth(
+    API.createReview,
+    "",
+    action.payload
+  );
+  if (ok && data) {
+    yield put(setModalWindow(null));
+    yield put(
+      setMessage({
+        status: true,
+        message: `Review successfully sent`,
+      })
+    );
+  } else {
+    yield put(
+      setMessage({
+        status: false,
+        message: `Error sending review ${problem}`,
+      })
+    );
+  }
+}
+
 export default function* movieSaga() {
   yield all([
     takeLatest(getAllMovies, getMoviesWorker),
@@ -331,5 +357,6 @@ export default function* movieSaga() {
     takeLatest(removeList, removeListWorker),
     takeLatest(getSearchList, getSearchListWorker),
     takeLatest(editList, editMyListWorker),
+    takeLatest(addReview, createReviewWorker),
   ]);
 }

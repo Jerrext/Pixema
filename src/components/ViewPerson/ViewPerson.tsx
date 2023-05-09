@@ -43,7 +43,6 @@ const ViewPerson: FC<ViewPersonProps> = ({ personData }) => {
           </div>
         </span>
       </span>
-      {", "}
     </>
   );
 };

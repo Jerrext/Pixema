@@ -1,5 +1,6 @@
 import { create } from "apisauce";
 import {
+  AddReviewPayload,
   DetailsListType,
   ListValue,
   SigInPayloadData,
@@ -173,6 +174,14 @@ const getSearchList = (token: string, query: string) => {
   );
 };
 
+const createReview = (token: string, data: AddReviewPayload) => {
+  return API.post(`/reviews`, data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
 export default {
   signUpUser,
   signInUser,
@@ -188,4 +197,5 @@ export default {
   removeList,
   getSearchList,
   editMyList,
+  createReview,
 };
