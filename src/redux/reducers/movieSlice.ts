@@ -14,8 +14,9 @@ import {
   RemoveListPayload,
   GetAllMoviesPayload,
   AddReviewPayload,
+  RatingDataType,
 } from "./@types";
-import { ListData, SingleMovieData } from "../sagas/@types";
+import { ListData, RatingData, SingleMovieData } from "../sagas/@types";
 import { FILTERS_RESET } from "src/utils/constants";
 
 type MoviesState = {
@@ -33,6 +34,7 @@ type MoviesState = {
   currentList: ListData | null;
   searchList: SearchListType;
   filtersData: FiltersType;
+  ratings: RatingDataType[];
 };
 
 const initialState: MoviesState = {
@@ -50,6 +52,7 @@ const initialState: MoviesState = {
   currentList: null,
   searchList: [],
   filtersData: FILTERS_RESET,
+  ratings: [],
 };
 
 const MovieSlice = createSlice({
@@ -129,6 +132,20 @@ const MovieSlice = createSlice({
     },
     editList(_, __: PayloadAction<DetailsListPayload>) {},
     addReview(_, __: PayloadAction<AddReviewPayload>) {},
+    getRatings(_, __: PayloadAction<string | number>) {},
+    setRatings(state, action: PayloadAction<RatingData[]>) {
+      const newRatings: RatingDataType[] = [];
+      action.payload.forEach((item) =>
+        newRatings.push({
+          reviewableId: item.reviewable_id,
+          userId: item.user_id,
+          score: item.score,
+          createdAt: item.created_at,
+          updatedAt: item.updated_at,
+        })
+      );
+      state.ratings = newRatings;
+    },
   },
 });
 
@@ -162,6 +179,8 @@ export const {
   setFiltersData,
   editList,
   addReview,
+  getRatings,
+  setRatings,
 } = MovieSlice.actions;
 export default MovieSlice.reducer;
 
@@ -185,4 +204,5 @@ export const MovieSelectors = {
   getCurrentList: (state: RootState) => state.movie.currentList,
   getSearchMovieList: (state: RootState) => state.movie.searchList,
   getFilters: (state: RootState) => state.movie.filtersData,
+  getRatingsState: (state: RootState) => state.movie.ratings,
 };

@@ -105,3 +105,11 @@ export type AddReviewPayload = {
   review?: string;
   score: number;
 };
+
+export type RatingDataType = {
+  reviewableId: number;
+  score: number;
+  createdAt: string;
+  updatedAt: string;
+  userId: number;
+};

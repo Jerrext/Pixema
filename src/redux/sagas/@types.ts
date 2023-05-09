@@ -1,4 +1,4 @@
-import { CardListType } from "src/utils/@globalTypes";
+import { CardListType, CardType } from "src/utils/@globalTypes";
 
 export type UserSignInResponseData = {
   themes: {};
@@ -245,6 +245,24 @@ type CreateListData = {
   model_type: string;
 };
 
+export type RatingData = {
+  author: null;
+  body: null;
+  created_at: string;
+  id: number;
+  link: null;
+  media_type: string;
+  model_type: string;
+  reviewable: CardType;
+  reviewable_id: number;
+  reviewable_type: string;
+  score: number;
+  source: null;
+  type: string;
+  updated_at: string;
+  user_id: number;
+};
+
 export type UserResponseData = {
   user: UserData;
   status: string;
@@ -289,5 +307,10 @@ export type GetListsResponseData = {
 export type GetSearchListResponseData = {
   results: any;
   query: string;
+  status: string;
+};
+
+export type GetRatingsResponseData = {
+  pagination: PaginationData<RatingData[]>;
   status: string;
 };

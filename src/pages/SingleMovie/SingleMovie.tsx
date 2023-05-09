@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   MovieSelectors,
   addMovieToList,
+  getRatings,
   getRecommendationMovieList,
   getSingleMovie,
   removeListItem,
@@ -67,9 +68,11 @@ const SingleMovie = () => {
     MovieSelectors.getRecommendationMovieLoading
   );
   const moviesLists = useSelector(MovieSelectors.getFullMyMoviesLists);
+  const ratingsData = useSelector(MovieSelectors.getRatingsState);
 
   const { theme } = useThemeContext();
   const isLight = theme === Theme.Light;
+
   const filteredMoviesLists = moviesLists.filter(
     (item) => item.title !== "Favorites" && item.title !== "watchlist"
   );
@@ -81,6 +84,9 @@ const SingleMovie = () => {
   const watchedIndex = watchedList
     ? watchedList.list.findIndex((movie) => movie.id === movieData?.id)
     : -1;
+  const currentRating = ratingsData
+    ? ratingsData.find((item) => item.reviewableId === movieData?.id)
+    : null;
   const recommendationPageCount = Math.ceil(
     (recommendationCardList.length + 0.001) / 4
   );
@@ -89,6 +95,7 @@ const SingleMovie = () => {
     movieData?.rating && +movieData.rating < 8 && +movieData.rating >= 6;
   const isOrange = movieData?.rating && +movieData.rating < 6;
   const emptyValue = "Empty";
+  // const ratingScore = ratingsData.find(item => )
 
   const newPoster = movieData?.poster
     ? movieData.poster.replace(imageSize, "w400")
@@ -101,10 +108,10 @@ const SingleMovie = () => {
     return data?.length !== 0
       ? data?.map((item, index, array) => {
           return (
-            <>
-              <ViewPerson key={item.id} personData={item} />
+            <span key={item.id}>
+              <ViewPerson personData={item} />
               {index !== array.length - 1 && ", "}
-            </>
+            </span>
           );
         })
       : emptyValue;
@@ -266,6 +273,10 @@ const SingleMovie = () => {
     setWatchedState(watchedIndex > -1);
   }, [watchedIndex]);
 
+  useEffect(() => {
+    dispatch(getRatings("me"));
+  }, []);
+
   return isSingleMovieLoadng ? (
     <Loader />
   ) : (
@@ -278,18 +289,22 @@ const SingleMovie = () => {
                 <MovieIcon />
                 <img src={newPoster} alt={movieData?.name} />
               </div>
+              {currentRating ? (
+                `Your Score: ${currentRating.score}`
+              ) : (
+                <Button
+                  title={
+                    <>
+                      <StarIcon />
+                      <span>Rate this</span>
+                    </>
+                  }
+                  onClick={onReviewBtnClick}
+                  type={ButtonType.Secondary}
+                  className={styles.rateBtn}
+                />
+              )}
               <GroupButtons groupButtonsList={GROUP_BUTTON_LIST} />
-              <Button
-                title={
-                  <>
-                    <StarIcon />
-                    <span>Rate this</span>
-                  </>
-                }
-                onClick={onReviewBtnClick}
-                type={ButtonType.Secondary}
-                className={styles.rateBtn}
-              />
               {filteredMoviesLists.length !== 0 && (
                 <ListSelect
                   title="Lists"

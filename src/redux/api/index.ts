@@ -182,6 +182,18 @@ const createReview = (token: string, data: AddReviewPayload) => {
   });
 };
 
+const getRating = (token: string, id: string | number) => {
+  return API.get(
+    `/user-profile/${id}/ratings`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
 export default {
   signUpUser,
   signInUser,
@@ -198,4 +210,5 @@ export default {
   getSearchList,
   editMyList,
   createReview,
+  getRating,
 };

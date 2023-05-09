@@ -10,6 +10,7 @@ import {
   getAllMovies,
   getFullMyMoviesLists,
   getMyMoviesLists,
+  getRatings,
   getRecommendationMovieList,
   getSearchList,
   getSingleMovie,
@@ -22,6 +23,7 @@ import {
   setMyMoviesListLoading,
   setMyMoviesLists,
   setPagesCount,
+  setRatings,
   setRecommendationMovieList,
   setRecommendationMovieLoading,
   setSearchList,
@@ -35,6 +37,7 @@ import {
   ChangeListResponseData,
   CreateListResponseData,
   GetListsResponseData,
+  GetRatingsResponseData,
   GetSearchListResponseData,
   MoviesResponseData,
   MyListResponseData,
@@ -263,7 +266,9 @@ function* createMyListWorker(action: PayloadAction<DetailsListPayload>) {
     yield callCheckingAuth(API.createMyList, token, data);
   if (ok) {
     yield put(clearFullMyMoviesLists());
-    yield put(getMyMoviesLists());
+    if (!token) {
+      yield put(getMyMoviesLists());
+    }
     yield put(setModalWindow(null));
   } else {
     yield put(
@@ -344,6 +349,21 @@ function* createReviewWorker(action: PayloadAction<AddReviewPayload>) {
   }
 }
 
+function* getRatingWorker(action: PayloadAction<string | number>) {
+  const { ok, data, problem }: ApiResponse<GetRatingsResponseData> =
+    yield callCheckingAuth(API.getRating, "", action.payload);
+  if (ok && data) {
+    yield put(setRatings(data.pagination.data));
+  } else {
+    yield put(
+      setMessage({
+        status: false,
+        message: `Error sending review ${problem}`,
+      })
+    );
+  }
+}
+
 export default function* movieSaga() {
   yield all([
     takeLatest(getAllMovies, getMoviesWorker),
@@ -358,5 +378,6 @@ export default function* movieSaga() {
     takeLatest(getSearchList, getSearchListWorker),
     takeLatest(editList, editMyListWorker),
     takeLatest(addReview, createReviewWorker),
+    takeLatest(getRatings, getRatingWorker),
   ]);
 }
