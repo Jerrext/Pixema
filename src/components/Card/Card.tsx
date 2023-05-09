@@ -10,7 +10,6 @@ import {
   addMovieToList,
   removeListItem,
 } from "src/redux/reducers/movieSlice";
-import { FullListsPayload } from "src/redux/reducers/@types";
 import { Theme, useThemeContext } from "src/Context/Theme/Context";
 import { imageSize } from "src/utils/constants";
 
@@ -44,7 +43,7 @@ const Card: FC<CardProps> = ({ card, classname }) => {
   const isGreen = +rating < 8 && +rating >= 6;
   const isOrange = +rating < 6;
 
-  const newPoster = poster.replace(imageSize, "w300");
+  const newPoster = poster ? poster.replace(imageSize, "w300") : "";
 
   const onBookmarkBtnClick = () => {
     if (favoriteList) {

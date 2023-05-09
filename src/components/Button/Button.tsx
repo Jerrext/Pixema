@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, ReactNode, KeyboardEvent } from "react";
+import React, { FC, ReactNode } from "react";
 import classNames from "classnames";
 import styles from "./Button.module.scss";
 import { ButtonType } from "src/utils/@globalTypes";

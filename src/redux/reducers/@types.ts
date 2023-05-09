@@ -67,7 +67,8 @@ export type DetailsListType = {
   public: boolean;
 };
 
-export type CreateListPayload = {
+export type DetailsListPayload = {
+  id?: number;
   data: {
     details: DetailsListType;
   };

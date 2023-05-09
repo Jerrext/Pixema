@@ -53,7 +53,7 @@
     }
   }
 
-  &:hover {
+  &:last-child:hover {
     svg > path {
       fill: $light;
     }

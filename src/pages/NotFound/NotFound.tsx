@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./NotFound.module.scss";
-import Button from "src/components/Button/Button";
+import Button from "src/components/Button";
 import { ButtonType } from "src/utils/@globalTypes";
 import { useNavigate } from "react-router-dom";
 import { RoutesList } from "../Router";

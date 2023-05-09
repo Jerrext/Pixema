@@ -1,6 +1,5 @@
 import { create } from "apisauce";
 import {
-  CreateListPayload,
   DetailsListType,
   ListValue,
   SigInPayloadData,
@@ -102,6 +101,14 @@ const createMyList = (token: string, data: DetailsListType) => {
   });
 };
 
+const editMyList = (token: string, id: number, data: DetailsListType) => {
+  return API.put(`/lists/${id}`, data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
 const getMyList = (token: string, id: string) => {
   return API.get(
     `/lists/${id}`,
@@ -153,7 +160,7 @@ const removeList = (token: string, id: number) => {
     }
   );
 };
-//secure/value-lists/tmdb-countries,tmdb-languages
+
 const getSearchList = (token: string, query: string) => {
   return API.get(
     `/search/${query}`,
@@ -165,19 +172,6 @@ const getSearchList = (token: string, query: string) => {
     }
   );
 };
-
-// const getValueLists = (token: string) => {
-//   return API.get(
-//     `/value-lists/tmdb-countries,tmdb-languages`,
-//     {},
-//     {
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: `Bearer ${token}`,
-//       },
-//     }
-//   );
-// };
 
 export default {
   signUpUser,
@@ -193,5 +187,5 @@ export default {
   createMyList,
   removeList,
   getSearchList,
-  // getValueLists,
+  editMyList,
 };

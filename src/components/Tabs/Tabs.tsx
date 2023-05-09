@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import classNames from "classnames";
 import styles from "./Tabs.module.scss";
 import { MovieTabsNames } from "src/utils/@globalTypes";

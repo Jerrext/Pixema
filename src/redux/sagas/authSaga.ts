@@ -13,22 +13,14 @@ import {
   signUpUser,
 } from "../reducers/authSlice";
 import {
-  Callback,
   GetUserDataPayload,
-  SigInPayloadData,
   SignInUserPayload,
   SignUpUserPayload,
 } from "../reducers/@types";
-import { UserErrorsData, UserResponseData } from "./@types";
+import { UserResponseData } from "./@types";
 import { ACCESS_TOKEN_KEY } from "src/utils/constants";
 import callCheckingAuth from "./callCheckingAuth";
-import {
-  clearFullMyMoviesLists,
-  clearMoviesData,
-  createMyList,
-  setAllMoviesLoading,
-  setMyMoviesLists,
-} from "../reducers/movieSlice";
+import { clearMoviesData, createMyList } from "../reducers/movieSlice";
 
 function* signUpUserWorker(action: PayloadAction<SignUpUserPayload>) {
   const { data, callback } = action.payload;

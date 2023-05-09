@@ -1,5 +1,4 @@
 import React, { FC } from "react";
-import classNames from "classnames";
 import styles from "./CardList.module.scss";
 import { CardListType, SearchListType } from "src/utils/@globalTypes";
 import Card from "src/components/Card";

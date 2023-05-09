@@ -15,11 +15,13 @@ import AddListWindow from "src/components/ModalWindow/AddListWindow";
 import { ModalWindowType } from "src/utils/@globalTypes";
 import RemoveListWindow from "src/components/ModalWindow/RemoveListWindow";
 import FilterWindow from "src/components/ModalWindow/FilterWindow";
+import EditListWindow from "src/components/ModalWindow/EditListWindow/EditListWindow";
 
 const PagesContainer = () => {
   const isLoggedIn = useSelector(AuthSelectors.getLoggedIn);
   const message = useSelector(MessageSelectors.getMessage);
   const modalWindow = useSelector(MovieSelectors.getModalWindow);
+  // const moviesLists = useSelector(MovieSelectors.getMyMoviesLists);
   const currentList = useSelector(MovieSelectors.getCurrentList);
   const filters = useSelector(MovieSelectors.getFilters);
 
@@ -36,7 +38,9 @@ const PagesContainer = () => {
       case ModalWindowType.RemoveList:
         return <RemoveListWindow currentList={currentList} />;
       case ModalWindowType.FilterWindow:
-        return <FilterWindow filters={filters} modalWindowType={modalWindow} />;
+        return <FilterWindow filters={filters} />;
+      case ModalWindowType.EditList:
+        return <EditListWindow currentList={currentList} />;
       default:
         return;
     }

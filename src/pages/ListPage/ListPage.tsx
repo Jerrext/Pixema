@@ -40,7 +40,9 @@ const ListPage = () => {
     dispatch(setModalWindow(ModalWindowType.RemoveList));
   };
 
-  const onEditListBtnClick = () => {};
+  const onEditListBtnClick = () => {
+    dispatch(setModalWindow(ModalWindowType.EditList));
+  };
 
   useEffect(() => {
     if (moviesLists.length === fullMoviesLists.length) {

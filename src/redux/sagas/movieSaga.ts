@@ -5,23 +5,19 @@ import {
   changeMyMoviesLists,
   clearFullMyMoviesLists,
   createMyList,
+  editList,
   getAllMovies,
   getFullMyMoviesLists,
-  // getFavoriteMovies,
-  // getMyMoviesList,
   getMyMoviesLists,
   getRecommendationMovieList,
   getSearchList,
   getSingleMovie,
-  // getValueLists,
   removeList,
   removeListItem,
   setAllMoviesLoading,
   setFullMyMoviesLists,
   setModalWindow,
-  // setFavoriteMoviesList,
   setMoviesList,
-  // setMyMoviesList,
   setMyMoviesListLoading,
   setMyMoviesLists,
   setPagesCount,
@@ -37,7 +33,6 @@ import { ApiResponse } from "apisauce";
 import {
   ChangeListResponseData,
   CreateListResponseData,
-  // CreateListResponseDate,
   GetListsResponseData,
   GetSearchListResponseData,
   MoviesResponseData,
@@ -49,7 +44,7 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import {
   ListPayload,
   GetAllMoviesPayload,
-  CreateListPayload,
+  DetailsListPayload,
   RemoveListPayload,
 } from "../reducers/@types";
 import { setMessage } from "../reducers/messageSlice";
@@ -146,24 +141,6 @@ function* getRecommendationMovieListWorker(action: PayloadAction<string>) {
   }
 }
 
-// function* getMyMoviesListWorker(action: PayloadAction<number>) {
-//   yield put(setMyMoviesListLoading(true));
-//   const id = action.payload;
-//   const { ok, data, problem }: ApiResponse<MyListResponseData> =
-//     yield callCheckingAuth(API.getMyList, "", id);
-//   if (ok && data) {
-//     yield put(setMyMoviesList(data.items.data));
-//     yield put(setMyMoviesListLoading(false));
-//   } else {
-//     yield put(
-//       setMessage({
-//         status: false,
-//         message: `Error getting movies list ${problem}`,
-//       })
-//     );
-//   }
-// }
-
 function* getMyMoviesListsWorker() {
   yield put(setMyMoviesListLoading(true));
   const { ok, data, problem }: ApiResponse<GetListsResponseData> =
@@ -250,18 +227,39 @@ function* removeListItemWorker(action: PayloadAction<ListPayload>) {
   }
 }
 
-function* createMyListWorker(action: PayloadAction<CreateListPayload>) {
-  const { token, data } = action.payload;
-  const {
-    ok,
-    data: responseData,
-    problem,
-  }: ApiResponse<CreateListResponseData> = yield callCheckingAuth(
-    API.createMyList,
-    token,
+function* editMyListWorker(action: PayloadAction<DetailsListPayload>) {
+  const { id, data } = action.payload;
+  const { ok, problem }: ApiResponse<any> = yield callCheckingAuth(
+    API.editMyList,
+    "",
+    id,
     data
   );
-  if (ok && responseData) {
+  if (ok) {
+    yield put(clearFullMyMoviesLists());
+    yield put(getMyMoviesLists());
+    yield put(setModalWindow(null));
+    yield put(
+      setMessage({
+        status: true,
+        message: `The changes have been saved`,
+      })
+    );
+  } else {
+    yield put(
+      setMessage({
+        status: false,
+        message: `List editing error ${problem}`,
+      })
+    );
+  }
+}
+
+function* createMyListWorker(action: PayloadAction<DetailsListPayload>) {
+  const { token, data } = action.payload;
+  const { ok, problem }: ApiResponse<CreateListResponseData> =
+    yield callCheckingAuth(API.createMyList, token, data);
+  if (ok) {
     yield put(clearFullMyMoviesLists());
     yield put(getMyMoviesLists());
     yield put(setModalWindow(null));
@@ -320,39 +318,18 @@ function* getSearchListWorker(action: PayloadAction<string>) {
   }
 }
 
-// function* getValueListsWorker() {
-//   yield put(setAllMoviesLoading(true));
-//   const { ok, data, problem }: ApiResponse<any> = yield callCheckingAuth(
-//     API.getValueLists,
-//     ""
-//   );
-//   if (ok && data) {
-//     yield put(setSearchList(data.results));
-//     yield put(setAllMoviesLoading(false));
-//   } else {
-//     yield put(
-//       setMessage({
-//         status: false,
-//         message: `Search error ${problem}`,
-//       })
-//     );
-//   }
-// }
-
 export default function* movieSaga() {
   yield all([
     takeLatest(getAllMovies, getMoviesWorker),
     takeLatest(getSingleMovie, getSingleMovieWorker),
     takeLatest(getRecommendationMovieList, getRecommendationMovieListWorker),
-    // takeLatest(getMyMoviesList, getMyMoviesListWorker),
     takeLatest(getMyMoviesLists, getMyMoviesListsWorker),
     takeEvery(getFullMyMoviesLists, getFullMyMoviesListsWorker),
     takeLatest(addMovieToList, addMovieToListWorker),
-    // takeLatest(getFavoriteMovies, getFavoriteMoviesListWorker),
     takeLatest(removeListItem, removeListItemWorker),
     takeLatest(createMyList, createMyListWorker),
     takeLatest(removeList, removeListWorker),
     takeLatest(getSearchList, getSearchListWorker),
-    // takeLatest(getValueLists, getValueListsWorker),
+    takeLatest(editList, editMyListWorker),
   ]);
 }

@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, useEffect, useState } from "react";
+import React, { FC, useState } from "react";
 import "./ThumbsGallery.scss";
 import classNames from "classnames";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -25,9 +25,6 @@ const ThumbsGallery: FC<ThumbsGalleryProps> = ({
 }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
   const { theme } = useThemeContext();
-
-  // const smallImage = images.replace(imageSize, "w400");
-  // const bigImage = movieData?.poster.replace(imageSize, "w400");
 
   return (
     <div

@@ -110,20 +110,15 @@ const SignIn = () => {
         onChange={setEmail}
         inputType="email"
       />
-      <div className={styles.passwordWrapper}>
-        <Input
-          value={password}
-          title="Password"
-          placeholder="Your password"
-          errText={passwordError}
-          onBlur={onBlurPassword}
-          onChange={setPassword}
-          inputType="password"
-        />
-        {/* <Link to={RoutesList.ResetPassword} className={styles.forgotPassword}>
-          Forgot password?
-        </Link> */}
-      </div>
+      <Input
+        value={password}
+        title="Password"
+        placeholder="Your password"
+        errText={passwordError}
+        onBlur={onBlurPassword}
+        onChange={setPassword}
+        inputType="password"
+      />
     </FormPage>
   );
 };

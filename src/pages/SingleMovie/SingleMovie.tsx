@@ -18,6 +18,7 @@ import {
   BookmarkIcon,
   EyeIcon,
   ImdbIcon,
+  MovieIcon,
   SocialIcon,
   TrendIcon,
 } from "src/assets/icons";
@@ -78,7 +79,9 @@ const SingleMovie = () => {
   const isOrange = movieData?.rating && +movieData.rating < 6;
   const emptyValue = "Empty";
 
-  const newPoster = movieData?.poster.replace(imageSize, "w400");
+  const newPoster = movieData?.poster
+    ? movieData.poster.replace(imageSize, "w400")
+    : "";
 
   const getCreditsDepartment = (department: string) => {
     const data = movieData?.credits.filter(
@@ -251,7 +254,10 @@ const SingleMovie = () => {
         <div className={styles.wrapper}>
           <div className={styles.movieCardWrapper}>
             <div className={styles.movieCard}>
-              <img src={newPoster} className={styles.moviePoster}></img>
+              <div className={styles.poster}>
+                <MovieIcon />
+                <img src={newPoster} alt={movieData?.name} />
+              </div>
               <GroupButtons groupButtonsList={GROUP_BUTTON_LIST} />
               {filteredMoviesLists.length !== 0 && (
                 <ListSelect

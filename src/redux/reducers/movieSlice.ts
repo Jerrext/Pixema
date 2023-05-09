@@ -1,20 +1,18 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import React from "react";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import {
   CardListType,
-  CardType,
   FiltersType,
   ModalWindowType,
   SearchListType,
 } from "src/utils/@globalTypes";
 import {
   ListPayload,
-  CreateListPayload,
+  DetailsListPayload,
   FullListsPayload,
   RemoveListPayload,
   GetAllMoviesPayload,
-  FiltersPayload,
 } from "./@types";
 import { ListData, SingleMovieData } from "../sagas/@types";
 import { FILTERS_RESET } from "src/utils/constants";
@@ -104,7 +102,7 @@ const MovieSlice = createSlice({
       state.fullMyMoviesLists.splice(listIndex, 1, action.payload);
     },
     removeListItem(_, __: PayloadAction<ListPayload>) {},
-    createMyList(_, __: PayloadAction<CreateListPayload>) {},
+    createMyList(_, __: PayloadAction<DetailsListPayload>) {},
     setModalWindow(state, action: PayloadAction<ModalWindowType | null>) {
       state.modalWindow = action.payload;
     },
@@ -128,6 +126,7 @@ const MovieSlice = createSlice({
     setFiltersData(state, action: PayloadAction<FiltersType>) {
       state.filtersData = action.payload;
     },
+    editList(_, __: PayloadAction<DetailsListPayload>) {},
   },
 });
 
@@ -159,6 +158,7 @@ export const {
   getSearchList,
   setSearchList,
   setFiltersData,
+  editList,
 } = MovieSlice.actions;
 export default MovieSlice.reducer;
 

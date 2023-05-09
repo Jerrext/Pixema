@@ -1,7 +1,7 @@
-import classNames from "classnames";
 import React, { FC, ReactNode } from "react";
+import classNames from "classnames";
 import { Theme, useThemeContext } from "src/Context/Theme/Context";
-import Button from "src/components/Button/Button";
+import Button from "src/components/Button";
 import styles from "src/pages/FormPages/FormPage.module.scss";
 import { ButtonType } from "src/utils/@globalTypes";
 

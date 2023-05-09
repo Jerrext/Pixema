@@ -1,4 +1,4 @@
-import { CardListType, SearchListType } from "src/utils/@globalTypes";
+import { CardListType } from "src/utils/@globalTypes";
 
 export type UserSignInResponseData = {
   themes: {};

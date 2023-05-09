@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useState } from "react";
 import styles from "./UserName.module.scss";
 import classNames from "classnames";
 import { useDispatch } from "react-redux";

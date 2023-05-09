@@ -1,8 +1,6 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC } from "react";
 import styles from "./ViewPerson.module.scss";
 import classNames from "classnames";
-import { useDispatch } from "react-redux";
-import { logoutUser } from "src/redux/reducers/authSlice";
 import { SingleMovieCredits } from "src/redux/sagas/@types";
 import { UnknownPersonIcon } from "src/assets/icons";
 import { Theme, useThemeContext } from "src/Context/Theme/Context";
@@ -24,7 +22,8 @@ const ViewPerson: FC<ViewPersonProps> = ({ personData }) => {
           })}
         >
           <div className={styles.personPoster}>
-            {poster ? <img src={poster} /> : <UnknownPersonIcon />}
+            <UnknownPersonIcon />
+            <img src={poster} />
           </div>
           <div className={styles.personDescription}>
             <p>

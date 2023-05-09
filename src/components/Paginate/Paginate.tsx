@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from "react";
+import React, { FC } from "react";
 import styles from "./Paginate.module.scss";
 import ReactPaginate from "react-paginate";
 import classNames from "classnames";

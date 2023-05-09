@@ -2,7 +2,6 @@ import { call, put } from "redux-saga/effects";
 import { ApiResponse } from "apisauce";
 
 import { ACCESS_TOKEN_KEY } from "../../utils/constants";
-import API from "../api";
 import { logoutUser } from "../reducers/authSlice";
 
 function* callCheckingAuth(apiCall: any, token?: string, ...params: any) {

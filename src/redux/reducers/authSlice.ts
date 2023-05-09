@@ -1,15 +1,13 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import React from "react";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import {
-  SigInPayloadData,
   SignInUserPayload,
   SignUpUserPayload,
-  Callback,
   InputErrorsData,
   GetUserDataPayload,
 } from "./@types";
-import { UserData, UserSignInData } from "../sagas/@types";
+import { UserData } from "../sagas/@types";
 import { ACCESS_TOKEN_KEY } from "src/utils/constants";
 
 type AuthState = {

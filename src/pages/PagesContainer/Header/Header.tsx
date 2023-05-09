@@ -1,4 +1,4 @@
-import React, { KeyboardEvent, useEffect, useMemo, useState } from "react";
+import React from "react";
 import styles from "./Header.module.scss";
 import { PixemaLogoIcon } from "src/assets/icons";
 import { useSelector } from "react-redux";

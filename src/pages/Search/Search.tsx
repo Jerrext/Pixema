@@ -2,18 +2,9 @@ import React, { useEffect } from "react";
 import styles from "./Search.module.scss";
 import CardList from "src/components/CardList/";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  MovieSelectors,
-  getSearchList,
-  setCurrentList,
-  setModalWindow,
-  setMyMoviesListLoading,
-} from "src/redux/reducers/movieSlice";
+import { MovieSelectors, getSearchList } from "src/redux/reducers/movieSlice";
 import Loader from "src/components/Loader";
 import { useParams } from "react-router-dom";
-import { EditIcon, TrashCanIcon } from "src/assets/icons";
-import { ButtonType, ModalWindowType } from "src/utils/@globalTypes";
-import Button from "src/components/Button";
 
 const Search = () => {
   const dispatch = useDispatch();
@@ -34,7 +25,7 @@ const Search = () => {
     <Loader />
   ) : (
     <>
-      <p></p>
+      <p className={styles.searchValue}>{`Search results '${query}'`}</p>
       <CardList cardList={searchMovieList} />
     </>
   );

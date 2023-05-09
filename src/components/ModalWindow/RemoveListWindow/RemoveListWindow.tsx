@@ -1,30 +1,19 @@
-import React, { FC, ReactNode, useEffect, useMemo, useState } from "react";
-import classNames from "classnames";
+import React, { FC } from "react";
 import styles from "./RemoveListWindow.module.scss";
-import { Theme, useThemeContext } from "src/Context/Theme/Context";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  MovieSelectors,
-  createMyList,
-  removeList,
-  setModalWindow,
-  // setAddListWindowVisibility,
-} from "src/redux/reducers/movieSlice";
-
-import { ButtonType, ModalWindowType } from "src/utils/@globalTypes";
+import { useDispatch } from "react-redux";
+import { removeList, setModalWindow } from "src/redux/reducers/movieSlice";
+import { ButtonType } from "src/utils/@globalTypes";
 import { ListData } from "src/redux/sagas/@types";
 import { useNavigate } from "react-router-dom";
 import { RoutesList } from "src/pages/Router";
-import Input from "src/components/Input/Input";
-import SelectComponent from "src/components/SelectComponent/SelectComponent";
-import Button from "src/components/Button/Button";
+import Button from "src/components/Button";
 import ModalWindow from "../ModalWindow";
 
-type ModalWindowProps = {
+type RemoveListWindowProps = {
   currentList: ListData | null;
 };
 
-const RemoveListWindow: FC<ModalWindowProps> = ({ currentList }) => {
+const RemoveListWindow: FC<RemoveListWindowProps> = ({ currentList }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

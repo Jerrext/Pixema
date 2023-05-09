@@ -1,24 +1,17 @@
-import React, { FC, ReactNode, useEffect, useMemo, useState } from "react";
-import classNames from "classnames";
+import React, { useEffect, useMemo, useState } from "react";
 import styles from "./AddListWindow.module.scss";
-import { Theme, useThemeContext } from "src/Context/Theme/Context";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  MovieSelectors,
-  createMyList,
-  removeList,
-  setModalWindow,
-  // setAddListWindowVisibility,
-} from "src/redux/reducers/movieSlice";
-
-import { ButtonType, ModalWindowType } from "src/utils/@globalTypes";
-import { ListData } from "src/redux/sagas/@types";
-import { useNavigate } from "react-router-dom";
-import { RoutesList } from "src/pages/Router";
-import Input from "src/components/Input/Input";
-import SelectComponent from "src/components/SelectComponent/SelectComponent";
-import Button from "src/components/Button/Button";
+import { useDispatch } from "react-redux";
+import { createMyList } from "src/redux/reducers/movieSlice";
+import { ButtonType } from "src/utils/@globalTypes";
+import Input from "src/components/Input";
+import SelectComponent from "src/components/SelectComponent";
+import Button from "src/components/Button";
 import ModalWindow from "../ModalWindow";
+
+const options = [
+  { value: "true", label: "Public" },
+  { value: "false", label: "Private" },
+];
 
 const AddListWindow = () => {
   const dispatch = useDispatch();
@@ -32,11 +25,6 @@ const AddListWindow = () => {
 
   const [titleTouched, setTitleTouched] = useState(false);
   const [descriptionTouched, setDescriptionTouched] = useState(false);
-
-  const options = [
-    { value: "true", label: "Public" },
-    { value: "false", label: "Private" },
-  ];
 
   const isPublic = currentValues === "true" ? true : false;
 

@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, useMemo, useEffect, useCallback } from "react";
+import React, { FC, ReactNode, useMemo } from "react";
 import styles from "./Sidebar.module.scss";
 import {
   EyeIcon,

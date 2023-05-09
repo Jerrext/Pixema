@@ -1,12 +1,5 @@
 import React, { ReactNode, useEffect } from "react";
-
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Navigate,
-  useNavigate,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import SignIn from "./FormPages/SignIn";
 import PagesContainer from "./PagesContainer";
 import SignUp from "./FormPages/SignUp";
@@ -15,18 +8,15 @@ import { AuthSelectors, getUserInfo } from "src/redux/reducers/authSlice";
 import Home from "./Home";
 import SingleMovie from "./SingleMovie";
 import ListPage from "./ListPage";
-import {
-  MovieSelectors,
-  getMyMoviesLists,
-} from "src/redux/reducers/movieSlice";
-import Settings from "./Settings/Settings";
+import { getMyMoviesLists } from "src/redux/reducers/movieSlice";
+import Settings from "./Settings";
 import { changeTheme } from "src/redux/reducers/themeSlice";
 import { THEME } from "src/utils/constants";
 import { Theme } from "src/Context/Theme/Context";
 import Trends from "./Trends";
 import Search from "./Search";
 import Filters from "./Filters";
-import NotFound from "./NotFound/NotFound";
+import NotFound from "./NotFound";
 
 export enum RoutesList {
   Home = "/",

@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from "react";
-import styles from "./SignUp.module.scss";
 import FormPage from "../FormPage";
 import { Link, useNavigate } from "react-router-dom";
 import { RoutesList } from "src/pages/Router";
@@ -11,7 +10,6 @@ import {
   setInputErrors,
   signUpUser,
 } from "src/redux/reducers/authSlice";
-// import SelectComponent from "src/components/SelectComponent/";
 
 const SignUp = () => {
   const dispatch = useDispatch();

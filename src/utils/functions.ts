@@ -1,6 +1,3 @@
-import ViewPerson from "src/components/ViewPerson";
-import { SingleMovieCredits } from "src/redux/sagas/@types";
-
 export const checkEmptyValue = (data: any, value: string) => {
   return data ? value : "Empty";
 };
