@@ -1,0 +1,25 @@
+@import "src/assets/colors";
+
+.rating {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.scoreItem {
+  border-left: 2px solid $light;
+  padding-left: 25px;
+  margin-left: 25px;
+  font-size: 25px;
+  font-weight: 400;
+  line-height: 40px;
+  // width: 60px;
+  text-align: center;
+}
+
+// .scoreBtn {
+//   cursor: pointer;
+//   &:hover > svg > path {
+//     fill: $primary;
+//   }
+// }

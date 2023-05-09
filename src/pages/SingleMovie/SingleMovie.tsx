@@ -7,6 +7,7 @@ import {
   getRecommendationMovieList,
   getSingleMovie,
   removeListItem,
+  setModalWindow,
   setRecommendationMovieList,
   setSingleMovie,
 } from "src/redux/reducers/movieSlice";
@@ -19,7 +20,9 @@ import {
   EyeIcon,
   ImdbIcon,
   MovieIcon,
+  ReviewIcon,
   SocialIcon,
+  StarIcon,
   TrendIcon,
 } from "src/assets/icons";
 import {
@@ -32,13 +35,19 @@ import Card from "src/components/Card";
 import Player from "src/components/Player";
 import ThumbsGallery from "src/components/ThumbsGallery";
 import Tabs from "src/components/Tabs";
-import { MovieTabsNames } from "src/utils/@globalTypes";
+import {
+  ButtonType,
+  ModalWindowType,
+  MovieTabsNames,
+} from "src/utils/@globalTypes";
 import ViewPerson from "src/components/ViewPerson";
 import { setMessage } from "src/redux/reducers/messageSlice";
 import { FullListsPayload } from "src/redux/reducers/@types";
 import ListSelect from "src/components/ListSelect";
 import EmptyState from "src/components/EmptyState";
 import { imageSize } from "src/utils/constants";
+import Button from "src/components/Button/Button";
+import { Theme, useThemeContext } from "src/Context/Theme/Context";
 
 const SingleMovie = () => {
   const { id } = useParams();
@@ -59,6 +68,8 @@ const SingleMovie = () => {
   );
   const moviesLists = useSelector(MovieSelectors.getFullMyMoviesLists);
 
+  const { theme } = useThemeContext();
+  const isLight = theme === Theme.Light;
   const filteredMoviesLists = moviesLists.filter(
     (item) => item.title !== "Favorites" && item.title !== "watchlist"
   );
@@ -221,6 +232,10 @@ const SingleMovie = () => {
     currentPage !== 1 && setCurrentPage(currentPage - 1);
   };
 
+  const onReviewBtnClick = () => {
+    dispatch(setModalWindow(ModalWindowType.WriteReviewWindow));
+  };
+
   const recommendationPageList = useMemo(() => {
     return recommendationCardList.filter(
       (item, index) => index >= 4 * (currentPage - 1) && index < 4 * currentPage
@@ -259,6 +274,18 @@ const SingleMovie = () => {
                 <img src={newPoster} alt={movieData?.name} />
               </div>
               <GroupButtons groupButtonsList={GROUP_BUTTON_LIST} />
+              <Button
+                title={
+                  <>
+                    <StarIcon />
+                    <span>Rate this</span>
+                  </>
+                }
+                onClick={onReviewBtnClick}
+                type={ButtonType.Secondary}
+                disabled
+                className={styles.rateBtn}
+              />
               {filteredMoviesLists.length !== 0 && (
                 <ListSelect
                   title="Lists"
@@ -316,7 +343,11 @@ const SingleMovie = () => {
               </div>
             </div>
             {movieData && movieData.images.length > 0 && (
-              <div className={styles.preview}>
+              <div
+                className={classNames(styles.preview, {
+                  [styles.blockLight]: isLight,
+                })}
+              >
                 <h2>Preview</h2>
                 <Tabs
                   onClick={onTabClick}
@@ -338,7 +369,11 @@ const SingleMovie = () => {
             )}
 
             {movieData && (
-              <div className={styles.playerWrapper}>
+              <div
+                className={classNames(styles.playerWrapper, {
+                  [styles.blockLight]: isLight,
+                })}
+              >
                 <h2>Watch online</h2>
                 <div className={styles.player}>
                   <Player
@@ -348,7 +383,30 @@ const SingleMovie = () => {
                 </div>
               </div>
             )}
-
+            <div
+              className={classNames(styles.reviews, {
+                [styles.blockLight]: isLight,
+              })}
+            >
+              <div className={styles.reviewsTop}>
+                <h2>Reviews</h2>
+                <Button
+                  title={
+                    <>
+                      <ReviewIcon />
+                      <span>Write a Review</span>
+                    </>
+                  }
+                  onClick={onReviewBtnClick}
+                  type={ButtonType.Secondary}
+                  className={styles.reviewBtn}
+                />
+              </div>
+              <div className={styles.reviewsWrapper}>
+                <h3>There are no reviews for this movie yet.</h3>
+                <p>Be the first to leave one!</p>
+              </div>
+            </div>
             <div className={styles.recommendation}>
               <div className={styles.recommendationTop}>
                 <h2>Recommendation</h2>

@@ -18,3 +18,5 @@ export { TrashCanIcon } from "./TrashCanIcon";
 export { EditIcon } from "./EditIcon";
 export { MagnifierIcon } from "./MagnifierIcon";
 export { MovieIcon } from "./MovieIcon";
+export { ReviewIcon } from "./ReviewIcon";
+export { StarIcon } from "./StarIcon";

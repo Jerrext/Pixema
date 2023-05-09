@@ -36,7 +36,7 @@ const ListSelect: FC<ListSelectProps> = ({ title, lists, movieId }) => {
     }
   };
   return (
-    <>
+    <div className={styles.wrapper}>
       <div
         className={styles.buttonWrapper}
         onClick={() => setActiveState(!activeState)}
@@ -63,7 +63,7 @@ const ListSelect: FC<ListSelectProps> = ({ title, lists, movieId }) => {
           );
         })}
       </div>
-    </>
+    </div>
   );
 };
 

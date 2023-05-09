@@ -84,6 +84,7 @@ export enum ModalWindowType {
   RemoveList,
   EditList,
   FilterWindow,
+  WriteReviewWindow,
 }
 
 export type FiltersType = {

@@ -16,6 +16,12 @@
   }
 }
 
+.movieCard {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .movieCardWrapper {
   width: 266px;
 }
@@ -28,7 +34,7 @@
   width: 100%;
   height: 356px;
   border-radius: 20px;
-  margin-bottom: 32px;
+  margin-bottom: 10px;
   overflow: hidden;
   background-color: $graphite;
   position: relative;
@@ -38,6 +44,8 @@
     object-position: center center;
     width: 100%;
     height: 100%;
+    z-index: 1;
+    position: relative;
   }
 
   svg {
@@ -188,11 +196,14 @@
 }
 
 .preview,
-.playerWrapper {
-  padding-top: 30px;
+.playerWrapper,
+.reviews {
+  padding: 30px;
   display: flex;
   flex-direction: column;
   gap: 20px;
+  border-radius: 20px;
+  background-color: $dark;
 }
 
 .player {
@@ -215,4 +226,63 @@
   svg {
     height: 250px;
   }
+}
+
+.reviewsTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.reviewBtn {
+  svg {
+    margin-right: 10px;
+    > path {
+      fill: $primary-secondary;
+    }
+  }
+
+  &:hover {
+    svg > path {
+      fill: $primary;
+    }
+  }
+}
+
+.rateBtn {
+  svg {
+    margin-right: 10px;
+    transform: scale(0.8);
+  }
+
+  &:hover {
+    svg > path {
+      fill: $secondary;
+    }
+  }
+}
+
+.reviewsWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  overflow: auto;
+
+  h3 {
+    font-weight: 600;
+  }
+
+  p {
+    margin-top: 5px;
+    font-weight: 400;
+    color: $secondary;
+  }
+}
+
+.blockLight {
+  background-color: transparent;
+  border: 1px solid $light;
+  box-shadow: 0 0 20px -10px $black;
 }
