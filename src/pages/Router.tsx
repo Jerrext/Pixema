@@ -70,7 +70,7 @@ const Router = () => {
             path={RoutesList.Browse}
             element={<Navigate to={"/home/page=1"} />}
           />
-          <Route path={"/home/:pageUrl"} element={<Home />} />
+          <Route path={"/home/:pageUrl"} element={redirectSignIn(<Home />)} />
           <Route
             path={RoutesList.SignIn}
             element={
