@@ -59,7 +59,7 @@ const Router = () => {
   }, [isLoggedIn]);
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
         <Route path={RoutesList.Home} element={<PagesContainer />}>
           <Route
